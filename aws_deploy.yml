@@ -1,0 +1,7 @@
+- name: AWS Netbox deployment role
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+    - aws_netbox_deploy
+  
