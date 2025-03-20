@@ -1,0 +1,57 @@
+---
+
+- name: Query data on Netbox
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - include_vars: main.yml
+
+    - name: Query VLANs on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Query IPv4 addresses data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Query interfaces data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Query devices data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Query device types data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Query sites data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+

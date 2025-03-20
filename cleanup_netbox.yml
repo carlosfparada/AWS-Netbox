@@ -1,0 +1,106 @@
+---
+
+- name: Cleanup data on Netbox
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - include_vars: main.yml
+
+    - name: Cleanup VLANs data on Netbox
+      netbox.netbox.netbox_vlan:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data:
+          site: "{{ item.value.site.name }}"
+          name: "{{ item.value.name }}"
+          vid: "{{ item.value.vid }}"          
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    - name: Cleanup IPv4 addresses data on Netbox
+      netbox.netbox.netbox_ip_address:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          assigned_object:
+            device: "{{ item.value.assigned_object.device.name }}"
+            name: "{{ item.value.assigned_object.name }}"
+          family: "{{ item.value.family.value }}"
+          address: "{{ item.value.address }}"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
+    # - name: Cleanup interfaces data on Netbox
+    #   netbox.netbox.netbox_device_interface:
+    #     netbox_url: "{{ net_netbox_url }}"
+    #     netbox_token: "{{ net_netbox_token }}"
+    #     validate_certs: no
+    #     data: 
+    #       device: "{{ item.value.device.name }}"
+    #       name: "{{ item.value.name }}"
+    #       type: "{{ item.value.type.label }}"
+    #       description: "{{ item.value.name }}"
+    #     state: absent
+    #   loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
+    #                 api_endpoint=net_netbox_url,
+    #                 token=net_netbox_token,
+    #                 validate_certs=False) }}"
+
+    - name: Cleanup devices data on Netbox
+      netbox.netbox.netbox_device:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          name: "{{ item.value.name }}"
+          site: "{{ site }}"
+          serial: "{{ item.value.serial }}"
+          device_type: "{{ item.value.device_type }}"
+          device_role: "{{ item.value.device_role }}"
+          comments: "Added by AAP"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
+              api_endpoint=net_netbox_url,
+              token=net_netbox_token,
+              validate_certs=False) }}"
+
+    - name: Cleanup device types data on Netbox
+      netbox.netbox.netbox_device_type:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          model: "{{ item.value.model }}"
+          manufacturer: "{{ item.value.manufacturer }}"
+          slug: "{{ item.value.slug }}"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+  
+    - name: Cleanup sites data on Netbox
+      netbox.netbox.netbox_site:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: "{{ net_netbox_token }}"
+        validate_certs: no
+        data: 
+          name: "{{ item.value.name }}"
+          slug: "{{ item.value.slug }}"
+          description: "Site located in {{ item.value.slug }}"
+          status: "{{ item.value.status.label }}"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
+              api_endpoint=net_netbox_url,
+              token=net_netbox_token,
+              validate_certs=False) }}"
+

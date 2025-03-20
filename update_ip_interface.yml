@@ -1,0 +1,42 @@
+---
+
+- name: Update interface vlan configs, triggered by Netbox changes
+  hosts: "{{ device }}"
+  gather_facts: false
+  tasks:
+    - include_vars: main.yml
+
+    - name: Debug Netbox data structure
+      debug:
+        msg: "{{ data }}" 
+
+    - name: Debug Netbox relevant variables
+      debug:
+        msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+
+    - name: Cisco IOS update IPv4 to l3 interface on {{ device }}
+      cisco.ios.ios_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv4:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '4'
+
+    - name: Cisco IOS update IPv6 to l3 interface on {{ device }}
+      cisco.ios.ios_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv6:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '6'
+
+    - name: Cisco IOS update description to interface on {{ device }}
+      cisco.ios.ios_interfaces:
+        config:
+        - name: "{{ interface }}"
+          description: "{{ description }}"
+      become: true
