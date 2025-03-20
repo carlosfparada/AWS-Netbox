@@ -37,7 +37,7 @@ volumes:
       delete_on_termination: true
       encrypted: false
 # Flavour 
-ec2_netbox_flavor_name: t3.micro
+ec2_netbox_flavor_name: t3.large
 # Key Pair
 ec2_netbox_key_name: "KeyPair-Virginia"
 # Instance
