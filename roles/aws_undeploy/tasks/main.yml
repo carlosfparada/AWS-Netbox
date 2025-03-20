@@ -26,7 +26,7 @@
     state: absent
     region: "{{ ec2_vpc_region }}"
     filters:
-      "tag:name": "{{ ec2_instance_name }}"
+      "tag:name": "{{ ec2_netbox_instance_name }}"
 
 - name: Delete Security Group
   amazon.aws.ec2_security_group:
