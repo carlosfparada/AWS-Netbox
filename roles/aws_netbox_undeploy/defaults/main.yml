@@ -28,6 +28,14 @@ ec2_sg_rules:
 # AMI
 ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0224-prod-jz3khonabosm6"
 ec2_netbox_image_id: ami-0d0dff5040aeeaf7f
+# Volumes
+volumes:
+  - device_name: /dev/sda1
+    ebs:
+      volume_type: gp2
+      volume_size: 32
+      delete_on_termination: true
+      encrypted: false
 # Flavour 
 ec2_netbox_flavor_name: t3.micro
 # Key Pair
