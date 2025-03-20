@@ -31,8 +31,8 @@ ec2_netbox_image_id: ami-0d0dff5040aeeaf7f
 # Flavour 
 ec2_netbox_flavor_name: t3.micro
 # Disk
-ec2_netbox_disk_size: 20
-ec2_netbox_ebs_name: /dev/sda1
+# ec2_netbox_disk_size: 20
+# ec2_netbox_ebs_name: /dev/sda1
 # Key Pair
 ec2_netbox_key_name: "KeyPair-Virginia"
 # Instance
