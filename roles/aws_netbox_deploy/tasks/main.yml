@@ -102,7 +102,7 @@
 
 - name: Print instance details
   ansible.builtin.debug:
-    msg: "Instance DNS name is: {{ ec2_instance.instances[0].public_dns_name }} with IP address {{ ec2_instance.instances[0].public_ip_address }}"
+    msg: "Netbox: http://{{ ec2_instance.instances[0].public_dns_name }}:8000 or http://{{ ec2_instance.instances[0].public_ip_address }}:8000"
 
 - name: Sleep for 30 seconds and continue with play
   wait_for:
