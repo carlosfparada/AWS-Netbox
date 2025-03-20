@@ -80,7 +80,7 @@
 - name: Get AMI by Name
   amazon.aws.ec2_ami_info:
     filters:
-      name: "{{ ec2_image_name }}"
+      name: "{{ ec2_netbox_image_name }}"
     region: "{{ ec2_vpc_region }}"
   register: ami_find
 
