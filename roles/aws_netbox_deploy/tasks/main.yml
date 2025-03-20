@@ -97,6 +97,13 @@
     #   assign_public_ip: true
     network_interfaces:
       - assign_public_ip: true
+    volumes:
+      - device_name: /dev/sda1
+        ebs:
+          volume_type: gp2
+          volume_size: 32
+          delete_on_termination: true
+          encrypted: false
     tags:
       name: "{{ ec2_netbox_instance_name }}"
     state: running
