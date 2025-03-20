@@ -25,6 +25,8 @@ ec2_sg_rules:
     icmp_type:  -1 # icmp subtype, -1 = any subtype
     cidr_ip: 0.0.0.0/0
     rule_desc: Allow all ICMP
+
+# NETBOX
 # AMI
 ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0224-prod-jz3khonabosm6"
 ec2_netbox_image_id: ami-0d0dff5040aeeaf7f
@@ -45,3 +47,50 @@ ec2_netbox_instance_name: netbox-1
 
 ec2_netbox_user: "{{ ansible_user }}"
 ec2_netbox_pass: "{{ ansible_password }}"
+
+# CISCO
+# AMI
+ec2_netbox_image_name: "Cisco-C8K-PAYG-ESS-17.15.02a-0973be0f-17dc-43c1-9677-13348bbfe587"
+ec2_netbox_image_id: ami-070b9ff0a5ff52017
+# Volumes
+volumes:
+  - device_name: /dev/xvda
+    ebs:
+      volume_type: gp2
+      volume_size: 16
+      delete_on_termination: true
+      encrypted: false
+# Flavour 
+#ec2_netbox_flavor_name: t3.medium
+ec2_netbox_flavor_name: c5.large
+# Key Pair
+ec2_netbox_key_name: "KeyPair-Virginia"
+# Instance
+ec2_netbox_instance_name: cisco-1
+
+# ec2-user / ?
+ec2_cisco_user: "{{ ansible_user }}"
+ec2_cisco_pass: "{{ ansible_password }}"
+
+# ARISTA
+# AMI
+ec2_netbox_image_name: "CloudEOS4.32.2F-971505ec-86ee-48a7-a33b-54295288e797"
+ec2_netbox_image_id: ami-0f3d624fef6d9acf3
+# Volumes
+volumes:
+  - device_name: /dev/xvda
+    ebs:
+      volume_type: gp2
+      volume_size: 8
+      delete_on_termination: true
+      encrypted: false
+# Flavour 
+ec2_netbox_flavor_name: c5.xlarge
+# Key Pair
+ec2_netbox_key_name: "KeyPair-Virginia"
+# Instance
+ec2_netbox_instance_name: eos-1
+
+# ec2-user / ?
+ec2_cisco_user: "{{ ansible_user }}"
+ec2_cisco_pass: "{{ ansible_password }}"
