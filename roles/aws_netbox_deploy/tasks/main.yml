@@ -97,11 +97,11 @@
       assign_public_ip: true
     tags:
       name: "{{ ec2_netbox_instance_name }}"
-    volumes:
-      - device_name: "{{ ec2_netbox_ebs_name | default('/dev/sda1', true) }}"
-        ebs:
-          volume_size: "{{ ec2_netbox_disk_size | default(20, true) }}"
-          delete_on_termination: true
+    # volumes:
+    #   - device_name: "{{ ec2_netbox_ebs_name | default('/dev/sda1', true) }}"
+    #     ebs:
+    #       volume_size: "{{ ec2_netbox_disk_size | default(20, true) }}"
+    #       delete_on_termination: true
     #user_data: "{{ lookup('ansible.builtin.template', 'user_data_netbox.j2') }}"
     state: running
   register: ec2_instance
