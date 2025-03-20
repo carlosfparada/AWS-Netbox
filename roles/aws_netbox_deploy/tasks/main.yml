@@ -93,8 +93,10 @@
     key_name: "{{ ec2_netbox_key_name }}"
     region: "{{ ec2_vpc_region }}"
     vpc_subnet_id: "{{ subnet.subnet.id }}"
-    network:
-      assign_public_ip: true
+    # network:
+    #   assign_public_ip: true
+    network_interfaces:
+      - assign_public_ip: true
     tags:
       name: "{{ ec2_netbox_instance_name }}"
     state: running
