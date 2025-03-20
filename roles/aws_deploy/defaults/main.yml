@@ -1,0 +1,42 @@
+# VPC NETBOX
+ec2_vpc_name: VPC_NETBOX
+ec2_vpc_region: us-east-1
+ec2_vpc_cidr: 10.0.0.0/16
+# Subnet
+ec2_subnet_name: Subnet_NETBOX
+ec2_subnet_cidr: 10.0.0.0/24
+# IGW
+ec2_igw_name: IGW_NETBOX
+# Route Table
+ec2_rt_name: RT_NETBOX
+# RHEL Rules
+ec2_sg_name: SG_NETBOX
+ec2_sg_rules:
+  - proto: tcp
+    ports:
+      - 80
+      - 443
+      - 22
+      - 8000
+    cidr_ip: 0.0.0.0/0
+    rule_desc: Allow all on ports
+  - proto: icmp
+    icmp_code: -1 # icmp type, -1 = any type
+    icmp_type:  -1 # icmp subtype, -1 = any subtype
+    cidr_ip: 0.0.0.0/0
+    rule_desc: Allow all ICMP
+# AMI
+ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0224-prod-jz3khonabosm6"
+ec2_netbox_image_id: ami-0d0dff5040aeeaf7f
+# Flavour 
+ec2_netbox_flavor_name: t3.micro
+# Disk
+ec2_netbox_disk_size: 20
+ec2_netbox_ebs_name: /dev/sda1
+# Key Pair
+ec2_netbox_key_name: "KeyPair-Virginia"
+# Instance
+ec2_netbox_instance_name: netbox-1
+
+ec2_netbox_user: "{{ ansible_user }}"
+ec2_netbox_pass: "{{ ansible_password }}"
