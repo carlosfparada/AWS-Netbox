@@ -21,12 +21,26 @@
       "tag:name": "{{ ec2_rt_name }}"
   register: rtb
 
-- name: Terminate RHEL instance
+- name: Terminate Netbox instance
   amazon.aws.ec2_instance:
     state: absent
     region: "{{ ec2_vpc_region }}"
     filters:
       "tag:name": "{{ ec2_netbox_instance_name }}"
+
+- name: Terminate Cisco instance
+  amazon.aws.ec2_instance:
+    state: absent
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:name": "{{ ec2_cisco_instance_name }}"
+
+- name: Terminate Arista instance
+  amazon.aws.ec2_instance:
+    state: absent
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:name": "{{ ec2_arista_instance_name }}"
 
 - name: Delete Security Group
   amazon.aws.ec2_security_group:
