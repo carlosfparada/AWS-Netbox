@@ -150,6 +150,7 @@
 - name: Wait until Netbox to boot up
   wait_for:
     port: 8000
+    #port: 22
     state: started
     timeout: 600
     delay: 30
