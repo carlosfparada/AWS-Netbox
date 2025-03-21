@@ -10,6 +10,7 @@
 - name: Query Subnets
   amazon.aws.ec2_vpc_subnet_info:
     region: "{{ ec2_vpc_region }}"
+    az:  "{{ ec2_vpc_az }}"
     filters:
       "tag:name": "{{ ec2_subnet_name }}"
   register: subnet
@@ -46,6 +47,7 @@
   amazon.aws.ec2_security_group:
     name: "{{ ec2_sg_name }}"
     region: "{{ ec2_vpc_region }}"
+    az:  "{{ ec2_vpc_az }}"
     state: absent
 
 - name: Delete Subnet in VPC
