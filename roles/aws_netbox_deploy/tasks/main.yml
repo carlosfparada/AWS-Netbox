@@ -53,40 +53,17 @@
     tags:
       name: "{{ ec2_sg_name }}"
 
-# - name: check if ec2_key_pair is a file
-#   stat:
-#     path: "{{ ec2_key_pair }}"
-#   register: ec2_key_pair_stat
-#   when: ec2_key_pair is defined
-
-# - name: import SSH Key from file
-#   amazon.aws.ec2_key:
-#     name: "{{ ec2_vpc_name }}"
-#     key_material: "{{ lookup('file', ec2_key_pair ) }}"
-#     region: "{{ ec2_region }}"
-#   when:
-#     - ec2_key_pair is defined
-#     - ec2_key_pair_stat.stat.exists | bool
-
-# - name: import SSH Key from variable
-#   amazon.aws.ec2_key:
-#     name: "{{ ec2_vpc_name }}"
-#     key_material: "{{ ec2_key_pair }}"
-#     region: "{{ ec2_region }}"
-#   when:
-#     - ec2_key_pair is defined
-#     - not ec2_key_pair_stat.stat.exists | bool
-
-- name: Get AMI by Name
+# NETBOX
+- name: Get Netbox AMI by Name
   amazon.aws.ec2_ami_info:
     filters:
       name: "{{ ec2_netbox_image_name }}"
     region: "{{ ec2_vpc_region }}"
-  register: ami_find
+  register: ami_netbox_find
 
 - name: Create Netbox instance
   amazon.aws.ec2_instance:
-    image_id: "{{ ami_find.images[-1].image_id | default('') }}"
+    image_id: "{{ ami_netbox_find.images[-1].image_id | default('') }}"
     instance_type: "{{ ec2_netbox_flavor_name }}"
     security_group: "{{ ec2_sg_name }}"
     name: "{{ ec2_netbox_instance_name }}"
@@ -97,15 +74,102 @@
     #   assign_public_ip: true
     network_interfaces:
       - assign_public_ip: true
-    volumes: "{{ volumes }}"
+    volumes: "{{ ec2_netbox_volumes }}"
     tags:
       name: "{{ ec2_netbox_instance_name }}"
     state: running
-  register: ec2_instance
+  register: ec2_netbox_instance
 
-- name: Print instance details
+- name: Print Netbox instance details
   ansible.builtin.debug:
-    msg: "Netbox: http://{{ ec2_instance.instances[0].public_dns_name }}:8000 or http://{{ ec2_instance.instances[0].public_ip_address }}:8000"
+    msg: "Netbox: http://{{ ec2_netbox_instance.instances[0].public_dns_name }}:8000/ (admin/instance-id)"
+
+# CISCO
+- name: Get Cisco AMI by Name
+  amazon.aws.ec2_ami_info:
+    filters:
+      name: "{{ ec2_cisco_image_name }}"
+    region: "{{ ec2_vpc_region }}"
+  register: ami_cisco_find
+
+- name: Create Cisco instance
+  amazon.aws.ec2_instance:
+    image_id: "{{ ami_cisco_find.images[-1].image_id | default('') }}"
+    instance_type: "{{ ec2_cisco_flavor_name }}"
+    security_group: "{{ ec2_sg_name }}"
+    name: "{{ ec2_cisco_instance_name }}"
+    key_name: "{{ ec2_cisco_key_name }}"
+    region: "{{ ec2_vpc_region }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    # network:
+    #   assign_public_ip: true
+    network_interfaces:
+      - assign_public_ip: true
+    volumes: "{{ ec2_cisco_volumes }}"
+    tags:
+      name: "{{ ec2_cisco_instance_name }}"
+    state: running
+  register: ec2_cisco_instance
+
+- name: Print Cisco instance details
+  ansible.builtin.debug:
+    msg: "Cisco: ssh -i <*.pem> ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}:8000"
+
+# ARISTA
+- name: Get Arista AMI by Name
+  amazon.aws.ec2_ami_info:
+    filters:
+      name: "{{ ec2_arista_image_name }}"
+    region: "{{ ec2_vpc_region }}"
+  register: ami_find
+
+- name: Create Arista instance
+  amazon.aws.ec2_instance:
+    image_id: "{{ ami_find.images[-1].image_id | default('') }}"
+    instance_type: "{{ ec2_arista_flavor_name }}"
+    security_group: "{{ ec2_sg_name }}"
+    name: "{{ ec2_arista_instance_name }}"
+    key_name: "{{ ec2_arista_key_name }}"
+    region: "{{ ec2_vpc_region }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    # network:
+    #   assign_public_ip: true
+    network_interfaces:
+      - assign_public_ip: true
+    volumes: "{{ ec2_arista_volumes }}"
+    tags:
+      name: "{{ ec2_arista_instance_name }}"
+    state: running
+  register: ec2_arista_instance
+
+- name: Print Arista instance details
+  ansible.builtin.debug:
+    msg: "Arista: ssh -i <*.pem> ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}:8000"
+
+# Wait for boot up
+- name: Wait until Netbox to boot up
+  wait_for:
+    port: 80
+    state: started
+    timeout: 600
+    delay: 30
+    host: "{{ ec2_netbox_instance.instances[0].public_dns_name }}"
+
+- name: Wait until Cisco to boot up
+  wait_for:
+    port: 22
+    state: started
+    timeout: 600
+    delay: 30
+    host: "{{ ec2_cisco_instance.instances[0].public_dns_name }}"
+
+- name: Wait until Arista to boot up
+  wait_for:
+    port: 22
+    state: started
+    timeout: 600
+    delay: 30
+    host: "{{ ec2_arista_instance.instances[0].public_dns_name }}"
 
 - name: Sleep for 30 seconds and continue with play
   wait_for:
