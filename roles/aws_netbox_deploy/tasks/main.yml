@@ -15,7 +15,6 @@
     vpc_id: "{{ vpc.vpc.id }}"
     cidr: "{{ ec2_subnet_cidr }}"
     region: "{{ ec2_vpc_region }}"
-    az:  "{{ ec2_vpc_az }}"
     state: present
     tags:
       name: "{{ ec2_subnet_name }}"
