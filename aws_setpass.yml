@@ -1,0 +1,67 @@
+---
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
+- name: Set Cisco and Arista passwords
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files: vars/main.yml
+  tasks:
+
+  # cat private-key.pem | ansible-vault encrypt_string  --stdin-name 'private_key' --output private-key.vault
+  - ansible.builtin.include_vars: files/private-key.yml
+
+  - name: Copy private key locally
+    ansible.builtin.copy:
+      content: "{{ private_key }}"
+      dest: /tmp/private-key.pem
+      mode: '0600'
+
+  - name: Set Cisco password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
+      responses:
+        # ip-10-0-0-197# configure terminal
+        # ip-10-0-0-197(config)# aaa new-model
+        # ip-10-0-0-197(config)# aaa authentication login default local enable
+        # ip-10-0-0-197(config)# username ec2-user password xxxx
+        # ip-10-0-0-197(config)# exit
+        # ip-10-0-0-197# exit
+        'ip-*#':
+          - configure terminal
+          - aaa new-model
+          - aaa authentication login default local enable
+          - username ec2-user password "{{ ec2_arista_user }}"
+          - exit
+          - exit
+    no_log: true # hide passwords on logs
+
+  - name: Set Arista password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
+      responses:
+        # localhost> enable
+        # localhost# configure terminal
+        # localhost(config)# aaa authentication login default local
+        # localhost(config)# username ec2-user password xxxx
+        # localhost(config)# exit
+        # localhost# exit
+        'localhost*':
+          - enable
+          - configure terminal
+          - aaa authentication login default local
+          - username ec2-user secret 0 "{{ ec2_arista_user }}"
+          - exit
+          - exit
+    no_log: true # hide passwords on logs
+
+  - name: Sleep for 10 seconds and continue with play
+    wait_for:
+      timeout: 10

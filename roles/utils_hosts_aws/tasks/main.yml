@@ -3,14 +3,26 @@
 # - name: Refresh inventory
 #   ansible.builtin.meta: refresh_inventory
 
-- name: Get RHEL node
+- name: Get Cisco node
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^rhel-(.*)$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^cisco-(.*)$")
 
-- name: Add RHEL node to the rhel group
+- name: Add Arista node to the cisco group
   add_host:
     name: "{{ node_name }}"
-    groups: "rhel"
+    groups: "cisco"
+  when: node_name is defined
+
+- name: Get Arista node
+  set_fact:
+    node_name: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^arista-(.*)$")
+
+- name: Add Arista node to the arista group
+  add_host:
+    name: "{{ node_name }}"
+    groups: "arista"
   when: node_name is defined
