@@ -40,7 +40,6 @@ ec2_netbox_volumes:
       encrypted: false
 # Flavour 
 ec2_netbox_flavor_name: t3.large
-#ec2_netbox_flavor_name: c5.large
 # Key Pair
 ec2_netbox_key_name: "KeyPair-Virginia"
 # Instance
@@ -63,8 +62,7 @@ ec2_cisco_volumes:
       delete_on_termination: true
       encrypted: false
 # Flavour 
-#ec2_netbox_flavor_name: t3.medium
-ec2_cisco_flavor_name: t3.large
+ec2_netbox_flavor_name: t3.medium
 # Key Pair
 ec2_cisco_key_name: "KeyPair-Virginia"
 # Instance
