@@ -92,7 +92,7 @@
         # user: "{{ ec2_netbox_user }}"
         # password: "{{ ec2_netbox_pass }}"
         method: POST
-        body: '{ "username": "admin", "password": "{{ ec2_netbox_pass }}" }'
+        body: '{ "username": "admin", "password": "{{ hostvars[groups['netbox'][0]].instance_id }}" }'
         status_code: 200
         body_format: json
         headers:
