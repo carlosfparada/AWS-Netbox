@@ -85,6 +85,7 @@
           username: admin
           password: MyPassword
         state: present
+      delegate_to: localhost
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
