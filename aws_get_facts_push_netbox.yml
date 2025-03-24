@@ -11,6 +11,7 @@
 - name: Collect Cisco and Arista Facts and Push to Netbox
   hosts: cisco, arista
   gather_facts: false
+  vars_files: vars/main.yml
   vars:
     ansible_command_timeout: 300
     ssh_type: paramiko

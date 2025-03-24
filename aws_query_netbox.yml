@@ -13,9 +13,8 @@
   hosts: localhost
   gather_facts: false
   connection: local
+  vars_files: vars/main.yml
   tasks:
-    - include_vars: main.yml
-
     - name: Query VLANs on Netbox
       debug:
         var: item

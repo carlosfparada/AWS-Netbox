@@ -3,9 +3,8 @@
 - name: Update interface vlan configs, triggered by Netbox changes
   hosts: "{{ device }}"
   gather_facts: false
+  vars_files: vars/main.yml
   tasks:
-    - include_vars: main.yml
-
     - name: Debug Netbox data structure
       debug:
         msg: "{{ data }}" 
