@@ -82,8 +82,8 @@
         netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
         netbox_token: thisIsMyToken
         data:
-          username: admin
-          password: MyPassword
+          username: "{{ ec2_netbox_user }}"
+          password: "{{ ec2_netbox_pass }}"
         state: present
       delegate_to: localhost
 
