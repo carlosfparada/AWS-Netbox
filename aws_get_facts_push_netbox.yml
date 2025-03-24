@@ -24,11 +24,11 @@
 
     - name: Arista
       debug:
-        var: hostvars['arista']
+        var: hostvars[groups['arista'][0]]
 
     - name: Cisco
       debug:
-        var: hostvars['cisco']
+        var: hostvars[groups['cisco'][0]]
 
     - name: IOS gatthering facts
       block:
