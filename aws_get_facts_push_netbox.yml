@@ -96,10 +96,10 @@
         status_code: 200
         body_format: json
         headers:
-          Content-Type: application/json
-          Accept: application/json; indent=4
-      register: net_netbox_token
+          Content-Type: "application/json"
+          Accept: "application/json; indent=4"
       delegate_to: localhost
+      register: net_netbox_token
 
     - name: Create Token
       netbox.netbox.netbox_user:
