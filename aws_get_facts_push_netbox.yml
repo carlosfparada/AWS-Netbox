@@ -189,7 +189,7 @@
       throttle: 1
       delegate_to: localhost
 
-    - name: Push IPv4 addresses data to Netbox
+    - name: Push IPv4 addresses data to Netbox (Cisco)
       netbox.netbox.netbox_ip_address:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ netbox_token.json.key }}"
@@ -205,6 +205,25 @@
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      throttle: 1
+      delegate_to: localhost
+
+    - name: Push IPv4 addresses data to Netbox (Arista)
+      netbox.netbox.netbox_ip_address:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          assigned_object:
+            device: "{{ inventory_hostname }}"
+            name: "{{ item.name }}"
+          family: 4
+          address: "{{ item.ipv4.address }}"
+          description: "{{ item.ipv4.address }} description"
+        state: present
+      loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
+      #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
       throttle: 1
       delegate_to: localhost
 
