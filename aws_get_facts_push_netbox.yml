@@ -152,6 +152,7 @@
         validate_certs: no
         data: 
           name: "demo"
+          site: "{{ site }}"
         state: present
       throttle: 1
       delegate_to: localhost
