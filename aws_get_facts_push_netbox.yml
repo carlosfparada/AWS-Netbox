@@ -130,6 +130,7 @@
           slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
       throttle: 1
+      delegate_to: localhost
 
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:
