@@ -95,17 +95,6 @@
       debug:
         var: netbox_token
 
-    # - name: Create Token
-    #   netbox.netbox.netbox_user:
-    #     netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-    #     netbox_token: thisIsMyToken
-    #     data:
-    #       username: "admin"
-    #       password: "{{ hostvars[groups['netbox'][0]].instance_id }}"
-    #     state: present
-    #   delegate_to: localhost
-    #   register: netbox_token
-
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
@@ -120,6 +109,16 @@
       delegate_to: localhost
       throttle: 1
 
+    - name: Set Manufacturer (Cisco)
+      set_fact:
+        manufacturer: "{{ inventory_hostname }}"
+      when: inventory_hostname | regex_search("^cisco-(.*)$")
+
+    - name: Set Manufacturer (Arista)
+      set_fact:
+        manufacturer: "{{ inventory_hostname }}"
+      when: inventory_hostname | regex_search("^arista-(.*)$")
+
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
@@ -127,7 +126,7 @@
         validate_certs: no
         data: 
           model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-          manufacturer: "{% if ansible_network_os == 'eos' %}arista{% else %}cisco{% endif %}"
+          manufacturer: "{{ manufacturer }}"
           slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
       throttle: 1
