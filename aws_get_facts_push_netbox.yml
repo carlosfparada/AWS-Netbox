@@ -8,8 +8,8 @@
   - include_role: 
       name: utils_hosts_aws
 
-- name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
-  hosts: all
+- name: Collect Cisco and Arista Facts and Push to Netbox
+  hosts: cisco, arista
   gather_facts: false
   vars:
     ansible_command_timeout: 300
