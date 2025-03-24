@@ -1,6 +1,2 @@
 ---
 
-#node_pattern: "bigipf5"
-#group_name: "bigipf5"
-#node_pattern: "rhelserver"
-#group_name: "rhelserver"

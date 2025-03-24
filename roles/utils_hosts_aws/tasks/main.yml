@@ -3,13 +3,25 @@
 # - name: Refresh inventory
 #   ansible.builtin.meta: refresh_inventory
 
-- name: Get Cisco node
+- name: Get Netbox node
+  set_fact:
+    node_name: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^netbox-(.*)$")
+
+- name: Add Netbox node to the netbox group
+  add_host:
+    name: "{{ node_name }}"
+    groups: "netbox"
+  when: node_name is defined
+
+- name: Get Cisco nodes
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
   when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^cisco-(.*)$")
 
-- name: Add Arista node to the cisco group
+- name: Add Cisco node to the cisco group
   add_host:
     name: "{{ node_name }}"
     groups: "cisco"
