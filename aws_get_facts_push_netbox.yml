@@ -97,7 +97,7 @@
             "username": "admin",
             "password": "{{ hostvars[groups['netbox'][0]].instance_id }}"
           }
-        status_code: 200
+        status_code: 201
         body_format: json
         headers:
           Content-Type: "application/json"
