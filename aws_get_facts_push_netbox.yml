@@ -98,17 +98,18 @@
         headers:
           Content-Type: application/json
           Accept: application/json; indent=4
-      register: token
-
-    - name: Create Token
-      netbox.netbox.netbox_user:
-        netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
-        netbox_token: thisIsMyToken
-        data:
-          username: "{{ ec2_netbox_user }}"
-          password: "{{ ec2_netbox_pass }}"
-        state: present
+      register: net_netbox_token
       delegate_to: localhost
+
+    # - name: Create Token
+    #   netbox.netbox.netbox_user:
+    #     netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
+    #     netbox_token: thisIsMyToken
+    #     data:
+    #       username: "{{ ec2_netbox_user }}"
+    #       password: "{{ ec2_netbox_pass }}"
+    #     state: present
+    #   delegate_to: localhost
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
