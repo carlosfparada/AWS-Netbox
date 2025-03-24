@@ -22,6 +22,14 @@
 # COLLECT FROM NODES #
 ######################
 
+    - name: Arista
+      debug:
+        var: hostvars['arista']
+
+    - name: Cisco
+      debug:
+        var: hostvars['cisco']
+
     - name: IOS gatthering facts
       block:
       - name: IOS facts
