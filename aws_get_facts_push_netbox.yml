@@ -112,12 +112,12 @@
     - name: Set Manufacturer (Cisco)
       set_fact:
         manufacturer: "{{ inventory_hostname }}"
-      when: inventory_hostname | regex_search("^cisco-(.*)$")
+      when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Set Manufacturer (Arista)
       set_fact:
         manufacturer: "{{ inventory_hostname }}"
-      when: inventory_hostname | regex_search("^arista-(.*)$")
+      when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
