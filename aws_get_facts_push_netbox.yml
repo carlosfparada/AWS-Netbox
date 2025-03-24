@@ -41,7 +41,6 @@
       - name: Set IOS facts
         set_fact:
           _facts: "{{ _ios_facts }}"
-#      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
 - name: Collect Arista Facts
   hosts: arista
