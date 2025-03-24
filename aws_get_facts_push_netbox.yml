@@ -89,11 +89,11 @@
           Accept: "application/json; indent=4"
       run_once: true
       delegate_to: localhost
-      register: net_netbox_token
+      register: netbox_token
 
     - name: all
       debug:
-        var: net_netbox_token
+        var: netbox_token
 
     # - name: Create Token
     #   netbox.netbox.netbox_user:
@@ -104,12 +104,12 @@
     #       password: "{{ hostvars[groups['netbox'][0]].instance_id }}"
     #     state: present
     #   delegate_to: localhost
-    #   register: net_netbox_token
+    #   register: netbox_token
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ site }}"
@@ -123,7 +123,7 @@
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
@@ -135,7 +135,7 @@
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ inventory_hostname }}"
@@ -151,7 +151,7 @@
     - name: Push interfaces data to Netbox
       netbox.netbox.netbox_device_interface:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -166,7 +166,7 @@
     - name: Push IPv4 addresses data to Netbox
       netbox.netbox.netbox_ip_address:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           assigned_object:
@@ -183,7 +183,7 @@
     - name: Push VLANs data to Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           site: "{{ site }}"
