@@ -16,8 +16,6 @@
     ansible_command_timeout: 300
     ansible_connection: network_cli
     #ssh_type: paramiko
-  tasks:
-    - include_vars: main.yml
 
 ######################
 # COLLECT FROM NODES #
