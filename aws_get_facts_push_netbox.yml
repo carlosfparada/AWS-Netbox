@@ -147,6 +147,7 @@
           comments: "Added by AAP"
         state: present
       throttle: 1
+      delegate_to: localhost
 
     - name: Push interfaces data to Netbox
       netbox.netbox.netbox_device_interface:
@@ -162,6 +163,7 @@
       loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
       when: _facts.ansible_facts.ansible_network_resources.interfaces is defined
       throttle: 1
+      delegate_to: localhost
 
     - name: Push IPv4 addresses data to Netbox
       netbox.netbox.netbox_ip_address:
@@ -179,6 +181,7 @@
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
       throttle: 1
+      delegate_to: localhost
 
     - name: Push VLANs data to Netbox
       netbox.netbox.netbox_vlan:
@@ -193,6 +196,7 @@
       loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
       when: _facts.ansible_facts.ansible_network_resources.vlans is defined and item is defined
       throttle: 1
+      delegate_to: localhost
 
     - name: Delete Token
       netbox.netbox.netbox_user:
@@ -202,3 +206,4 @@
           username: admin
           password: MyPassword
         state: absent
+      delegate_to: localhost
