@@ -89,8 +89,6 @@
     - name: Create a Token
       ansible.builtin.uri:
         url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
-        # user: "{{ ec2_netbox_user }}"
-        # password: "{{ ec2_netbox_pass }}"
         method: POST
         body: |
           { 
