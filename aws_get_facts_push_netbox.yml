@@ -150,9 +150,9 @@
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
+        role: "demo"
         data: 
           name: "demo"
-          #role: "demo"
           site: "{{ site }}"
         state: present
       throttle: 1
