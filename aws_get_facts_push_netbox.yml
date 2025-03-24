@@ -122,13 +122,12 @@
       delegate_to: localhost
 
     - name: Push Manufacturer to Netbox
-      netbox.netbox.netbox_device_type:
+      netbox.netbox.netbox_manufacturer:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ manufacturer }}"
-          model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
         state: present
       throttle: 1
       delegate_to: localhost
