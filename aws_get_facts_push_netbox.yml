@@ -13,20 +13,14 @@
   gather_facts: false
   vars_files: vars/main.yml
   vars:
-    ansible_command_timeout: 300
     ansible_connection: network_cli
     ansible_network_os: ios
+    #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-
-######################
-# COLLECT FROM NODES #
-######################
-
     - name: all
       debug:
         var: hostvars[inventory_hostname]
-
 
     - name: Cisco gatthering facts
       block:
@@ -51,32 +45,21 @@
       - name: Set IOS facts
         set_fact:
           _facts: "{{ _ios_facts }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+#      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-
-    - name: NXOS gatthering facts
-      block:
-      - name: NXOS facts
-        #connection: local
-        cisco.nxos.nxos_facts:
-          gather_subset:
-            - hardware
-          gather_network_resources:
-            - "interfaces"
-            - "l2_interfaces"
-            - "l3_interfaces"
-            - "acl_interfaces"
-            - "static_routes" 
-            - "acls" 
-        register: _nxos_facts
-        #become: true
-      - name: Debug NXOS facts
-        debug:
-          var: _nxos_facts
-      - name: Set NXOS facts
-        set_fact:
-          _facts: "{{ _nxos_facts }}"
-      when: ansible_network_os == 'nxos'
+- name: Collect Arista Facts
+  hosts: arista
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+    #ansible_command_timeout: 300
+    #ssh_type: paramiko
+  tasks:
+    - name: all
+      debug:
+        var: hostvars[inventory_hostname]
 
     - name: EOS gatthering facts
       block:
@@ -93,12 +76,19 @@
       - name: Set EOS facts
         set_fact:
           _facts: "{{ _eos_facts }}"
-      when: ansible_network_os == 'eos'
 
-
-##################
-# PUSH TO NETBOX #
-##################
+- name: Push to Netbox
+  hosts: localhost
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: local
+    #ansible_command_timeout: 300
+    #ssh_type: paramiko
+  tasks:
+    - name: all
+      debug:
+        var: _facts
 
     - name: Create Token
       netbox.netbox.netbox_user:
