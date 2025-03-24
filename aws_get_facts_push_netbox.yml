@@ -251,3 +251,168 @@
           password: MyPassword
         state: absent
       delegate_to: localhost
+
+# Arista 
+# _eos_facts:
+#   ansible_facts:
+#     ansible_network_resources: {}
+#     ansible_net_gather_network_resources: []
+#     ansible_net_gather_subset:
+#       - interfaces
+#       - default
+#       - hardware
+#       - config
+#     ansible_net_all_ipv4_addresses:
+#       - 10.0.0.20
+#     ansible_net_all_ipv6_addresses: []
+#     ansible_net_interfaces:
+#       Ethernet1:
+#         description: ''
+#         macaddress: 0e:a0:e2:99:22:99
+#         mtu: 1500
+#         bandwidth: 0
+#         duplex: duplexFull
+#         lineprotocol: up
+#         operstatus: connected
+#         type: routed
+#         ipv4:
+#           address: 10.0.0.20
+#           masklen: 24
+#     ansible_net_neighbors: {}
+#     ansible_net_serialnum: B54601C9BD952D7A7526391F53D9B868
+#     ansible_net_hostname: localhost
+#     ansible_net_fqdn: localhost
+#     ansible_net_system: eos
+#     ansible_net_model: vEOS
+#     ansible_net_version: 4.32.2F-cloud
+#     ansible_net_api: cliconf
+#     ansible_net_python_version: 3.12.5
+#     ansible_net_filesystems: []
+#     ansible_net_memfree_mb: 1999.67578125
+#     ansible_net_memtotal_mb: 7583.98046875
+#     ansible_net_config: "show running-config\r\n% Invalid input (privileged mode required)\r\nlocalhost>"
+#   failed: false
+#   changed: false
+# _ansible_verbose_always: true
+# _ansible_no_log: false
+# changed: false
+# Cisco
+# _ios_facts:
+#   ansible_facts:
+#     ansible_network_resources:
+#       static_routes:
+#         - address_families:
+#             - afi: ipv4
+#               routes:
+#                 - next_hops:
+#                     - interface: GigabitEthernet1
+#                       forward_router_address: 10.0.0.1
+#                   dest: 0.0.0.0/0
+#         - vrf: GS
+#           address_families:
+#             - afi: ipv4
+#               routes:
+#                 - next_hops:
+#                     - interface: GigabitEthernet1
+#                       forward_router_address: 10.0.0.1
+#                       global: true
+#                   dest: 0.0.0.0/0
+#       vlans:
+#         - name: default
+#           vlan_id: 1
+#           state: active
+#           shutdown: disabled
+#           mtu: 1500
+#         - name: fddi-default
+#           vlan_id: 1002
+#           state: active
+#           shutdown: enabled
+#           mtu: 1500
+#         - name: token-ring-default
+#           vlan_id: 1003
+#           state: active
+#           shutdown: enabled
+#           mtu: 1500
+#         - name: fddinet-default
+#           vlan_id: 1004
+#           state: active
+#           shutdown: enabled
+#           mtu: 1500
+#         - name: trnet-default
+#           vlan_id: 1005
+#           state: active
+#           shutdown: enabled
+#           mtu: 1500
+#       interfaces:
+#         - name: GigabitEthernet1
+#           enabled: true
+#         - name: VirtualPortGroup0
+#           enabled: true
+#       l2_interfaces:
+#         - name: VirtualPortGroup0
+#         - name: GigabitEthernet1
+#       acl_interfaces: []
+#       l3_interfaces:
+#         - name: GigabitEthernet1
+#           ipv4:
+#             - dhcp:
+#                 enable: true
+#           ipv6:
+#             - address: dhcp
+#             - enable: true
+#         - name: VirtualPortGroup0
+#           ipv4:
+#             - address: 192.168.35.101/24
+#       acls:
+#         - afi: ipv4
+#           acls:
+#             - name: GS_NAT_ACL
+#               acl_type: standard
+#               aces:
+#                 - sequence: 10
+#                   grant: permit
+#                   source:
+#                     address: 192.168.35.0
+#                     wildcard_bits: 0.0.0.255
+#             - name: meraki-fqdn-dns
+#               acl_type: extended
+#     ansible_net_gather_network_resources:
+#       - static_routes
+#       - vlans
+#       - interfaces
+#       - l2_interfaces
+#       - acl_interfaces
+#       - l3_interfaces
+#       - acls
+#     ansible_net_gather_subset:
+#       - default
+#       - hardware
+#     ansible_net_system: ios
+#     ansible_net_model: C8000V
+#     ansible_net_image: bootflash:packages.conf
+#     ansible_net_version: 17.15.02a
+#     ansible_net_hostname: ip-10-0-0-174
+#     ansible_net_api: cliconf
+#     ansible_net_python_version: 3.12.5
+#     ansible_net_iostype: IOS-XE
+#     ansible_net_operatingmode: autonomous
+#     ansible_net_serialnum: 9ZHDILKAC33
+#     ansible_net_filesystems:
+#       - 'bootflash:'
+#     ansible_net_filesystems_info:
+#       'bootflash:':
+#         spacetotal_kb: 11328712
+#         spacefree_kb: 9849108
+#     ansible_net_cpu_utilization:
+#       core:
+#         five_seconds: 0
+#         one_minute: 0
+#         five_minutes: 0
+#         five_seconds_interrupt: 0
+#     ansible_net_memtotal_mb: 1558.761360168457
+#     ansible_net_memfree_mb: 1290.5968742370605
+#   failed: false
+#   changed: false
+# _ansible_verbose_always: true
+# _ansible_no_log: false
+# changed: false
