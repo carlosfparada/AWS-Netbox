@@ -22,13 +22,10 @@
 # COLLECT FROM NODES #
 ######################
 
-    - name: Arista
+    - name: all
       debug:
-        var: hostvars[groups['arista'][0]]
+        var: hostvars[inventory_hostname]
 
-    - name: Cisco
-      debug:
-        var: hostvars[groups['cisco'][0]]
 
     - name: Cisco gatthering facts
       block:
