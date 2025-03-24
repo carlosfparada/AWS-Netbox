@@ -49,11 +49,7 @@ ec2_netbox_instance_name: netbox-1
 ec2_netbox_user: "{{ ansible_user }}"
 ec2_netbox_pass: "{{ ansible_password }}"
 
-# Netbox
-# net_netbox_url: "http://{{ hostvars[groups['netbox'][0]].private_ip_address }}.8000"
-# # On Netbox: User icon -> Profile -> API Tokens
-# net_netbox_token: "..."
-site: hetzner
+site: aws
 
 # CISCO
 # https://www.cisco.com/c/en/us/td/docs/routers/C8000V/AWS/deploying-c8000v-on-amazon-web-services/deploy-c8000v-on-amazon-web-services.html
