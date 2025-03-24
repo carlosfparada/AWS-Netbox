@@ -18,13 +18,9 @@
     #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-    - name: all
-      debug:
-        var: hostvars[inventory_hostname]
-
-    - name: Cisco gatthering facts
+    - name: Cisco Gatthering Facts
       block:
-      - name: Cisco facts
+      - name: Cisco Facts
         #connection: local
         cisco.ios.ios_facts:
           gather_subset:
@@ -57,13 +53,9 @@
     #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-    - name: all
-      debug:
-        var: hostvars[inventory_hostname]
-
-    - name: EOS gatthering facts
+    - name: EOS Gatthering Facts
       block:
-      - name: EOS facts
+      - name: EOS Facts
         #connection: local
         arista.eos.eos_facts:
           gather_subset: all
