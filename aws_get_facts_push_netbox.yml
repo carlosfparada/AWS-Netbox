@@ -1,5 +1,13 @@
 ---
 
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
 - name: Collect Cisco IOS, NXOS and Arista EOS Facts and Push to Netbox
   hosts: all
   gather_facts: false

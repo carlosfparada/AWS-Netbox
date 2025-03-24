@@ -1,5 +1,14 @@
 ---
 
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
 - name: Query data on Netbox
   hosts: localhost
   gather_facts: false
