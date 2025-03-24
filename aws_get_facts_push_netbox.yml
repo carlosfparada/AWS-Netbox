@@ -146,14 +146,14 @@
       delegate_to: localhost
 
     - name: Push devices role data to Netbox
-      netbox.netbox.netbox_device:
+      netbox.netbox.netbox_device_role:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "demo"
-          site: "{{ site }}"
-          role: "demo"
+          # site: "{{ site }}"
+          # role: "demo"
         state: present
       throttle: 1
       delegate_to: localhost
