@@ -92,6 +92,15 @@
 # PUSH TO NETBOX #
 ##################
 
+    - name: Create Token
+      netbox.netbox.netbox_user:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: thisIsMyToken
+        data:
+          username: admin
+          password: MyPassword
+        state: present
+
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ net_netbox_url }}"
@@ -179,3 +188,12 @@
       loop: "{{ _facts.ansible_facts.ansible_network_resources.vlans }}"
       when: _facts.ansible_facts.ansible_network_resources.vlans is defined and item is defined
       throttle: 1
+
+    - name: Delete Token
+      netbox.netbox.netbox_user:
+        netbox_url: "{{ net_netbox_url }}"
+        netbox_token: thisIsMyToken
+        data:
+          username: admin
+          password: MyPassword
+        state: absent
