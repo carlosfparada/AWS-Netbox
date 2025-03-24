@@ -117,7 +117,7 @@
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
-        netbox_url: "{{ net_netbox_url }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ net_netbox_token }}"
         validate_certs: no
         data: 
