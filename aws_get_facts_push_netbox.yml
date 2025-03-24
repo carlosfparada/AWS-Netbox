@@ -14,7 +14,8 @@
   vars_files: vars/main.yml
   vars:
     ansible_command_timeout: 300
-    ssh_type: paramiko
+    ansible_connection: network_cli
+    #ssh_type: paramiko
   tasks:
     - include_vars: main.yml
 
