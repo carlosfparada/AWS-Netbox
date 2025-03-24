@@ -73,19 +73,6 @@
     #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-    - name: all
-      debug:
-        var: hostvars[groups['netbox'][0]]
-
-# $ curl -X POST \
-# -H "Content-Type: application/json" \
-# -H "Accept: application/json; indent=4" \
-# https://netbox/api/users/tokens/provision/ \
-# --data '{
-#     "username": "hankhill",
-#     "password": "I<3C3H8"
-# }'
-
     - name: Create a Token
       ansible.builtin.uri:
         url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
@@ -103,6 +90,10 @@
       run_once: true
       delegate_to: localhost
       register: net_netbox_token
+
+    - name: all
+      debug:
+        var: net_netbox_token
 
     # - name: Create Token
     #   netbox.netbox.netbox_user:
