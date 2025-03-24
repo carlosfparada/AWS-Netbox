@@ -86,30 +86,30 @@
 #     "password": "I<3C3H8"
 # }'
 
-    - name: Create a Token
-      ansible.builtin.uri:
-        url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}/api/users/tokens/provision/"
-        # user: your_username
-        # password: your_pass
-        method: POST
-        body: '{ username: "{{ ec2_netbox_user }}", password "{{ ec2_netbox_pass }}" }'
-        status_code: 200
-        body_format: json
-        headers:
-          Content-Type: application/json
-          Accept: application/json; indent=4
-      register: net_netbox_token
-      delegate_to: localhost
-
-    # - name: Create Token
-    #   netbox.netbox.netbox_user:
-    #     netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
-    #     netbox_token: thisIsMyToken
-    #     data:
-    #       username: "{{ ec2_netbox_user }}"
-    #       password: "{{ ec2_netbox_pass }}"
-    #     state: present
+    # - name: Create a Token
+    #   ansible.builtin.uri:
+    #     url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}/api/users/tokens/provision/"
+    #     # user: your_username
+    #     # password: your_pass
+    #     method: POST
+    #     body: '{ username: "{{ ec2_netbox_user }}", password "{{ ec2_netbox_pass }}" }'
+    #     status_code: 200
+    #     body_format: json
+    #     headers:
+    #       Content-Type: application/json
+    #       Accept: application/json; indent=4
+    #   register: net_netbox_token
     #   delegate_to: localhost
+
+    - name: Create Token
+      netbox.netbox.netbox_user:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
+        netbox_token: thisIsMyToken
+        data:
+          username: "{{ ec2_netbox_user }}"
+          password: "{{ ec2_netbox_pass }}"
+        state: present
+      delegate_to: localhost
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:

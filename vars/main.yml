@@ -50,7 +50,7 @@ ec2_netbox_user: "{{ ansible_user }}"
 ec2_netbox_pass: "{{ ansible_password }}"
 
 # Netbox
-# net_netbox_url: "https://{{ hostvars[groups['netbox'][0]].private_ip_address }}"
+# net_netbox_url: "http://{{ hostvars[groups['netbox'][0]].private_ip_address }}"
 # # On Netbox: User icon -> Profile -> API Tokens
 # net_netbox_token: "..."
 site: hetzner
