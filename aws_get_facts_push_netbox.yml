@@ -152,7 +152,7 @@
         validate_certs: no
         data: 
           name: "demo"
-          role: "demo"
+          #role: "demo"
           site: "{{ site }}"
         state: present
       throttle: 1
