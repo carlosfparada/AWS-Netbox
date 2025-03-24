@@ -5,6 +5,7 @@ ec2_vpc_cidr: 10.0.0.0/16
 # Subnet
 ec2_subnet_name: Subnet_NETBOX
 ec2_subnet_cidr: 10.0.0.0/24
+ec2_subnet_az: Subnet_NETBOX
 # IGW
 ec2_igw_name: IGW_NETBOX
 # Route Table
