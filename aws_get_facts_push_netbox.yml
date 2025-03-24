@@ -9,12 +9,13 @@
       name: utils_hosts_aws
 
 - name: Collect Cisco and Arista Facts and Push to Netbox
-  hosts: cisco, arista
+  hosts: cisco
   gather_facts: false
   vars_files: vars/main.yml
   vars:
     ansible_command_timeout: 300
     ansible_connection: network_cli
+    ansible_network_os: ios
     #ssh_type: paramiko
   tasks:
 
