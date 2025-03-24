@@ -93,7 +93,7 @@
 
     - name: all
       debug:
-        var: netbox_token
+        var: _facts
 
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
