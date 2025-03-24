@@ -145,6 +145,17 @@
       throttle: 1
       delegate_to: localhost
 
+    - name: Push devices role data to Netbox
+      netbox.netbox.netbox_device:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          name: "demo"
+        state: present
+      throttle: 1
+      delegate_to: localhost
+
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
@@ -155,7 +166,7 @@
           site: "{{ site }}"
           serial: "{{ _facts.ansible_facts.ansible_net_serialnum | default(omit) }}"
           device_type: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
-          #device_role: "router"
+          device_role: "demo"
           local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
           comments: "Added by AAP"
         state: present
