@@ -75,7 +75,7 @@
   tasks:
     - name: all
       debug:
-        var: _facts
+        var: hostvars[groups['netbox'][0]]
 
 # $ curl -X POST \
 # -H "Content-Type: application/json" \
@@ -89,10 +89,10 @@
     - name: Create a Token
       ansible.builtin.uri:
         url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
-        user: "{{ ec2_netbox_user }}"
-        password: "{{ ec2_netbox_pass }}"
+        # user: "{{ ec2_netbox_user }}"
+        # password: "{{ ec2_netbox_pass }}"
         method: POST
-        body: '{ "username": "{{ ec2_netbox_user }}", "password": "{{ ec2_netbox_pass }}" }'
+        body: '{ "username": "admin", "password": "{{ ec2_netbox_pass }}" }'
         status_code: 200
         body_format: json
         headers:
