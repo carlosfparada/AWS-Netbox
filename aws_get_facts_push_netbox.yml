@@ -18,29 +18,27 @@
     #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-    - name: Cisco Gatthering Facts
-      block:
-      - name: Cisco Facts
-        #connection: local
-        cisco.ios.ios_facts:
-          gather_subset:
-            - hardware
-          gather_network_resources:
-            - "interfaces"
-            - "l2_interfaces"
-            - "l3_interfaces"
-            - "acl_interfaces"
-            - "static_routes" 
-            - "acls" 
-            - "vlans"
-        register: _ios_facts
-        #become: true
-      - name: Debug IOS facts
-        debug:
-          var: _ios_facts
-      - name: Set IOS facts
-        set_fact:
-          _facts: "{{ _ios_facts }}"
+    - name: Cisco Facts
+      #connection: local
+      cisco.ios.ios_facts:
+        gather_subset:
+          - hardware
+        gather_network_resources:
+          - "interfaces"
+          - "l2_interfaces"
+          - "l3_interfaces"
+          - "acl_interfaces"
+          - "static_routes" 
+          - "acls" 
+          - "vlans"
+      register: _ios_facts
+      #become: true
+    - name: Debug IOS facts
+      debug:
+        var: _ios_facts
+    - name: Set IOS facts
+      set_fact:
+        _facts: "{{ _ios_facts }}"
 
 - name: Collect Arista Facts
   hosts: arista
@@ -52,21 +50,19 @@
     #ansible_command_timeout: 300
     #ssh_type: paramiko
   tasks:
-    - name: EOS Gatthering Facts
-      block:
-      - name: EOS Facts
-        #connection: local
-        arista.eos.eos_facts:
-          gather_subset: all
-          #gather_network_resources: all
-        register: _eos_facts
-        #become: true
-      - name: Debug EOS facts
-        debug:
-          var: _eos_facts
-      - name: Set EOS facts
-        set_fact:
-          _facts: "{{ _eos_facts }}"
+    - name: EOS Facts
+      #connection: local
+      arista.eos.eos_facts:
+        gather_subset: all
+        #gather_network_resources: all
+      register: _eos_facts
+      #become: true
+    - name: Debug EOS facts
+      debug:
+        var: _eos_facts
+    - name: Set EOS facts
+      set_fact:
+        _facts: "{{ _eos_facts }}"
 
 - name: Push to Netbox
   hosts: localhost
