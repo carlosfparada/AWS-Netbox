@@ -79,7 +79,7 @@
 
     - name: Create Token
       netbox.netbox.netbox_user:
-        netbox_url: "https://{{ hostvars[groups['netbox'][0]].private_ip_address }}"
+        netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
         netbox_token: thisIsMyToken
         data:
           username: admin
