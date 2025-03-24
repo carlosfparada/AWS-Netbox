@@ -113,11 +113,13 @@
       set_fact:
         manufacturer: "cisco"
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      delegate_to: localhost
 
     - name: Set Manufacturer (Arista)
       set_fact:
         manufacturer: "arista"
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      delegate_to: localhost
 
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
