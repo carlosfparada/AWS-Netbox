@@ -30,9 +30,9 @@
       debug:
         var: hostvars[groups['cisco'][0]]
 
-    - name: IOS gatthering facts
+    - name: Cisco gatthering facts
       block:
-      - name: IOS facts
+      - name: Cisco facts
         #connection: local
         cisco.ios.ios_facts:
           gather_subset:
@@ -53,7 +53,8 @@
       - name: Set IOS facts
         set_fact:
           _facts: "{{ _ios_facts }}"
-      when: ansible_network_os == 'ios'
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+
 
     - name: NXOS gatthering facts
       block:
