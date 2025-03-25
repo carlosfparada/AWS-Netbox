@@ -3,6 +3,18 @@
 # - name: Refresh inventory
 #   ansible.builtin.meta: refresh_inventory
 
+- name: Get AAP node
+  set_fact:
+    node_name: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^aap-(.*)$")
+
+- name: Add AAP node to the netbox group
+  add_host:
+    name: "{{ node_name }}"
+    groups: "aap"
+  when: node_name is defined
+
 - name: Get Netbox node
   set_fact:
     node_name: "{{ item }}"
