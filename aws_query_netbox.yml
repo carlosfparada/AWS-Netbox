@@ -82,7 +82,7 @@
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
                     api_endpoint=netbox_url,
-                    token=netbox_token.json.ke,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Delete Token
