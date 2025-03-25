@@ -204,7 +204,7 @@
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
       throttle: 1
       delegate_to: localhost
 
@@ -223,7 +223,7 @@
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
       throttle: 1
       delegate_to: localhost
 
