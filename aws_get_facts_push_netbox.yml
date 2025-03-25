@@ -208,7 +208,6 @@
           description: "{{ item.ipv4[0].address }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-      #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$") and item.ipv4[0].address is defined
       throttle: 1
       delegate_to: localhost
@@ -257,3 +256,4 @@
         state: absent
       run_once: true
       delegate_to: localhost
+
