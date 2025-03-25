@@ -109,7 +109,7 @@
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
-          name: "demo"
+          name: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
                     api_endpoint=netbox_url,
