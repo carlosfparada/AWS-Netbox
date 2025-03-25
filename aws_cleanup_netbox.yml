@@ -11,10 +11,10 @@
 - name: Cleanup data on Netbox
   hosts: localhost
   gather_facts: false
-  connection: local
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: local
   tasks:
-    - include_vars: main.yml
-
     - name: Cleanup VLANs data on Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ net_netbox_url }}"
