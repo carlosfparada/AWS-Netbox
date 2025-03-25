@@ -15,9 +15,13 @@
   vars:
     ansible_connection: local
   tasks:
+    - name: Set Netbox URL
+      set_fact:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        
     - name: Create a Token
       ansible.builtin.uri:
-        url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
+        url: "{{ netbox_url }}"/api/users/tokens/provision/"
         method: POST
         body: |
           { 
@@ -35,7 +39,7 @@
 
     - name: Cleanup VLANs data on Netbox
       netbox.netbox.netbox_vlan:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data:
@@ -44,13 +48,13 @@
           vid: "{{ item.value.vid }}"          
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
-                    api_endpoint=netbox_token.json.key,
+                    api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup IPv4 addresses data on Netbox
       netbox.netbox.netbox_ip_address:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
@@ -61,13 +65,13 @@
           address: "{{ item.value.address }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
-                    api_endpoint=netbox_token.json.key,
+                    api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup interfaces data on Netbox
       netbox.netbox.netbox_device_interface:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
@@ -77,13 +81,13 @@
           description: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
-                    api_endpoint=netbox_token.json.key,
+                    api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup devices data on Netbox
       netbox.netbox.netbox_device:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
@@ -95,26 +99,26 @@
           comments: "Added by AAP"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
-              api_endpoint=netbox_token.json.key,
+              api_endpoint=netbox_url,
               token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Cleanup device roles data on Netbox
       netbox.netbox.netbox_device_type:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "demo"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
-                    api_endpoint=netbox_token.json.key,
+                    api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup device types data on Netbox
       netbox.netbox.netbox_device_type:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
@@ -123,26 +127,26 @@
           slug: "{{ item.value.slug }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
-                    api_endpoint=netbox_token.json.key,
+                    api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup manufacturer data on Netbox
       netbox.netbox.netbox_manufacturer:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturer',
-              api_endpoint=netbox_token.json.key,
+              api_endpoint=netbox_url,
               token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Cleanup sites data on Netbox
       netbox.netbox.netbox_site:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
@@ -152,13 +156,13 @@
           status: "{{ item.value.status.label }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
-              api_endpoint=netbox_token.json.key,
+              api_endpoint=netbox_url,
               token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Delete Token
       netbox.netbox.netbox_token:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
         data:
             key: "{{ netbox_token.json.key }}"
