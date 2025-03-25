@@ -15,10 +15,28 @@
   vars:
     ansible_connection: local
   tasks:
+    - name: Create a Token
+      ansible.builtin.uri:
+        url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
+        method: POST
+        body: |
+          { 
+            "username": "admin",
+            "password": "{{ hostvars[groups['netbox'][0]].instance_id }}"
+          }
+        status_code: 201
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json; indent=4"
+      run_once: true
+      delegate_to: localhost
+      register: netbox_token
+
     - name: Cleanup VLANs data on Netbox
       netbox.netbox.netbox_vlan:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data:
           site: "{{ item.value.site.name }}"
@@ -32,8 +50,8 @@
 
     - name: Cleanup IPv4 addresses data on Netbox
       netbox.netbox.netbox_ip_address:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           assigned_object:
@@ -49,8 +67,8 @@
 
     - name: Cleanup interfaces data on Netbox
       netbox.netbox.netbox_device_interface:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           device: "{{ item.value.device.name }}"
@@ -65,8 +83,8 @@
 
     - name: Cleanup devices data on Netbox
       netbox.netbox.netbox_device:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -81,10 +99,23 @@
               token=net_netbox_token,
               validate_certs=False) }}"
 
+    - name: Cleanup device roles data on Netbox
+      netbox.netbox.netbox_device_type:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          name: "demo"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
+                    api_endpoint=net_netbox_url,
+                    token=net_netbox_token,
+                    validate_certs=False) }}"
+
     - name: Cleanup device types data on Netbox
       netbox.netbox.netbox_device_type:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           model: "{{ item.value.model }}"
@@ -95,11 +126,24 @@
                     api_endpoint=net_netbox_url,
                     token=net_netbox_token,
                     validate_certs=False) }}"
-  
+
+    - name: Cleanup manufacturer data on Netbox
+      netbox.netbox.netbox_manufacturer:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          name: "{{ item.value.name }}"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturer',
+              api_endpoint=net_netbox_url,
+              token=net_netbox_token,
+              validate_certs=False) }}"
+
     - name: Cleanup sites data on Netbox
       netbox.netbox.netbox_site:
-        netbox_url: "{{ net_netbox_url }}"
-        netbox_token: "{{ net_netbox_token }}"
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -112,3 +156,13 @@
               token=net_netbox_token,
               validate_certs=False) }}"
 
+    - name: Delete Token
+      netbox.netbox.netbox_token:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        data:
+            key: "{{ netbox_token.json.key }}"
+        state: absent
+      run_once: true
+      delegate_to: localhost
+      
