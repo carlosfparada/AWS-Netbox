@@ -15,11 +15,29 @@
   connection: local
   vars_files: vars/main.yml
   tasks:
+    - name: Create a Token
+      ansible.builtin.uri:
+        url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000/api/users/tokens/provision/"
+        method: POST
+        body: |
+          { 
+            "username": "admin",
+            "password": "{{ hostvars[groups['netbox'][0]].instance_id }}"
+          }
+        status_code: 201
+        body_format: json
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json; indent=4"
+      run_once: true
+      delegate_to: localhost
+      register: netbox_token
+
     - name: Query VLANs on Netbox
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -27,7 +45,7 @@
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -35,7 +53,7 @@
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -43,7 +61,7 @@
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -51,7 +69,7 @@
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -59,7 +77,17 @@
       debug:
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
+    - name: Delete Token
+      netbox.netbox.netbox_token:
+        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_token: "{{ netbox_token.json.key }}"
+        data:
+            key: "{{ netbox_token.json.key }}"
+        state: absent
+      run_once: true
+      delegate_to: localhost
+      

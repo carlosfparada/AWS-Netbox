@@ -44,7 +44,7 @@
           vid: "{{ item.value.vid }}"          
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -61,7 +61,7 @@
           address: "{{ item.value.address }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -77,7 +77,7 @@
           description: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -95,7 +95,7 @@
           comments: "Added by AAP"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
-              api_endpoint=net_netbox_url,
+              api_endpoint=netbox_token.json.key,
               token=net_netbox_token,
               validate_certs=False) }}"
 
@@ -108,7 +108,7 @@
           name: "demo"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -123,7 +123,7 @@
           slug: "{{ item.value.slug }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
-                    api_endpoint=net_netbox_url,
+                    api_endpoint=netbox_token.json.key,
                     token=net_netbox_token,
                     validate_certs=False) }}"
 
@@ -136,7 +136,7 @@
           name: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturer',
-              api_endpoint=net_netbox_url,
+              api_endpoint=netbox_token.json.key,
               token=net_netbox_token,
               validate_certs=False) }}"
 
@@ -152,7 +152,7 @@
           status: "{{ item.value.status.label }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
-              api_endpoint=net_netbox_url,
+              api_endpoint=netbox_token.json.key,
               token=net_netbox_token,
               validate_certs=False) }}"
 
