@@ -201,7 +201,7 @@
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$") and item.value.ipv4.address is defined
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
       throttle: 1
       delegate_to: localhost
 
