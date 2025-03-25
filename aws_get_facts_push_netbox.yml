@@ -266,8 +266,7 @@
             # password: "{{ hostvars[groups['netbox'][0]].instance_id }}"
             key: "{{ netbox_token.json.key }}"
         state: absent
-      delegate_to: localhost
-      throttle: 1
+      run_once: true
       delegate_to: localhost
 
 # Arista 
