@@ -204,7 +204,7 @@
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
       #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$") and item.ipv4[0].address is defined
       throttle: 1
       delegate_to: localhost
 
@@ -216,13 +216,12 @@
         data: 
           assigned_object:
             device: "{{ inventory_hostname }}"
-            name: "{{ item.name }}"
+            name: "{{ item.key }}"
           family: 4
-          address: "{{ item.ipv4.address }}"
-          description: "{{ item.ipv4.address }} description"
+          address: "{{ item.value.ipv4.address }}"
+          description: "{{ item.value.ipv4.address }} description"
         state: present
-      loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-      #when: _facts.ansible_facts.ansible_network_resources.l3_interfaces is defined and item.ipv4 is defined and item.ipv4[0].address != ""
+      with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
       throttle: 1
       delegate_to: localhost
@@ -296,6 +295,7 @@
 # _ansible_verbose_always: true
 # _ansible_no_log: false
 # changed: false
+
 # Cisco
 # _ios_facts:
 #   ansible_facts:
