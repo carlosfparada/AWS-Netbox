@@ -45,7 +45,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=netbox_token.json.key,
-                    token=net_netbox_token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup IPv4 addresses data on Netbox
@@ -62,7 +62,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
                     api_endpoint=netbox_token.json.key,
-                    token=net_netbox_token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup interfaces data on Netbox
@@ -78,7 +78,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
                     api_endpoint=netbox_token.json.key,
-                    token=net_netbox_token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup devices data on Netbox
@@ -96,7 +96,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
               api_endpoint=netbox_token.json.key,
-              token=net_netbox_token,
+              token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Cleanup device roles data on Netbox
@@ -109,7 +109,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
                     api_endpoint=netbox_token.json.key,
-                    token=net_netbox_token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup device types data on Netbox
@@ -124,7 +124,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
                     api_endpoint=netbox_token.json.key,
-                    token=net_netbox_token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup manufacturer data on Netbox
@@ -137,7 +137,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturer',
               api_endpoint=netbox_token.json.key,
-              token=net_netbox_token,
+              token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Cleanup sites data on Netbox
@@ -153,7 +153,7 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
               api_endpoint=netbox_token.json.key,
-              token=net_netbox_token,
+              token=netbox_token.json.key,
               validate_certs=False) }}"
 
     - name: Delete Token
