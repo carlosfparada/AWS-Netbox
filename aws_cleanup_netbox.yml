@@ -61,7 +61,7 @@
           assigned_object:
             device: "{{ item.value.assigned_object.device.name }}"
             name: "{{ item.value.assigned_object.name }}"
-          family: "{{ item.value.family.value }}"
+          #family: "{{ item.value.family.value }}"
           address: "{{ item.value.address }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
