@@ -250,8 +250,6 @@
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
         netbox_token: "{{ netbox_token.json.key }}"
         data:
-            # user: admin
-            # password: "{{ hostvars[groups['netbox'][0]].instance_id }}"
             key: "{{ netbox_token.json.key }}"
         state: absent
       run_once: true
