@@ -139,7 +139,7 @@
         data: 
           name: "{{ item.value.name }}"
         state: absent
-      loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturer',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturers',
               api_endpoint=netbox_url,
               token=netbox_token.json.key,
               validate_certs=False) }}"
