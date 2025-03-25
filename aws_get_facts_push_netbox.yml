@@ -14,7 +14,7 @@
   vars_files: vars/main.yml
   vars:
     ansible_connection: network_cli
-    #ansible_network_os: ios
+    ansible_network_os: ios
   tasks:
     - name: Cisco Facts
       #connection: local
@@ -30,7 +30,6 @@
           - "acls" 
           - "vlans"
       register: _ios_facts
-      #become: true
     - name: Debug IOS facts
       debug:
         var: _ios_facts
@@ -45,8 +44,7 @@
   vars:
     ansible_connection: network_cli
     ansible_network_os: eos
-    #ansible_command_timeout: 300
-    #ssh_type: paramiko
+
   tasks:
     - name: EOS Facts
       #connection: local
@@ -54,7 +52,6 @@
         gather_subset: all
         #gather_network_resources: all
       register: _eos_facts
-      #become: true
     - name: Debug EOS facts
       debug:
         var: _eos_facts
@@ -68,8 +65,6 @@
   vars_files: vars/main.yml
   vars:
     ansible_connection: local
-    #ansible_command_timeout: 300
-    #ssh_type: paramiko
   tasks:
     - name: Create a Token
       ansible.builtin.uri:
@@ -89,10 +84,6 @@
       delegate_to: localhost
       register: netbox_token
 
-    - name: all
-      debug:
-        var: _facts
-
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
@@ -104,8 +95,8 @@
           description: "Site located in {{ site }}"
           status: Active
         state: present
+      run_once: true
       delegate_to: localhost
-      throttle: 1
 
     - name: Set Manufacturer (Cisco)
       set_fact:
