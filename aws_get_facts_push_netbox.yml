@@ -267,6 +267,8 @@
             key: "{{ netbox_token.json.key }}"
         state: absent
       delegate_to: localhost
+      throttle: 1
+      delegate_to: localhost
 
 # Arista 
 # _eos_facts:
