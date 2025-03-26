@@ -70,14 +70,14 @@
       set_fact:
         netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
 
-    - name: Create a Token
+    - name: Create a Token (not first time)
       ansible.builtin.uri:
         url: "{{ netbox_url }}/api/users/tokens/provision/"
         method: POST
         body: |
           { 
             "username": "admin",
-            "password": "{{ hostvars[groups['netbox'][0]].instance_id }}"
+            "password": "{{ ec2_netbox_pass }}"
           }
         status_code: 201
         body_format: json
