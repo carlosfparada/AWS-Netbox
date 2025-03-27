@@ -134,6 +134,22 @@
     state: absent
   when: vpc.vpcs | length > 0 and subnet.subnets | length > 0
 
+- name: Delete Subnet 1 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    cidr: "{{ subnet1.subnets[0].cidr_block }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+  when: vpc.vpcs | length > 0 and subnet1.subnets | length > 0
+
+- name: Delete Subnet 2 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpcs[0].id }}"
+    cidr: "{{ subnet2.subnets[0].cidr_block }}"
+    region: "{{ ec2_vpc_region }}"
+    state: absent
+  when: vpc.vpcs | length > 0 and subnet2.subnets | length > 0
+
 - name: Delete Route Table
   amazon.aws.ec2_vpc_route_table:
     vpc_id: "{{ vpc.vpcs[0].id }}"
