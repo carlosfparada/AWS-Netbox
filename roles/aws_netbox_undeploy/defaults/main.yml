@@ -5,6 +5,19 @@ ec2_vpc_cidr: 10.0.0.0/16
 # Subnet
 ec2_subnet_name: Subnet_NETBOX
 ec2_subnet_cidr: 10.0.0.0/24
+ec2_subnet_az: us-east-1a
+# Subnet1
+ec2_subnet_name1: Subnet_NETBOX_ENI1
+ec2_subnet_cidr1: 10.0.1.0/24
+# Subnet2
+ec2_subnet_name2: Subnet_NETBOX_ENI2
+ec2_subnet_cidr2: 10.0.2.0/24
+# Cisco ENIs
+ec2_cisco_eni_name1: ENI_CISCO_NETBOX1
+ec2_cisco_eni_name2: ENI_CISCO_NETBOX2
+# Arista ENIs
+ec2_arista_eni_name1: ENI_ARISTA_NETBOX1
+ec2_arista_eni_name2: ENI_ARISTA_NETBOX2
 # IGW
 ec2_igw_name: IGW_NETBOX
 # Route Table

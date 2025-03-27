@@ -14,6 +14,48 @@
       "tag:name": "{{ ec2_subnet_name }}"
   register: subnet
 
+- name: Query Subnet 1
+  amazon.aws.ec2_vpc_subnet_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_subnet_name1 }}"
+  register: subnet1
+
+- name: Query Subnet 2
+  amazon.aws.ec2_vpc_subnet_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_subnet_name2 }}"
+  register: subnet2
+
+- name: Query Cisco ENI 1
+  amazon.aws.ec2_eni_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_cisco_eni_name1 }}"
+  register: cisco_eni1
+
+- name: Query Cisco ENI 2
+  amazon.aws.ec2_eni_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_cisco_eni_name2 }}"
+  register: cisco_eni2
+
+- name: Query Arista ENI 1
+  amazon.aws.ec2_eni_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_arista_eni_name1 }}"
+  register: arista_eni1
+
+- name: Query Arista ENI 2
+  amazon.aws.ec2_eni_info:
+    region: "{{ ec2_vpc_region }}"
+    filters:
+      "tag:Name": "{{ ec2_arista_eni_name2 }}"
+  register: arista_eni2
+
 - name: Query Route Tables
   amazon.aws.ec2_vpc_route_table_info:
     region: "{{ ec2_vpc_region }}"
