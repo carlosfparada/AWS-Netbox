@@ -21,6 +21,28 @@
       name: "{{ ec2_subnet_name }}"
   register: subnet
 
+- name: Create Subnet 1 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr1 }}"
+    region: "{{ ec2_vpc_region }}"
+    az: "{{ ec2_subnet_az }}"
+    state: present
+    tags:
+      Name: "{{ ec2_subnet_name1 }}"
+  register: subnet1
+
+- name: Create Subnet 2 in VPC
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ ec2_subnet_cidr2 }}"
+    region: "{{ ec2_vpc_region }}"
+    az: "{{ ec2_subnet_az }}"
+    state: present
+    tags:
+      Name: "{{ ec2_subnet_name2 }}"
+  register: subnet2
+
 - name: Create Internet Gateway (IGW)
   amazon.aws.ec2_vpc_igw:
     vpc_id: "{{ vpc.vpc.id }}"
