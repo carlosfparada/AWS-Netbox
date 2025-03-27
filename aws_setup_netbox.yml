@@ -344,10 +344,10 @@
     #     config: "{{ cisco_vlans }}"
     #   become: yes
 
-    - name: Assign Cisco VLANs to Interfaces
-      cisco.ios.ios_l2_interfaces:
-        config: "{{ cisco_l2_interfaces }}"
-      become: yes
+    # - name: Assign Cisco VLANs to Interfaces
+    #   cisco.ios.ios_l2_interfaces:
+    #     config: "{{ cisco_l2_interfaces }}"
+    #   become: yes
 
     - name: Create Cisco IPv4 Addresses
       cisco.ios.ios_l3_interfaces:
