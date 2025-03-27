@@ -112,6 +112,31 @@
     state: running
   register: ec2_cisco_instance
 
+
+- name: Create and Attach Cisco ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_cisco_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_cisco_instance.instances[0].instance_id }}"
+    device_index: 1
+    subnet_id: "{{ subnet1.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Create and Attach Arista ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_arista_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_arista_instance.instances[0].instance_id }}"
+    device_index: 2
+    subnet_id: "{{ subnet2.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
 - name: Print Cisco instance details
   ansible.builtin.debug:
     msg: "Cisco: ssh -i <*.pem> ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
@@ -142,6 +167,30 @@
       name: "{{ ec2_arista_instance_name }}"
     state: running
   register: ec2_arista_instance
+
+- name: Create and Attach Arista ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_arista_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_arista_instance.instances[0].instance_id }}"
+    device_index: 1
+    subnet_id: "{{ subnet1.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Create and Attach Arista ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_arista_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_arista_instance.instances[0].instance_id }}"
+    device_index: 2
+    subnet_id: "{{ subnet2.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
 
 - name: Print Arista instance details
   ansible.builtin.debug:
