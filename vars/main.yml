@@ -87,6 +87,18 @@ ec2_cisco_instance_name: cisco-1
 ec2_cisco_user: "{{ ansible_user }}"
 ec2_cisco_pass: "{{ ansible_password }}"
 
+# Provisioning
+cisco_ipv4_addresses: 
+  - interface: GigabitEthernet1
+    ipv4_address: 10.1.2.3/24
+  - interface: GigabitEthernet1
+    ipv4_address: 10.2.3.4/24
+cisco_vlans:
+  - name: Vlan 10
+    vlan_id: 10
+  - name: Vlan 20
+    vlan_id: 20
+
 # ARISTA
 # AMI
 ec2_arista_image_name: "CloudEOS4.32.2F-971505ec-86ee-48a7-a33b-54295288e797"
@@ -109,3 +121,16 @@ ec2_arista_instance_name: arista-1
 # ec2-user / ?
 ec2_arista_user: "{{ ansible_user }}"
 ec2_arista_pass: "{{ ansible_password }}"
+
+# Provisioning
+arista_ipv4_addresses: 
+  - interface: Ethernet1
+    ipv4_address: 10.3.4.5/24
+  - interface: Ethernet1
+    ipv4_address: 10.4.5.6/24
+arista_vlans:
+  - name: Vlan 10
+    vlan_id: 10
+  - name: Vlan 20
+    vlan_id: 20
+

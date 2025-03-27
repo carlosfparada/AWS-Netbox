@@ -17,6 +17,16 @@
     ansible_network_os: ios
     ansible_command_timeout: 300
   tasks:
+    - name: Add IPv4 addresses
+      cisco.ios.ios_l3_interfaces:
+        config: 
+          - name: "{{ item.interface }}"
+            ipv4:
+            - address: "{{ item.ipv4_address }}"
+        state: merged
+      #become: true
+      loop: "{{ ipv4_addresses }} "
+
     - name: Cisco Facts
       #connection: local
       cisco.ios.ios_facts:
