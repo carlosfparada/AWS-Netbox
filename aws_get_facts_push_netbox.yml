@@ -15,6 +15,7 @@
   vars:
     ansible_connection: network_cli
     ansible_network_os: ios
+    ansible_command_timeout: 300
   tasks:
     - name: Cisco Facts
       #connection: local
@@ -44,7 +45,7 @@
   vars:
     ansible_connection: network_cli
     ansible_network_os: eos
-
+    ansible_command_timeout: 300
   tasks:
     - name: EOS Facts
       #connection: local
