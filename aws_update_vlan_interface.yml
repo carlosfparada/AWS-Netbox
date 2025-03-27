@@ -1,12 +1,12 @@
 ---
 
-- name: Update interface vlan configs, triggered by Netbox changes
+- name: Update interface vlan configs (Arista) 
   hosts: "{{ device }}"
   gather_facts: false
   vars_files: vars/main.yml
   vars:
     ansible_connection: network_cli
-    ansible_network_os: ios
+    ansible_network_os: eos
   tasks:
     - name: Debug Netbox data structure
       debug:
@@ -16,8 +16,8 @@
       debug:
         msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
 
-    - name: Cisco IOS update VLAN to l2 interface on {{ device }}
-      cisco.ios.ios_l2_interfaces:
+    - name: Arista EOS update VLAN to {{ device }}
+      arista.eos.eos_l2_interfaces:
         config:
           - name: "{{ interface }}"
             mode: access
@@ -25,4 +25,3 @@
               vlan: "{{ vlan_id }}"
         state: merged
       become: true
-
