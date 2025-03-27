@@ -339,10 +339,10 @@
     ansible_connection: network_cli
     ansible_network_os: ios
   tasks:
-    # - name: Create Cisco VLANs
-    #   cisco.ios.ios_vlans:
-    #     config: "{{ cisco_vlans }}"
-    #   become: yes
+    - name: Create Cisco VLANs
+      cisco.ios.ios_vlans:
+        config: "{{ cisco_vlans }}"
+      become: yes
 
     # - name: Assign Cisco VLANs to Interfaces
     #   cisco.ios.ios_l2_interfaces:
