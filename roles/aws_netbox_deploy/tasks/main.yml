@@ -146,11 +146,11 @@
     attached: true
     state: present
 
-- name: Create and Attach Arista ENI 2
+- name: Create and Attach Cisco ENI 2
   amazon.aws.ec2_eni:
     name: "{{ ec2_arista_eni_name2 }}"
     region: "{{ ec2_vpc_region }}"
-    instance_id: "{{ ec2_arista_instance.instances[0].instance_id }}"
+    instance_id: "{{ ec2_cisco_instance.instances[0].instance_id }}"
     device_index: 2
     subnet_id: "{{ subnet2.subnet.id }}"
     #security_groups: "{{ ec2_sg_name }}"
