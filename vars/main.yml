@@ -93,8 +93,10 @@ ec2_cisco_pass: "{{ ansible_password }}"
 cisco_vlans:
   - name: Vlan10
     vlan_id: 10
+    state: active
   - name: Vlan20
     vlan_id: 20
+    state: active
 cisco_l2_interfaces:
   - name: VirtualPortGroup0
     mode: access
@@ -139,8 +141,10 @@ ec2_arista_pass: "{{ ansible_password }}"
 arista_vlans:
   - name: Vlan10
     vlan_id: 10
+    state: active
   - name: Vlan20
     vlan_id: 20
+    state: active
 arista_l2_interfaces:
   - name: Ethernet2
     mode: access
