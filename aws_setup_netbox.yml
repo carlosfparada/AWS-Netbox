@@ -318,7 +318,7 @@
   tasks:
 
     - name: Create Cisco VLANs
-      cisco.ios.ios_vlans:
+      cisco.iosxr.ios_vlans:
         config:
           - name: Vlan10
             vlan_id: 10
