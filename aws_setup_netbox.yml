@@ -318,7 +318,8 @@
   tasks:
     - name: Create Cisco VLANs
       cisco.ios.ios_vlans:
-        config: "{{ cisco_vlans }}"
+        config:
+          "{{ cisco_vlans }}"
       become: yes
 
     - name: Assign Cisco VLANs to Interfaces
