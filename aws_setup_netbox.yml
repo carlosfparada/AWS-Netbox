@@ -319,19 +319,16 @@
     - name: Create Cisco VLANs
       cisco.ios.ios_vlans:
         config: "{{ cisco_vlans }}"
-        state: merged
       become: yes
 
     - name: Assign Cisco VLANs to Interfaces
       cisco.ios.ios_l2_interfaces:
         config: "{{ cisco_l2_interfaces }}"
-        state: merged
       become: yes
 
     - name: Create Cisco IPv4 Addresses
       cisco.ios.ios_l3_interfaces:
         config: "{{ cisco_l3_interfaces }}"
-        state: merged
       become: yes
 
 - name: Provision Arista Device
