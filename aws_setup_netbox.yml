@@ -307,27 +307,3 @@
   #     existing_token: "{{ aap_token }}"
   #     state: absent
 
-
-
-- name: Provision Arista Device
-  hosts: arista
-  gather_facts: false
-  vars_files: vars/main.yml
-  vars:
-    ansible_connection: network_cli
-    ansible_network_os: eos
-  tasks:
-    - name: Create Arista VLANs
-      arista.eos.eos_vlans:
-        config: "{{ arista_vlans }}"
-      become: yes
-
-    - name: Assign Arista VLANs to Interfaces
-      arista.eos.eos_l2_interfaces:
-        config: "{{ arista_l2_interfaces }}"
-      become: yes
-
-    - name: Create Arista IPv4 Addresses
-      arista.eos.eos_l3_interfaces:
-        config: "{{ arista_l3_interfaces }}"
-      become: yes
