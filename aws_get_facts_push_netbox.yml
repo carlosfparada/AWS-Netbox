@@ -132,7 +132,7 @@
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
-          model: "{{ _facts.ansible_facts.ansible_net_model }}"
+          model: "{{ _facts.ansible_facts.ansible_net_model | upper }}"
           manufacturer: "{{ manufacturer }}"
           slug: "{{ _facts.ansible_facts.ansible_net_version }}"
         state: present
@@ -159,7 +159,7 @@
           name: "{{ inventory_hostname }}"
           site: "{{ site }}"
           serial: "{{ _facts.ansible_facts.ansible_net_serialnum }}"
-          device_type: "{{ _facts.ansible_facts.ansible_net_model }}"
+          device_type: "{{ _facts.ansible_facts.ansible_net_model | upper }}"
           device_role: "demo"
           local_context_data: "{{ _facts.ansible_facts.ansible_network_resources }}"
           comments: "Added by AAP"
