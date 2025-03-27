@@ -88,16 +88,27 @@ ec2_cisco_user: "{{ ansible_user }}"
 ec2_cisco_pass: "{{ ansible_password }}"
 
 # Provisioning
-cisco_ipv4_addresses: 
-  - interface: GigabitEthernet1
-    ipv4_address: 10.1.2.3/24
-  - interface: GigabitEthernet1
-    ipv4_address: 10.2.3.4/24
 cisco_vlans:
   - name: Vlan 10
     vlan_id: 10
   - name: Vlan 20
     vlan_id: 20
+cisco_l2_interfaces:
+  - name: VirtualPortGroup0
+    mode: access
+    access:
+      vlan: 10
+  - name: GigabitEthernet2
+    mode: access
+    access:
+      vlan: 20
+cisco_l3_interfaces: 
+  - name: VirtualPortGroup0
+    ipv4:
+    - address: 10.1.2.3/24
+  - name: GigabitEthernet2
+    ipv4:
+    - address: 10.2.3.4/24
 
 # ARISTA
 # AMI
@@ -123,14 +134,20 @@ ec2_arista_user: "{{ ansible_user }}"
 ec2_arista_pass: "{{ ansible_password }}"
 
 # Provisioning
-arista_ipv4_addresses: 
-  - interface: Ethernet1
-    ipv4_address: 10.3.4.5/24
-  - interface: Ethernet1
-    ipv4_address: 10.4.5.6/24
 arista_vlans:
   - name: Vlan 10
     vlan_id: 10
   - name: Vlan 20
     vlan_id: 20
-
+arista_l2_interfaces:
+  - interface: Ethernet2
+    vlan_id: 10
+  - interface: Ethernet3
+    vlan_id: 20
+arista_l3_interfaces: 
+  - name: Ethernet2
+    ipv4:
+    - address: 10.3.4.5/24
+  - name: Ethernet3
+    ipv4:
+    - address: 10.4.5.6/24
