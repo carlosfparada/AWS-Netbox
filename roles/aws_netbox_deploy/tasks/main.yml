@@ -105,7 +105,7 @@
 
 - name: Print Netbox instance details
   ansible.builtin.debug:
-    msg: "Netbox: http://{{ ec2_netbox_instance.instances[0].public_dns_name }}:8000/ (admin/instance-id)"
+    msg: "Netbox: http://{{ ec2_netbox_instance.instances[0].public_dns_name }}:8000"
 
 # CISCO
 - name: Get Cisco AMI by Name
@@ -160,7 +160,7 @@
 
 - name: Print Cisco instance details
   ansible.builtin.debug:
-    msg: "Cisco: ssh -i <*.pem> ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
+    msg: "Cisco: ssh [-i <*.pem>] ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
 
 # ARISTA
 - name: Get Arista AMI by Name
@@ -215,7 +215,7 @@
 
 - name: Print Arista instance details
   ansible.builtin.debug:
-    msg: "Arista: ssh -i <*.pem> ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
+    msg: "Arista: ssh [-i <*.pem>] ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
 
 # Wait for boot up
 - name: Wait until Netbox to boot up
