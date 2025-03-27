@@ -142,10 +142,14 @@ arista_vlans:
   - name: Vlan20
     vlan_id: 20
 arista_l2_interfaces:
-  - interface: Ethernet2
-    vlan_id: 10
-  - interface: Ethernet3
-    vlan_id: 20
+  - name: Ethernet2
+    mode: access
+    access:
+      vlan: 10
+  - name: Ethernet3
+    mode: access
+    access:
+      vlan: 20
 arista_l3_interfaces: 
   - name: Ethernet2
     ipv4:
