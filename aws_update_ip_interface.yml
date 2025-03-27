@@ -1,6 +1,6 @@
 ---
 
-- name: Update interface vlan configs, triggered by Netbox changes
+- name: Update interface IPv4 (Cisco)
   hosts: "{{ device }}"
   gather_facts: false
   vars_files: vars/main.yml
