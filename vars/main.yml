@@ -61,6 +61,8 @@ ec2_netbox_instance_name: netbox-1
 ec2_netbox_user: "{{ ansible_user }}"
 ec2_netbox_pass: "{{ ansible_password }}"
 
+# ec2-user
+
 site: aws
 
 # CISCO
@@ -83,15 +85,15 @@ ec2_cisco_key_name: "KeyPair-Virginia"
 # Instance
 ec2_cisco_instance_name: cisco-1
 
-# ec2-user / ?
+# ec2-user
 ec2_cisco_user: "{{ ansible_user }}"
 ec2_cisco_pass: "{{ ansible_password }}"
 
 # Provisioning
 cisco_vlans:
-  - name: Vlan 10
+  - name: Vlan10
     vlan_id: 10
-  - name: Vlan 20
+  - name: Vlan20
     vlan_id: 20
 cisco_l2_interfaces:
   - name: VirtualPortGroup0
@@ -129,15 +131,15 @@ ec2_arista_key_name: "KeyPair-Virginia"
 # Instance
 ec2_arista_instance_name: arista-1
 
-# ec2-user / ?
+# ec2-user
 ec2_arista_user: "{{ ansible_user }}"
 ec2_arista_pass: "{{ ansible_password }}"
 
 # Provisioning
 arista_vlans:
-  - name: Vlan 10
+  - name: Vlan10
     vlan_id: 10
-  - name: Vlan 20
+  - name: Vlan20
     vlan_id: 20
 arista_l2_interfaces:
   - interface: Ethernet2
