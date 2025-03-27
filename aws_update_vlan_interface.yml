@@ -4,6 +4,9 @@
   hosts: "{{ device }}"
   gather_facts: false
   vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    #ansible_network_os: ios
   tasks:
     - name: Debug Netbox data structure
       debug:
