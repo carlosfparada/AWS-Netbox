@@ -307,6 +307,7 @@
   #     existing_token: "{{ aap_token }}"
   #     state: absent
 
+
 - name: Provision Cisco Device
   hosts: cisco
   gather_facts: false
