@@ -316,6 +316,15 @@
     ansible_connection: network_cli
     ansible_network_os: ios
   tasks:
+
+    - name: Create Cisco VLANs
+      cisco.ios.ios_vlans:
+        config:
+          - name: Vlan10
+            vlan_id: 10
+            state: active
+      become: yes
+
     - name: Create Cisco VLANs
       cisco.ios.ios_vlans:
         config:
