@@ -131,9 +131,9 @@
         netbox_token: "{{ netbox_token.json.key }}"
         validate_certs: no
         data: 
-          model: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+          model: "{{ _facts.ansible_facts.ansible_net_model | default('unknown') }}"
           manufacturer: "{{ manufacturer }}"
-          slug: "{{ _facts.ansible_facts.ansible_net_system | default('unknown') }}"
+          slug: "{{ _facts.ansible_facts.ansible_net_version | default('unknown') }}"
         state: present
       throttle: 1
       delegate_to: localhost
