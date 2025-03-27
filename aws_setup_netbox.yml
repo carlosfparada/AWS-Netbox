@@ -307,6 +307,30 @@
   #     existing_token: "{{ aap_token }}"
   #     state: absent
 
+
+- name: Provision Cisco Device
+  hosts: cisco
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+  tasks:
+    - name: Create Cisco VLANs
+      cisco.ios.ios_vlans:
+        config: "{{ cisco_vlans }}"
+      become: yes
+
+    - name: Assign Cisco VLANs to Interfaces
+      cisco.ios.ios_l2_interfaces:
+        config: "{{ cisco_l2_interfaces }}"
+      become: yes
+
+    - name: Create Cisco IPv4 Addresses
+      cisco.ios.ios_l3_interfaces:
+        config: "{{ cisco_l3_interfaces }}"
+      become: yes
+
 - name: Provision Arista Device
   hosts: arista
   gather_facts: false
@@ -318,11 +342,14 @@
     - name: Create Arista VLANs
       arista.eos.eos_vlans:
         config: "{{ arista_vlans }}"
+      become: yes
 
     - name: Assign Arista VLANs to Interfaces
       arista.eos.eos_l2_interfaces:
         config: "{{ arista_l2_interfaces }}"
+      become: yes
 
     - name: Create Arista IPv4 Addresses
       arista.eos.eos_l3_interfaces:
         config: "{{ arista_l3_interfaces }}"
+      become: yes
