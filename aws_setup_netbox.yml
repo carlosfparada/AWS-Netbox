@@ -357,7 +357,7 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
-  - name: Re-write Netbox Inventory Source (AAP URL and Token)
+  - name: Rewrite Netbox Inventory Source (AAP URL and Token)
     vars:
       aap_hostname: "https://{{ groups['aap'][0] }}"
       aap_username: admin
