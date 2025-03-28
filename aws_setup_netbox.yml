@@ -279,7 +279,7 @@
             {
               "vlan_id": "{{ data['vid'] }}",
               "vlan_name": "{{ data['name'] }}",
-              "vlan_name": "{{ data['status']['value'] }}",
+              "state": "{{ data['status']['value'] }}",
               "event": "{{ event }}",
               "timestamp": "{{ timestamp }}",
               "data": "{{ data }}"
