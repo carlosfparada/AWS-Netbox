@@ -415,7 +415,7 @@
   #     existing_token: "{{ aap_token }}"
   #     state: absent
 
-- name: Deploy Demo AWS Netbox
+- name: Rewrite and Update Netbox Inventory Source
   hosts: localhost
   connection: local
   gather_facts: no
