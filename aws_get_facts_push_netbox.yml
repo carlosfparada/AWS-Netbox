@@ -49,10 +49,9 @@
     ansible_command_timeout: 300
   tasks:
     - name: EOS Facts
-      #connection: local
       arista.eos.eos_facts:
         gather_subset: all
-        gather_network_resources: l3_interfaces
+        gather_network_resources: all
       become: true
       register: _eos_facts
     - name: Debug EOS facts
