@@ -84,9 +84,6 @@
     no_log: false
     register: job_template_ip
 
-  - debug: 
-      var: job_template_ip
-
   - name: Get AAP Job Template ID (Update VLAN Interface)
     ansible.controller.job_template:
       controller_host: "https://{{ groups['aap'][0] }}"
@@ -98,9 +95,6 @@
       state: exists
     no_log: false
     register: job_template_vlan
-
-  - debug: 
-      var: job_template_vlan
 
   - name: Set Netbox URL
     ansible.builtin.set_fact:
