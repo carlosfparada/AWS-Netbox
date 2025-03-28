@@ -94,6 +94,18 @@
       name: "AWS Netbox: Update VLAN Interface"
       state: exists
     no_log: false
+    register: job_template_vlan_interface
+
+  - name: Get AAP Job Template ID (Update VLAN
+    ansible.controller.job_template:
+      controller_host: "https://{{ groups['aap'][0] }}"
+      # controller_oauthtoken: "{{ aap_token }}"
+      controller_username: "admin"
+      controller_password: "{{ aap_password }}"
+      validate_certs: false
+      name: "AWS Netbox: Update VLAN"
+      state: exists
+    no_log: false
     register: job_template_vlan
 
   - name: Set Netbox URL
@@ -196,6 +208,47 @@
       state: present
     register: webhook_ip
 
+  - name: Delete Webhook on Netbox (VLAN Interface)
+    netbox.netbox.netbox_webhook:
+      netbox_url: "{{ netbox_url }}"
+      netbox_token: "{{ netbox_token.json.key }}"
+      validate_certs: no
+      data: 
+        name: Webhook VLAN Interface
+      state: absent
+
+  - name: Create Webhook on Netbox (VLAN Interface)
+    netbox.netbox.netbox_webhook:
+      netbox_url: "{{ netbox_url }}"
+      netbox_token: "{{ netbox_token.json.key }}"
+      validate_certs: no
+      data: 
+        name: Webhook VLAN Interface
+        content_types:    # void, only for backward-compatibility reasons
+          - dcim.device   # void, only for backward-compatibility reasons
+        enabled: true
+        payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_vlan_interface.id }}/launch/"
+        ssl_verification: no
+        http_method: POST
+        http_content_type: application/json
+        additional_headers: "Authorization: Bearer {{ aap_token.token }}"
+        body_template: !unsafe >-
+          { 
+          "extra_vars": 
+            {
+              "device": "{{ data['device']['name'] }}",
+              "interface": "{{ data['name'] }}",
+              "vlan_id": "{{ data['untagged_vlan']['vid'] }}",
+              "vlan_name": "{{ data['untagged_vlan']['name'] }}",
+              "event": "{{ event }}",
+              "timestamp": "{{ timestamp }}",
+              "data": "{{ data }}"
+            },
+            "limit": "{{ data['device']['name'] }}"
+          }
+      state: present
+    register: webhook_vlan_interface
+
   - name: Delete Webhook on Netbox (VLAN)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
@@ -250,6 +303,29 @@
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_ip.webhook.id }}",
+          "type_create": true,
+          "type_update": true
+        }
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json; indent=4"
+        Authorization: "Token {{ netbox_token.json.key }}"
+      status_code: 201
+
+  - name: Create an Event Rule (VLAN Interface)
+    ansible.builtin.uri:
+      url: "{{ netbox_url }}/api/extras/event-rules/"
+      method: POST
+      body: |
+        { 
+          "name": "Event Rule VLAN Interface",
+          "content_types": [
+              "dcim.interface"
+          ],
+          "action_type": "webhook",
+          "action_object_type": "extras.webhook",
+          "action_object_id": "{{ webhook_vlan_interface.webhook.id }}",
           "type_create": true,
           "type_update": true
         }
