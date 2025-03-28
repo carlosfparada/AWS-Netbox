@@ -357,13 +357,13 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
-  - name: Delete Netbox Token
-    netbox.netbox.netbox_token:
-      netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
-      data:
-          key: "{{ netbox_token.json.key }}"
-      state: absent
+  # - name: Delete Netbox Token
+  #   netbox.netbox.netbox_token:
+  #     netbox_url: "{{ netbox_url }}"
+  #     netbox_token: "{{ netbox_token.json.key }}"
+  #     data:
+  #         key: "{{ netbox_token.json.key }}"
+  #     state: absent
 
   # - name: Delete an AAP Token
   #   ansible.platform.token:
