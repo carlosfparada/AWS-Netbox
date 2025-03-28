@@ -51,7 +51,7 @@
     - name: EOS Facts
       #connection: local
       arista.eos.eos_facts:
-        gather_subset: all
+        gather_subset: l3_interfaces
         gather_network_resources: all
       become: true
       register: _eos_facts
