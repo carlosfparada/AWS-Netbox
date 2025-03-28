@@ -18,7 +18,7 @@
         msg: "{{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
-    - name: Update VLAN to {{ device }} (Arista) 
+    - name: Update VLAN (Arista) 
       arista.eos.eos_l2_interfaces:
         config:
           - name: "{{ vlan_name }}"
