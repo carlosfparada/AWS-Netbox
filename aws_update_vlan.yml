@@ -15,7 +15,7 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ device }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+        msg: "{{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Update VLAN to {{ device }} (Arista) 
