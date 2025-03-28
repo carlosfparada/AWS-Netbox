@@ -315,10 +315,10 @@
         config: "{{ arista_vlans }}"
       become: yes
 
-    - name: Assign Arista VLANs to Interfaces
-      arista.eos.eos_l2_interfaces:
-        config: "{{ arista_l2_interfaces }}"
-      become: yes
+    # - name: Assign Arista VLANs to Interfaces
+    #   arista.eos.eos_l2_interfaces:
+    #     config: "{{ arista_l2_interfaces }}"
+    #   become: yes
 
     # - name: Create Arista IPv4 Addresses
     #   arista.eos.eos_l3_interfaces:
