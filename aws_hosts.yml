@@ -3,8 +3,8 @@
 # as it seems the Controller is not able to do that
 # automatically, as it isually do for Templates
 plugin: netbox.netbox.nb_inventory
-#api_endpoint: "https://{{lookup('ansible.builtin.env','netbox_url')}}"
-#token: "{{lookup('ansible.builtin.env','netbox_token')}}"
+#api_endpoint: <set using NETBOX_API Source variable, passed as EE as ENV Var>
+#token: <set using NETBOX_TOKEN Source variable, passed to the EE as ENV Var>
 validate_certs: no
 config_context: yes
 group_by:
