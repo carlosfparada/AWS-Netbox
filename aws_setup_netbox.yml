@@ -283,7 +283,7 @@
               "timestamp": "{{ timestamp }}",
               "data": "{{ data }}"
             },
-            "limit": "{{ data['device']['name'] }}"
+            "limit": "arista"
           }
       state: present
     register: webhook_vlan
