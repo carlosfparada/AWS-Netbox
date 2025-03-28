@@ -320,10 +320,10 @@
         config: "{{ arista_l2_interfaces }}"
       become: yes
 
-    - name: Create Arista IPv4 Addresses
-      arista.eos.eos_l3_interfaces:
-        config: "{{ arista_l3_interfaces }}"
-      become: yes
+    # - name: Create Arista IPv4 Addresses
+    #   arista.eos.eos_l3_interfaces:
+    #     config: "{{ arista_l3_interfaces }}"
+    #   become: yes
 
 - name: Provision Cisco Device
   hosts: cisco
