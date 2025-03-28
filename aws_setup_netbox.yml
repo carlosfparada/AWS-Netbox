@@ -357,7 +357,7 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
-  - name: Update Netbox Inventory Source (AAP URL and Token)
+  - name: Re-write Netbox Inventory Source (AAP URL and Token)
     vars:
       aap_hostname: "https://{{ groups['aap'][0] }}"
       aap_username: admin
@@ -381,6 +381,21 @@
             netbox_token: "{{ netbox_token.json.key }}"      
       include_role:
         name: infra.controller_configuration.inventory_sources
+
+  - name: Update Netbox Inventory Source
+    vars:
+      aap_hostname: "https://{{ groups['aap'][0] }}"
+      aap_username: admin
+      aap_password: "{{ aap_password }}"
+      aap_validate_certs: false
+      controller_inventory_source_update:
+        - name: Netbox Inventory Source Update
+          description: Netbox Inventory Source Update
+          organization: Default
+          inventory: Netbox Inventory
+          wait: True
+      include_role:
+        name: infra.aap_configuration.controller_inventory_source_update
 
 
   # - name: Delete Netbox Token
