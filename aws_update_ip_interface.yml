@@ -1,6 +1,6 @@
 ---
 
-- name: Update interface IPv4 (Cisco)
+- name: Update interface IP (Cisco)
   hosts: "{{ device }}"
   gather_facts: false
   vars_files: vars/main.yml
@@ -8,15 +8,17 @@
     ansible_connection: network_cli
     ansible_network_os: ios
   tasks:
-    - name: Debug Netbox data structure
+    - name: Debug Netbox data structure (Cisco)
       debug:
         msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-    - name: Debug Netbox relevant variables
+    - name: Debug Netbox relevant variables (Cisco)
       debug:
         msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-    - name: Cisco IOS update IPv4 to l3 interface on {{ device }}
+    - name: Update IPv4 to l3 interface on {{ device }} (Cisco)
       cisco.ios.ios_l3_interfaces:
         config: 
           - name: "{{ interface }}"
@@ -24,9 +26,9 @@
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == '4'
+      when: address_family == '4' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-    - name: Cisco IOS update IPv6 to l3 interface on {{ device }}
+    - name: Update IPv6 to l3 interface on {{ device }} (Cisco)
       cisco.ios.ios_l3_interfaces:
         config: 
           - name: "{{ interface }}"
@@ -34,11 +36,60 @@
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == '6'
+      when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-    - name: Cisco IOS update description to interface on {{ device }}
+    - name: Update description to interface on {{ device }} (Cisco)
       cisco.ios.ios_interfaces:
         config:
         - name: "{{ interface }}"
           description: "{{ description }}"
       become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+
+
+- name: Update interface IP (Arista)
+  hosts: "{{ device }}"
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+  tasks:
+    - name: Debug Netbox data structure (Arista)
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Debug Netbox relevant variables (Arista)
+      debug:
+        msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Update IPv4 to l3 interface on {{ device }} (Arista)
+      arista.eos.eos_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv4:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '4' and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Update IPv6 to l3 interface on {{ device }} (Arista)
+      arista.eos.eos_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv6:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Update description to interface on {{ device }} (Arista)
+      arista.eos.eos_interfaces:
+        config:
+        - name: "{{ interface }}"
+          description: "{{ description }}"
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
