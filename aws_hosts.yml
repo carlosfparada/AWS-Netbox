@@ -3,8 +3,8 @@
 # as it seems the Controller is not able to do that
 # automatically, as it isually do for Templates
 plugin: netbox.netbox.nb_inventory
-api_endpoint: https://172.16.1.60
-token: abc...
+api_endpoint: "https://{{ netbox_url }}"
+token: "{{ netbox_token }}"
 validate_certs: no
 config_context: yes
 group_by:
