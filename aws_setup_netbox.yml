@@ -170,8 +170,8 @@
       validate_certs: no
       data: 
         name: Webhook IP Address
-        content_types:    # void
-          - dcim.device   # void
+        content_types:    # void, only for backward-compatibility reasons
+          - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
         payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_ip.id }}/launch/"
         ssl_verification: no
