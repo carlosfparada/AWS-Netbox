@@ -1,0 +1,28 @@
+---
+
+- name: Update VLAN configs (Arista) 
+  hosts: "{{ device }}"
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+  tasks:
+    - name: Debug Netbox data structure (Arista) 
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Debug Netbox relevant variables (Arista) 
+      debug:
+        msg: "{{ device }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Update VLAN to {{ device }} (Arista) 
+      arista.eos.eos_l2_interfaces:
+        config:
+          - name: "{{ vlan_name }}"
+            vlan_id: "{{ vlan_id }}"
+        state: merged
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
