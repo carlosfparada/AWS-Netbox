@@ -344,7 +344,7 @@
         { 
           "name": "Event Rule VLAN",
           "content_types": [
-              "dcim.interface"
+              "ipam.vlan"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
