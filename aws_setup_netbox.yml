@@ -194,7 +194,6 @@
           { 
           "extra_vars": 
             {
-              "device": "{{ data['assigned_object']['device']['name'] }}",
               "interface": "{{ data['assigned_object']['name'] }}",
               "ip_address": "{{ data['address'] }}",
               "address_family": "{{ data['family']['value'] }}",
@@ -202,8 +201,7 @@
               "event": "{{ event }}",
               "timestamp": "{{ timestamp }}",
               "data": "{{ data }}"
-            },
-            "limit": "{{ data['assigned_object']['device']['name'] }}"
+            }
           }
       state: present
     register: webhook_ip
@@ -277,6 +275,7 @@
           { 
           "extra_vars": 
             {
+              "device": "{{ data['vid'] }}",              
               "vlan_id": "{{ data['vid'] }}",
               "vlan_name": "{{ data['name'] }}",
               "state": "{{ data['status']['value'] }}",
