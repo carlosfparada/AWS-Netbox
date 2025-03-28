@@ -9,6 +9,8 @@
       name: utils_hosts_aws
 
 
+# data: {'id': 4, 'url': '/api/ipam/ip-addresses/4/', 'display': '2.3.4.5/24', 'family': {'value': 4, 'label': 'IPv4'}, 'address': '2.3.4.5/24', 'vrf': None, 'tenant': None, 'status': {'value': 'active', 'label': 'Active'}, 'role': None, 'assigned_object_type': 'dcim.interface', 'assigned_object_id': 2, 'assigned_object': {'id': 2, 'url': '/api/dcim/interfaces/2/', 'display': 'GigabitEthernet2', 'device': OrderedDict([('id', 1), ('url', '/api/dcim/devices/1/'), ('display', 'ec2-54-196-88-149.compute-1.amazonaws.com'), ('name', 'ec2-54-196-88-149.compute-1.amazonaws.com')]), 'name': 'GigabitEthernet2', 'cable': None, '_occupied': False}, 'nat_inside': None, 'nat_outside': [], 'dns_name': '', 'description': '', 'comments': '', 'tags': [], 'custom_fields': {}, 'created': '2025-03-28T14:30:37.678047Z', 'last_updated': '2025-03-28T14:30:37.678068Z'}
+
 - name: Update interface IP (Cisco)
   hosts: "{{ device }}"
   gather_facts: false

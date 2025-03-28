@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Update VLAN configs (Arista) 
+- name: Create VLAN configs (Arista) 
   hosts: arista
   gather_facts: false
   vars_files: vars/main.yml

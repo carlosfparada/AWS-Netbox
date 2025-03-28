@@ -194,6 +194,7 @@
           { 
           "extra_vars": 
             {
+              "device": "{{ data['device']['name'] }}",
               "interface": "{{ data['assigned_object']['name'] }}",
               "ip_address": "{{ data['address'] }}",
               "address_family": "{{ data['family']['value'] }}",
@@ -234,7 +235,7 @@
           { 
           "extra_vars": 
             {
-              "device": "{{ data['device']['name'] }}",
+              "device": "{{ data['assigned_object']['device']['name'] }}",
               "interface": "{{ data['name'] }}",
               "vlan_id": "{{ data['untagged_vlan']['vid'] }}",
               "vlan_name": "{{ data['untagged_vlan']['name'] }}",
