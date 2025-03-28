@@ -357,6 +357,32 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
+  - name: Update Netbox Inventory Source (AAP URL and Token)
+    vars:
+      aap_hostname: "https://{{ groups['aap'][0] }}"
+      aap_username: admin
+      aap_password: "{{ aap_password }}"
+      aap_validate_certs: false
+      controller_inventory_sources:
+        - name: Netbox Inventory Source
+          # description: Netbox Inventory Source
+          # source: 'scm'
+          # source_project: "AWS Netbox Project"
+          # source_path: "aws_hosts.yml"
+          # credential: Netbox Credential
+          inventory: Netbox Inventory
+          # execution_environment: "{{ ee_name }}"
+          # update_on_launch: True
+          # update_cache_timeout: 0
+          # overwrite: True
+          # overwrite_vars: True
+          source_vars:
+            netbox_url: "{{ netbox_url }}"
+            netbox_token: "{{ netbox_token.json.key }}"      
+      include_role:
+        name: infra.controller_configuration.inventory_sources
+
+
   # - name: Delete Netbox Token
   #   netbox.netbox.netbox_token:
   #     netbox_url: "{{ netbox_url }}"
