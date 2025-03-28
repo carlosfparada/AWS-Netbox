@@ -375,6 +375,7 @@
   #     existing_token: "{{ aap_token }}"
   #     state: absent
 
+
 - name: Rewrite and Update Netbox Inventory Source
   hosts: localhost
   connection: local
