@@ -15,7 +15,7 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+        msg: "{{ vlan_id }}, {{ vlan_name }}, {{ state }}, {{ event }}, {{ timestamp }}, {{ data }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Update VLAN (Arista) 
@@ -23,6 +23,7 @@
         config:
           - name: "{{ vlan_name }}"
             vlan_id: "{{ vlan_id }}"
+            state: "{{ state }}"
         state: merged
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
