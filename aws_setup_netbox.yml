@@ -277,10 +277,8 @@
           { 
           "extra_vars": 
             {
-              "device": "{{ data['device']['name'] }}",
-              "interface": "{{ data['name'] }}",
-              "vlan_id": "{{ data['untagged_vlan']['vid'] }}",
-              "vlan_name": "{{ data['untagged_vlan']['name'] }}",
+              "vlan_id": "{{ data['vid'] }}",
+              "vlan_name": "{{ data['name'] }}",
               "event": "{{ event }}",
               "timestamp": "{{ timestamp }}",
               "data": "{{ data }}"
