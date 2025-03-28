@@ -30,6 +30,7 @@
           - "static_routes" 
           - "acls" 
           - "vlans"
+      become: true
       register: _ios_facts
     - name: Debug IOS facts
       debug:
