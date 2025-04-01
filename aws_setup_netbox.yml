@@ -108,18 +108,6 @@
     no_log: false
     register: job_template_vlan
 
-  # - name: Get AAP Job Template ID (EDA Config Context)
-  #   ansible.controller.job_template:
-  #     controller_host: "https://{{ groups['aap'][0] }}"
-  #     # controller_oauthtoken: "{{ aap_token }}"
-  #     controller_username: "admin"
-  #     controller_password: "{{ aap_password }}"
-  #     validate_certs: false
-  #     name: "AWS Netbox: Update Config Context"
-  #     state: exists
-  #   no_log: false
-  #   register: job_template_eda
-
   - name: Set Netbox URL
     ansible.builtin.set_fact:
       netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
@@ -319,25 +307,10 @@
         content_types:    # void, only for backward-compatibility reasons
           - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
-        #payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_eda.id }}/launch/"
         payload_url: "http://{{ groups['aap'][0] }}:{{ eda_port }}"
         ssl_verification: no
         http_method: POST
         http_content_type: application/json
-        # additional_headers: "Authorization: Bearer {{ aap_token.token }}"
-        # body_template: !unsafe >-
-        #   { 
-        #   "extra_vars": 
-        #     {
-        #       "vlan_id": "{{ data['vid'] }}",
-        #       "vlan_name": "{{ data['name'] }}",
-        #       "state": "{{ data['status']['value'] }}",
-        #       "event": "{{ event }}",
-        #       "timestamp": "{{ timestamp }}",
-        #       "data": "{{ data }}"
-        #     },
-        #     "limit": "arista"
-        #   }
       state: present
     register: webhook_eda
 
