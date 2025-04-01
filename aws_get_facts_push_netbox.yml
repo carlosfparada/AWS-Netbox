@@ -251,6 +251,36 @@
       throttle: 1
       delegate_to: localhost
 
+    - name: Create config context to site 
+      netbox.netbox.netbox_config_context:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data:
+          name: "login_banner"
+          description: "login_banner"
+          data: "{{ login_banner }}"
+          sites:
+            - "{{ site }}"
+        state: present
+      run_once: true
+      delegate_to: localhost
+
+    - name: Create config context to site 
+      netbox.netbox.netbox_config_context:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data:
+          name: "dns_servers"
+          description: "dns_servers"
+          data: "{{ dns_servers }}"
+          sites:
+            - "{{ site }}"
+        state: present
+      run_once: true
+      delegate_to: localhost
+
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
