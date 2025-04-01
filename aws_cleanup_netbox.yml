@@ -160,6 +160,22 @@
               token=netbox_token.json.key,
               validate_certs=False) }}"
 
+
+    - name: Cleanup config-contexts on {{ site }}
+      netbox.netbox.netbox_config_context:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data:
+          name: "{{ item.value.name }}"
+          sites:
+            - "{{ site }}"
+        state: absent
+      loop: "{{ query('netbox.netbox.nb_lookup', 'config-contexts',
+                    api_endpoint=netbox_url,
+                    token=netbox_token.json.key,
+                    validate_certs=False) }}"
+
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
