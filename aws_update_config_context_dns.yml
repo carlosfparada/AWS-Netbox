@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Update Banner configs (Arista) 
+- name: Update DNS configs (Arista) 
   hosts: arista
   gather_facts: false
   vars_files: vars/main.yml
@@ -24,13 +24,40 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
+        msg: "{{ data.name }}, {{ data.data.login_name.dns_server }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
-    - name: Update DNS (Arista) 
+    - name: Create DNS (Arista) 
       arista.eos.eos_banner:
         banner: login
         text: "{{ data.data.login_name.banner }}"
         state: present
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+
+- name: Update DNS configs (Arista) 
+  hosts: cisco
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+  tasks:
+    - name: Debug Netbox data structure (Cisco) 
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+
+    - name: Debug Netbox relevant variables (Cisco) 
+      debug:
+        msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+
+    - name: Create Banner (Cisco) 
+      cisco.ios.ios_banner:
+        banner: login
+        text: "{{ data.data.login_name.banner }}"
+        state: present
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
