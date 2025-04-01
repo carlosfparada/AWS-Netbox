@@ -88,7 +88,7 @@
     - name: Query config-context data on Netbox
       debug:
         var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'config-contexts',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'configcontext',
                     api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
