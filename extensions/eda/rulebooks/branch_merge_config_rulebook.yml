@@ -1,20 +1,16 @@
 ---
 - name: "Receive logs sourced from HTTP Server Profile in PAN-OS (config events)"
-  hosts: "localhost"
-  # Source PanOS config
+  hosts: localhost
+  # Source Netbox Webhook
   sources:
     - paloaltonetworks.panos.logs:
         host: 0.0.0.0
-        port: 5000
-        #type: config
+        port: 6000
   # Rule config logs
   rules:
-    - name: "Handle Config Logs - Compliance"
-      condition: event.payload.type == "CONFIG" and event.payload.cmd == "set" and event.payload.result == "Succeeded" and event.payload.path is search ("rulebase security rules")
+    - name: "Handle Branch Merge Event - Config"
+      condition: event.payload.type == "CONFIG"
       actions:
-        # Debug
-        # - debug: 
-        #     var: event.payload
         - print_event:
             pretty: true
         # Config tag compliance
