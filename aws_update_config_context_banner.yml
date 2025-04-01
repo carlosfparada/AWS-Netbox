@@ -9,7 +9,7 @@
       name: utils_hosts_aws
 
 
-- name: Create Banner nd DNS configs (Arista) 
+- name: Update Banner configs (Arista) 
   hosts: arista
   gather_facts: false
   vars_files: vars/main.yml
@@ -24,15 +24,13 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ vlan_id }}, {{ vlan_name }}, {{ state }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+        msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Create VLAN (Arista) 
-      arista.eos.eos_vlans:
-        config:
-          - name: "{{ vlan_name }}"
-            vlan_id: "{{ vlan_id }}"
-            state: "{{ state }}"
-        state: merged
+      arista.eos.eos_banner:
+        banner: login
+        text: "{{ data.data.login_name.banner }}"
+        state: present
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
