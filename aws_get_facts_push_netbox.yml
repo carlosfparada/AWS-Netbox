@@ -251,6 +251,8 @@
       throttle: 1
       delegate_to: localhost
 
+    
+
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"

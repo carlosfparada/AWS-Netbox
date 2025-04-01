@@ -294,7 +294,7 @@
       netbox_token: "{{ netbox_token.json.key }}"
       validate_certs: no
       data: 
-        name: Webhook EDA Config Context
+        name: Webhook Config Context (EDA)
       state: absent
 
   - name: Create Webhook on Netbox (EDA Config Context)
