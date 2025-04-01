@@ -39,6 +39,12 @@
       set_fact:
         _facts: "{{ _ios_facts }}"
 
+    - name: Get Banner
+      cisco.ios.ios_command:
+      commands:
+        - sh banner login
+      register: cisco_banner
+
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
@@ -60,6 +66,13 @@
     - name: Set EOS facts
       set_fact:
         _facts: "{{ _eos_facts }}"
+    - name: Get Banner
+      arista.eos.eos_command:
+      commands:
+        - sh banner login
+      register: arista_banner
+
+
 
 - name: Push to Netbox
   hosts: cisco,arista
