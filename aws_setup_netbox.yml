@@ -300,22 +300,22 @@
       state: present
     register: webhook_vlan
 
-  - name: Delete Webhook on Netbox (EDA)
+  - name: Delete Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
       netbox_token: "{{ netbox_token.json.key }}"
       validate_certs: no
       data: 
-        name: Webhook EDA
+        name: Webhook EDA Config Context
       state: absent
 
-  - name: Create Webhook on Netbox (EDA)
+  - name: Create Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
       netbox_token: "{{ netbox_token.json.key }}"
       validate_certs: no
       data: 
-        name: Webhook EDA
+        name: Webhook EDA Config Context
         content_types:    # void, only for backward-compatibility reasons
           - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
@@ -417,7 +417,7 @@
         { 
           "name": "Event Rule Config Context",
           "content_types": [
-              "ipam.vlan"
+              "extras.configcontext"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
