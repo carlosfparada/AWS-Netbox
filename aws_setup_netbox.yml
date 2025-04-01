@@ -453,14 +453,27 @@
     - {role: infra.aap_configuration.controller_inventory_source_update, when: controller_inventory_source_update is defined}
 
 
-# - name: Provision Arista Device
-#   hosts: arista
-#   gather_facts: false
-#   vars_files: vars/main.yml
-#   vars:
-#     ansible_connection: network_cli
-#     ansible_network_os: eos
-#   tasks:
+- name: Provision Arista Device
+  hosts: arista
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+  tasks:
+    - name: Create DNS Servers (Arista) 
+      arista.eos.eos_config:
+        lines:
+          - ip name-server 8.8.8.8
+      become: true
+
+    - name: Create Banner (Arista)
+      arista.eos.eos_banner:
+        banner: login
+        text: "This is my login Banner, set by Ansible (v1)"
+        state: present
+      become: true
+
 #     - name: Create Arista VLANs
 #       arista.eos.eos_vlans:
 #         config: "{{ arista_vlans }}"
@@ -476,14 +489,27 @@
 #         config: "{{ arista_l3_interfaces }}"
 #       become: yes
 
-# - name: Provision Cisco Device
-#   hosts: cisco
-#   gather_facts: false
-#   vars_files: vars/main.yml
-#   vars:
-#     ansible_connection: network_cli
-#     ansible_network_os: ios
-#   tasks:
+- name: Provision Cisco Device
+  hosts: cisco
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: ios
+  tasks:
+    - name: Create Banner (Cisco)
+      cisco.ios.ios_banner:
+        banner: login
+        text: "This is my login Banner, set by Ansible (v1)"
+        state: present
+      become: true
+
+    - name: Create DNS Servers (Cisco) 
+      cisco.ios.ios_config:
+        lines:
+          - ip name-server 8.8.8.8
+      become: true
+
 #     - name: Create Cisco VLANs
 #       cisco.ios.ios_vlans:
 #         config: "{{ cisco_vlans }}"
