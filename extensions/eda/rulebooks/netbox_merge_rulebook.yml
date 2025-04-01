@@ -1,5 +1,5 @@
 ---
-- name: "Receive logs sourced from HTTP Server Profile in PAN-OS (config events)"
+- name: "Receive Netbox Webhook events (config changes)"
   hosts: localhost
 
   # Source Netbox Webhook
