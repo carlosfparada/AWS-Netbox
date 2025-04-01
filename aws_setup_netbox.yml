@@ -108,17 +108,17 @@
     no_log: false
     register: job_template_vlan
 
-  - name: Get AAP Job Template ID (EDA Config Context)
-    ansible.controller.job_template:
-      controller_host: "https://{{ groups['aap'][0] }}"
-      # controller_oauthtoken: "{{ aap_token }}"
-      controller_username: "admin"
-      controller_password: "{{ aap_password }}"
-      validate_certs: false
-      name: "AWS Netbox: Update Config Context"
-      state: exists
-    no_log: false
-    register: job_template_eda
+  # - name: Get AAP Job Template ID (EDA Config Context)
+  #   ansible.controller.job_template:
+  #     controller_host: "https://{{ groups['aap'][0] }}"
+  #     # controller_oauthtoken: "{{ aap_token }}"
+  #     controller_username: "admin"
+  #     controller_password: "{{ aap_password }}"
+  #     validate_certs: false
+  #     name: "AWS Netbox: Update Config Context"
+  #     state: exists
+  #   no_log: false
+  #   register: job_template_eda
 
   - name: Set Netbox URL
     ansible.builtin.set_fact:
