@@ -410,7 +410,7 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
-  - name: Create an Event Rule (Config Context)
+  - name: Create an Event Rule (EDA Config Context)
     ansible.builtin.uri:
       url: "{{ netbox_url }}/api/extras/event-rules/"
       method: POST
