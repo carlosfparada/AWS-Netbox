@@ -25,7 +25,4 @@
         - run_job_template:
             organization: "Default"
             name: "AWS EDA Paloalto: Fix Compliance Log"
-        # Remediation Template
-        # - run_job_template:
-        #     organization: "Default"
-        #     name: "EDA Paloalto: config remediation"
+
