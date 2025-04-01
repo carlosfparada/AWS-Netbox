@@ -108,14 +108,14 @@
     no_log: false
     register: job_template_vlan
 
-  - name: Get AAP Job Template ID (Branch EDA)
+  - name: Get AAP Job Template ID (EDA Config Context)
     ansible.controller.job_template:
       controller_host: "https://{{ groups['aap'][0] }}"
       # controller_oauthtoken: "{{ aap_token }}"
       controller_username: "admin"
       controller_password: "{{ aap_password }}"
       validate_certs: false
-      name: "AWS Netbox: Branch EDA"
+      name: "AWS Netbox: Update Config Context"
       state: exists
     no_log: false
     register: job_template_eda
@@ -319,7 +319,8 @@
         content_types:    # void, only for backward-compatibility reasons
           - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
-        payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_vlan.id }}/launch/"
+        #payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_eda.id }}/launch/"
+        payload_url: "http://{{ groups['aap'][0] }}:6000"
         ssl_verification: no
         http_method: POST
         http_content_type: application/json
