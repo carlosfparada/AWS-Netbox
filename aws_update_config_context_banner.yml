@@ -31,13 +31,13 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.login_banner }}" 
+        msg: "{{ data.name }}, {{ data.data.login_banner.banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Create Banner (Arista) 
       arista.eos.eos_banner:
         banner: login
-        text: "{{ data.data.login_name.login_banner }}"
+        text: "{{ data.data.login_banner.banner }}"
         state: present
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
@@ -65,13 +65,13 @@
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.login_banner }}" 
+        msg: "{{ data.name }}, {{ data.data.login_banner.banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Create Banner (Cisco)
       cisco.ios.ios_banner:
         banner: login
-        text: "{{ data.data.login_name.login_banner }}"
+        text: "{{ data.data.login_banner.banner }}"
         state: present
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
