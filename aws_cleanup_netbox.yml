@@ -160,7 +160,6 @@
               token=netbox_token.json.key,
               validate_certs=False) }}"
 
-
     - name: Cleanup config-contexts on {{ site }}
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
