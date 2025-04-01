@@ -1,24 +1,32 @@
 ---
 - name: "Receive logs sourced from HTTP Server Profile in PAN-OS (config events)"
   hosts: localhost
+
   # Source Netbox Webhook
   sources:
-    - paloaltonetworks.panos.logs:
+    - ansible.eda.webhook:
         host: 0.0.0.0
         port: 6000
+
   # Rule config logs
   rules:
-    - name: "Handle Branch Merge Event - Config"
+
+    - name: "Handle Branch Merge Event - Banner Config"
       condition: event.payload.type == "CONFIG"
       actions:
         - print_event:
             pretty: true
-        # Config tag compliance
+        # Config banner
         - run_job_template:
             organization: "Default"
-            name: "AWS EDA Paloalto: Fix Compliance Tag"
-        # Config log compliance
-        - run_job_template:
-            organization: "Default"
-            name: "AWS EDA Paloalto: Fix Compliance Log"
+            name: "AWS Netbox: Banner Config"
 
+    - name: "Handle Branch Merge Event - DNS Config"
+      condition: event.payload.event == "CONFIG"
+      actions:
+        - print_event:
+            pretty: true
+        # Config DNS
+        - run_job_template:
+            organization: "Default"
+            name: "AWS Netbox: DNS Config"
