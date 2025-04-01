@@ -38,6 +38,7 @@ ec2_sg_rules:
     icmp_type:  -1 # icmp subtype, -1 = any subtype
     cidr_ip: 0.0.0.0/0
     rule_desc: Allow all ICMP
+eda_port: 6000
 
 # NETBOX
 # AMI

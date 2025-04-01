@@ -320,7 +320,7 @@
           - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
         #payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_eda.id }}/launch/"
-        payload_url: "http://{{ groups['aap'][0] }}:6000"
+        payload_url: "http://{{ groups['aap'][0] }}:{{ eda_port }}"
         ssl_verification: no
         http_method: POST
         http_content_type: application/json
