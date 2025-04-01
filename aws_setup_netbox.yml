@@ -461,17 +461,17 @@
     ansible_connection: network_cli
     ansible_network_os: eos
   tasks:
-    - name: Create DNS Servers (Arista) 
-      arista.eos.eos_config:
-        lines:
-          - ip name-server 8.8.8.8
-      become: true
-
     - name: Create Banner (Arista)
       arista.eos.eos_banner:
         banner: login
         text: "This is my login Banner, set by Ansible (v1)"
         state: present
+      become: true
+
+    - name: Create DNS Servers (Arista) 
+      arista.eos.eos_config:
+        lines:
+          - ip name-server 8.8.8.8
       become: true
 
 #     - name: Create Arista VLANs
