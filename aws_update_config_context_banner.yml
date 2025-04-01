@@ -17,6 +17,9 @@
     ansible_connection: network_cli
     ansible_network_os: eos
   tasks:
+    - debug:
+      var: hostvars[inventory_hostname]
+
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
@@ -44,6 +47,9 @@
     ansible_connection: network_cli
     ansible_network_os: ios
   tasks:
+    - debug:
+      var: hostvars[inventory_hostname]
+
     - name: Debug Netbox data structure (Cisco) 
       debug:
         msg: "{{ data }}" 
