@@ -11,7 +11,7 @@
   # Rule config logs
   rules:
 
-    - name: "Handle Branch Merge Event - Banner Config"
+    - name: "Handle Config Context Change Event - Banner Config"
       condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("config context login_banner updated", ignorecase=true)
       actions:
         - print_event:
@@ -19,9 +19,9 @@
         # Config banner
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: Banner Config"
+            name: "AWS Netbox: Update Config Context"
 
-    - name: "Handle Branch Merge Event - DNS Config"
+    - name: "Handle Config Context Change Event - DNS Config"
       condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("DNS", ignorecase=true)
       actions:
         - print_event:
@@ -29,4 +29,4 @@
         # Config DNS
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: DNS Config"
+            name: "AWS Netbox: Update Config Context"
