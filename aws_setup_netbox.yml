@@ -388,16 +388,7 @@
     aap_validate_certs: false
     controller_inventory_sources:
       - name: Netbox Inventory Source
-        # description: Netbox Inventory Source
-        # source: 'scm'
-        # source_project: "AWS Netbox Project"
-        # source_path: "aws_hosts.yml"
-        # credential: Netbox Credential
         inventory: Netbox Inventory
-        # update_on_launch: True
-        # update_cache_timeout: 0
-        # overwrite: True
-        # overwrite_vars: True
         source_vars:
           NETBOX_API: "{{ netbox_url }}"
           NETBOX_TOKEN: "{{ netbox_token.json.key }}"      
