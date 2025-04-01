@@ -314,20 +314,20 @@
         ssl_verification: no
         http_method: POST
         http_content_type: application/json
-        additional_headers: "Authorization: Bearer {{ aap_token.token }}"
-        body_template: !unsafe >-
-          { 
-          "extra_vars": 
-            {
-              "vlan_id": "{{ data['vid'] }}",
-              "vlan_name": "{{ data['name'] }}",
-              "state": "{{ data['status']['value'] }}",
-              "event": "{{ event }}",
-              "timestamp": "{{ timestamp }}",
-              "data": "{{ data }}"
-            },
-            "limit": "arista"
-          }
+        # additional_headers: "Authorization: Bearer {{ aap_token.token }}"
+        # body_template: !unsafe >-
+        #   { 
+        #   "extra_vars": 
+        #     {
+        #       "vlan_id": "{{ data['vid'] }}",
+        #       "vlan_name": "{{ data['name'] }}",
+        #       "state": "{{ data['status']['value'] }}",
+        #       "event": "{{ event }}",
+        #       "timestamp": "{{ timestamp }}",
+        #       "data": "{{ data }}"
+        #     },
+        #     "limit": "arista"
+        #   }
       state: present
     register: webhook_eda
 
