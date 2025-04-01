@@ -20,6 +20,10 @@
     - debug:
         var: hostvars[inventory_hostname]
 
+    - name: Set facts
+      ansible.builtin.set_fact:
+        data: "{{ ansible_eda.event.payload.data }}"
+
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
