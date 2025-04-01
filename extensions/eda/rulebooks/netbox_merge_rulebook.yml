@@ -22,7 +22,7 @@
             name: "AWS Netbox: Banner Config"
 
     - name: "Handle Branch Merge Event - DNS Config"
-      condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("Creating VLAN", ignorecase=true)
+      condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("DNS", ignorecase=true)
       actions:
         - print_event:
             pretty: true
