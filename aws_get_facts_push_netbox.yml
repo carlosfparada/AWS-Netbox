@@ -32,9 +32,9 @@
           - "vlans"
       become: true
       register: _ios_facts
-    - name: Debug IOS facts
-      debug:
-        var: _ios_facts
+    # - name: Debug IOS facts
+    #   debug:
+    #     var: _ios_facts
     - name: Set IOS facts
       set_fact:
         _facts: "{{ _ios_facts }}"
@@ -42,13 +42,13 @@
     - name: Get IOS Banner
       cisco.ios.ios_command:
         commands:
-          - sh banner login
+          - show banner login
       register: cisco_banner
 
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
         commands:
-          - sh ip name-server
+          - show ip name-server
       register: cisco_nameservers
 
 - name: Collect Arista Facts
@@ -66,9 +66,9 @@
         gather_network_resources: all
       become: true
       register: _eos_facts
-    - name: Debug EOS facts
-      debug:
-        var: _eos_facts
+    # - name: Debug EOS facts
+    #   debug:
+    #     var: _eos_facts
     - name: Set EOS facts
       set_fact:
         _facts: "{{ _eos_facts }}"
@@ -76,13 +76,13 @@
     - name: Get EOS Banner
       arista.eos.eos_command:
         commands:
-          - sh banner login
+          - show banner login
       register: arista_banner
 
     - name: Get EOS Name Servers
       arista.eos.eos_command:
         commands:
-          - sh ip name-server
+          - show ip name-server
       register: arista_nameservers
 
 - name: Push to Netbox
