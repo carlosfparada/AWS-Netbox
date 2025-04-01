@@ -31,13 +31,13 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
+        msg: "{{ data.name }}, {{ data.data.login_name.login_banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Create Banner (Arista) 
       arista.eos.eos_banner:
         banner: login
-        text: "{{ data.data.login_name.banner }}"
+        text: "{{ data.data.login_name.login_banner }}"
         state: present
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
