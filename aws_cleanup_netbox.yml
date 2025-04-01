@@ -168,8 +168,7 @@
         validate_certs: no
         data:
           name: "{{ item.value.name }}"
-          sites:
-            - "{{ site }}"
+          data: "{{ dns_servers }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'config-contexts',
                     api_endpoint=netbox_url,
