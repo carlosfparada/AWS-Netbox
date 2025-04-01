@@ -251,7 +251,7 @@
       throttle: 1
       delegate_to: localhost
 
-    - name: Create config context to site 
+    - name: Create login_banner config context on {{ site }} 
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
@@ -266,7 +266,7 @@
       run_once: true
       delegate_to: localhost
 
-    - name: Create config context to site 
+    - name: Create dns_servers config context on {{ site }}
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
         netbox_token: "{{ netbox_token.json.key }}"
