@@ -28,7 +28,7 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.dns_server }}" 
+        msg: "{{ data.name }}, {{ data.data.dns_server }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Clean Up DNS Server (Arista) 
@@ -42,7 +42,7 @@
       arista.eos.eos_command:
         lines:
           - ip name-server {{ item }}
-      loop: "{{ data.data.login_name.dns_servers }}"
+      loop: "{{ data.data.dns_servers }}"
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
@@ -66,7 +66,7 @@
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.login_name.dns_servers }}" 
+        msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Clean Up DNS Server (Cisco) 
@@ -80,6 +80,6 @@
       cisco.ios.ios_command:
         lines:
           - ip name-server {{ item }}
-      loop: "{{ data.data.login_name.dns_servers }}"
+      loop: "{{ data.data.dns_servers }}"
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
