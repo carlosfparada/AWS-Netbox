@@ -288,6 +288,37 @@
       state: present
     register: webhook_vlan
 
+  - name: Create Webhook on Netbox (EDA)
+    netbox.netbox.netbox_webhook:
+      netbox_url: "{{ netbox_url }}"
+      netbox_token: "{{ netbox_token.json.key }}"
+      validate_certs: no
+      data: 
+        name: Webhook VLAN
+        content_types:    # void, only for backward-compatibility reasons
+          - dcim.device   # void, only for backward-compatibility reasons
+        enabled: true
+        payload_url: "https://{{ groups['aap'][0] }}/api/controller/v2/job_templates/{{ job_template_vlan.id }}/launch/"
+        ssl_verification: no
+        http_method: POST
+        http_content_type: application/json
+        additional_headers: "Authorization: Bearer {{ aap_token.token }}"
+        body_template: !unsafe >-
+          { 
+          "extra_vars": 
+            {
+              "vlan_id": "{{ data['vid'] }}",
+              "vlan_name": "{{ data['name'] }}",
+              "state": "{{ data['status']['value'] }}",
+              "event": "{{ event }}",
+              "timestamp": "{{ timestamp }}",
+              "data": "{{ data }}"
+            },
+            "limit": "arista"
+          }
+      state: present
+    register: webhook_eda
+
   - name: Create an Event Rule (IP Address)
     ansible.builtin.uri:
       url: "{{ netbox_url }}/api/extras/event-rules/"
@@ -347,6 +378,29 @@
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_vlan.webhook.id }}",
+          "type_create": true,
+          "type_update": true
+        }
+      body_format: json
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json; indent=4"
+        Authorization: "Token {{ netbox_token.json.key }}"
+      status_code: 201
+
+  - name: Create an Event Rule (EDA)
+    ansible.builtin.uri:
+      url: "{{ netbox_url }}/api/extras/event-rules/"
+      method: POST
+      body: |
+        { 
+          "name": "Event Rule EDA",
+          "content_types": [
+              "ipam.vlan"
+          ],
+          "action_type": "webhook",
+          "action_object_type": "extras.webhook",
+          "action_object_id": "{{ webhook_eda.webhook.id }}",
           "type_create": true,
           "type_update": true
         }
