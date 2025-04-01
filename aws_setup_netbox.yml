@@ -359,18 +359,34 @@
 
   - name: Create config context to site 
     netbox.netbox.netbox_config_context:
-      netbox_url: http://netbox.local
-      netbox_token: thisIsMyToken
+      netbox_url: "{{ netbox_url }}"
+      netbox_token: "{{ netbox_token.json.key }}"
+      validate_certs: no
       data:
-        name: "dns_nameservers-quadnine"
-        description: "9.9.9.9"
+        name: "login_banner"
+        description: "login_banner"
         data: |
           {
-            "login_baner"
-              [
-                "This is my Login Banner, set by Ansible"
-              ]
-            "dns_servers"
+            "login_banner":
+              {
+                "banner": "This is my Login Banner, set by Ansible"
+              }
+          }
+        sites:
+          - "{{ site }}"
+        state: present
+
+  - name: Create config context to site 
+    netbox.netbox.netbox_config_context:
+      netbox_url: "{{ netbox_url }}"
+      netbox_token: "{{ netbox_token.json.key }}"
+      validate_certs: no
+      data:
+        name: "dns_servers"
+        description: "dns_servers"
+        data: |
+          {
+            "dns_servers":
               [
                 "8.8.8.8",
                 "8.8.8.9"
@@ -378,6 +394,7 @@
           }
         sites:
           - "{{ site }}"
+        state: present
 
 
   # - name: Delete Netbox Token
