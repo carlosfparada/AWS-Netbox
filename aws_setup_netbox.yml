@@ -357,6 +357,27 @@
         Authorization: "Token {{ netbox_token.json.key }}"
       status_code: 201
 
+  - name: Create config context to site 
+    netbox.netbox.netbox_config_context:
+      netbox_url: http://netbox.local
+      netbox_token: thisIsMyToken
+      data:
+        name: "dns_nameservers-quadnine"
+        description: "9.9.9.9"
+        data: |
+          {
+            "login_baner"
+              [
+                "This is my Login Banner, set by Ansible"
+              ]
+            "login_baner"
+              [
+                "This is my Login Banner, set by Ansible"
+              ]          
+        sites:
+          - "{{ site }}"
+
+
   # - name: Delete Netbox Token
   #   netbox.netbox.netbox_token:
   #     netbox_url: "{{ netbox_url }}"
