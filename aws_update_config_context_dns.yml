@@ -27,7 +27,7 @@
         msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
-    - name: Create VLAN (Arista) 
+    - name: Update DNS (Arista) 
       arista.eos.eos_banner:
         banner: login
         text: "{{ data.data.login_name.banner }}"

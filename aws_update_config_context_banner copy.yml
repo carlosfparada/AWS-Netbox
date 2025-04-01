@@ -1,0 +1,36 @@
+---
+
+- name: Get nodes from Inventory and add to Groups
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - include_role: 
+      name: utils_hosts_aws
+
+
+- name: Update DNS configs (Arista) 
+  hosts: arista
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: eos
+  tasks:
+    - name: Debug Netbox data structure (Arista) 
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Debug Netbox relevant variables (Arista) 
+      debug:
+        msg: "{{ data.name }}, {{ data.data.login_name.banner }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Create Banner (Arista) 
+      arista.eos.eos_banner:
+        banner: login
+        text: "{{ data.data.login_name.banner }}"
+        state: present
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
