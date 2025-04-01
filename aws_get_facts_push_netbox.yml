@@ -41,14 +41,14 @@
 
     - name: Get IOS Banner
       cisco.ios.ios_command:
-      commands:
-        - sh banner login
+        commands:
+          - sh banner login
       register: cisco_banner
 
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
-      commands:
-        - sh ip name-server
+        commands:
+          - sh ip name-server
       register: cisco_nameservers
 
 - name: Collect Arista Facts
@@ -75,14 +75,14 @@
 
     - name: Get EOS Banner
       arista.eos.eos_command:
-      commands:
-        - sh banner login
+        commands:
+          - sh banner login
       register: arista_banner
 
     - name: Get EOS Name Servers
       arista.eos.eos_command:
-      commands:
-        - sh ip name-server
+        commands:
+          - sh ip name-server
       register: arista_nameservers
 
 - name: Push to Netbox
