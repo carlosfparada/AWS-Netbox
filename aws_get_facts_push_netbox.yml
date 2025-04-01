@@ -43,7 +43,7 @@
       cisco.ios.ios_command:
         commands:
           - show banner login
-      register: cisco_banner
+      #register: cisco_banner
 
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
