@@ -11,7 +11,7 @@
   # Rule config logs
   rules:
 
-    - name: "Handle Config Context Change Event - Banner Config"
+    - name: "Handle Config Context Change Event - Banner Config (EDA)"
       condition: event.payload.data.name == "login_banner"
       actions:
         - print_event:
@@ -19,9 +19,9 @@
         # Config banner
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: Update Config Context"
+            name: "AWS Netbox: Update Banner"
 
-    - name: "Handle Config Context Change Event - DNS Config"
+    - name: "Handle Config Context Change Event - DNS Config (EDA)"
       condition: event.payload.data.name == "dns_servers"
       actions:
         - print_event:
@@ -29,4 +29,4 @@
         # Config DNS
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: Update Config Context"
+            name: "AWS Netbox: Update DNS"
