@@ -96,7 +96,7 @@
     no_log: false
     register: job_template_vlan_interface
 
-  - name: Get AAP Job Template ID (Update VLAN
+  - name: Get AAP Job Template ID (Update VLAN)
     ansible.controller.job_template:
       controller_host: "https://{{ groups['aap'][0] }}"
       # controller_oauthtoken: "{{ aap_token }}"
@@ -107,6 +107,18 @@
       state: exists
     no_log: false
     register: job_template_vlan
+
+  - name: Get AAP Job Template ID (Branch EDA)
+    ansible.controller.job_template:
+      controller_host: "https://{{ groups['aap'][0] }}"
+      # controller_oauthtoken: "{{ aap_token }}"
+      controller_username: "admin"
+      controller_password: "{{ aap_password }}"
+      validate_certs: false
+      name: "AWS Netbox: Branch EDA"
+      state: exists
+    no_log: false
+    register: job_template_eda
 
   - name: Set Netbox URL
     ansible.builtin.set_fact:
@@ -294,7 +306,7 @@
       netbox_token: "{{ netbox_token.json.key }}"
       validate_certs: no
       data: 
-        name: Webhook VLAN
+        name: Webhook EDA
         content_types:    # void, only for backward-compatibility reasons
           - dcim.device   # void, only for backward-compatibility reasons
         enabled: true
