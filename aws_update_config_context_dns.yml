@@ -28,14 +28,14 @@
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Clean Up DNS Server (Arista) 
-      cisco.ios.ios_command:
+      arista.eos.eos_command:
         lines:
           - no ip name-server
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Create DNS Servers (Arista) 
-      cisco.ios.ios_command:
+      arista.eos.eos_command:
         lines:
           - ip name-server {{ item }}
       loop: "{{ data.data.login_name.dns_servers }}"
