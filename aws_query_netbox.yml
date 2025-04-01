@@ -85,10 +85,10 @@
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
-    - name: Query config-context data on Netbox
+    - name: Query config-contexts data on Netbox
       debug:
         var: item
-      loop: "{{ query('netbox.netbox.nb_lookup', 'configcontext',
+      loop: "{{ query('netbox.netbox.nb_lookup', 'config-contexts',
                     api_endpoint=netbox_url,
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
