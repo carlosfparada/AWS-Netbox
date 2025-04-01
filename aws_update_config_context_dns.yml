@@ -27,11 +27,18 @@
         msg: "{{ data.name }}, {{ data.data.login_name.dns_server }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
-    - name: Create DNS (Arista) 
-      arista.eos.eos_banner:
-        banner: login
-        text: "{{ data.data.login_name.banner }}"
-        state: present
+    - name: Clean Up DNS Server (Arista) 
+      cisco.ios.ios_command:
+        lines:
+          - no ip name-server
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+
+    - name: Create DNS Servers (Arista) 
+      cisco.ios.ios_command:
+        lines:
+          - ip name-server {{ item }}
+      loop: "{{ data.data.login_name.dns_servers }}"
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
@@ -54,10 +61,17 @@
         msg: "{{ data.name }}, {{ data.data.login_name.dns_servers }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
-    - name: Create DNS (Cisco) 
-      cisco.ios.ios_banner:
-        banner: login
-        text: "{{ data.data.login_name.banner }}"
-        state: present
+    - name: Clean Up DNS Server (Cisco) 
+      cisco.ios.ios_command:
+        lines:
+          - no ip name-server
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+
+    - name: Create DNS Servers (Cisco) 
+      cisco.ios.ios_command:
+        lines:
+          - ip name-server {{ item }}
+      loop: "{{ data.data.login_name.dns_servers }}"
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
