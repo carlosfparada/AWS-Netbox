@@ -19,7 +19,7 @@
         # Config banner
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: Update Banner"
+            name: "AWS Netbox: Update Banner (EDA)"
 
     - name: "Handle Config Context Change Event - DNS Config (EDA)"
       condition: event.payload.data.name == "dns_servers"
@@ -29,4 +29,4 @@
         # Config DNS
         - run_job_template:
             organization: "Default"
-            name: "AWS Netbox: Update DNS"
+            name: "AWS Netbox: Update DNS (EDA)"
