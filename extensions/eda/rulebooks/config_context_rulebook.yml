@@ -12,7 +12,7 @@
   rules:
 
     - name: "Handle Config Context Change Event - Banner Config"
-      condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("config context login_banner updated", ignorecase=true)
+      condition: event.payload.data.name == "login_banner"
       actions:
         - print_event:
             pretty: true
@@ -22,7 +22,7 @@
             name: "AWS Netbox: Update Config Context"
 
     - name: "Handle Config Context Change Event - DNS Config"
-      condition: event.payload.event == "job_ended" and event.payload.model == "branch" and event.payload.data.log is search("DNS", ignorecase=true)
+      condition: event.payload.data.name == "dns_servers"
       actions:
         - print_event:
             pretty: true
