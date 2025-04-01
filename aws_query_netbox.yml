@@ -85,6 +85,14 @@
                     token=netbox_token.json.key,
                     validate_certs=False) }}"
 
+    - name: Query sites data on Netbox
+      debug:
+        var: item
+      loop: "{{ query('netbox.netbox.nb_lookup', 'config-context',
+                    api_endpoint=netbox_url,
+                    token=netbox_token.json.key,
+                    validate_certs=False) }}"
+
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
