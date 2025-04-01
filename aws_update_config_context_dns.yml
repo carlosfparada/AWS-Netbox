@@ -28,7 +28,7 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data.dns_server }}" 
+        msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Clean Up DNS Server (Arista) 
