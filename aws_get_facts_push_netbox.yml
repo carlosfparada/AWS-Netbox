@@ -57,7 +57,8 @@
     - debug:
         var: banner
     - debug:
-        var: banner.stdout[0] | regex_search('^[[(.*)]]$','\\1') | first
+        msg: "{{ banner.stdout[0] | regex_search('^[[(.*)]]$','\\1') | first }}"
+
 
     - debug:
         var: aanameservers.stdout[0]
