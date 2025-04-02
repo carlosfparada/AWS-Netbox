@@ -55,12 +55,6 @@
           - show ip name-server
       register: nameservers
 
-
-    - debug:
-        var: nameservers.stdout_lines
-    - debug:
-        var: nameservers.stdout_lines[0]
-
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
@@ -317,7 +311,7 @@
           description: "dns_servers"
           data: |
             {
-              "dns_servers": "{{ nameservers.stdout_lines }}"
+              "dns_servers": "{{ nameservers.stdout_lines[0] }}"
             }
           sites:
             - "{{ site }}"
