@@ -28,7 +28,7 @@
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
-        msg: "{{ data.name }}, {{ data.data..banner }}" 
+        msg: "{{ data.name }}, {{ data.data.login_banner.banner }}" 
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Create Banner (Arista) 
