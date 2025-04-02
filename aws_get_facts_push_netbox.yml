@@ -52,7 +52,7 @@
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
         commands:
-          - show ip name-server
+          - show ip name-servers
       register: nameservers
 
 - name: Collect Arista Facts
@@ -297,7 +297,7 @@
         state: present
       run_once: true
       delegate_to: localhost
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
@@ -316,7 +316,7 @@
         state: present
       run_once: true
       delegate_to: localhost
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
     - name: Delete Token
       netbox.netbox.netbox_token:
