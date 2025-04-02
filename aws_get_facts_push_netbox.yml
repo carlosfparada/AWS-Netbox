@@ -55,17 +55,6 @@
           - show ip name-server
       register: nameservers
 
-    - debug:
-        var: banner.stdout_lines
-    - debug:
-        var: banner.stdout_lines|list
-    - debug:
-        var: banner.stdout[0] | split('\n') | first
-    # - debug:
-    #     msg: "{{ banner.stdout[0] | regex_search('(.*)', '\\1', multiline=True) }}"
-    - debug:
-        var: banner.stdout| from_yaml | first
-
 
     - debug:
         var: nameservers.stdout_lines
@@ -309,7 +298,7 @@
             {
               "login_banner":
                 {
-                  "banner": "{{ banner.stdout_lines }}"
+                  "banner": "{{ banner.stdout[0] | split('\n') | first }}"
                 }
             }
           sites:
