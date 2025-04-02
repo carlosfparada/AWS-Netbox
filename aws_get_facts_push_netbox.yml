@@ -58,6 +58,7 @@
         command: "show running | section banner"
         parser:
           name: ansible.netcommon.ntc_templates
+      become: true
       register: _int_result
 
 - name: Collect Arista Facts
