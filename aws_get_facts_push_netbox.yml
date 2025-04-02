@@ -65,10 +65,8 @@
   tasks:
     - name: EOS Facts
       arista.eos.eos_facts:
-        # gather_subset: all
-        # gather_network_resources: all
-        gather_subset: config
-        gather_network_resources: config
+        gather_subset: all
+        gather_network_resources: all
       become: true
       register: _eos_facts
     # - name: Debug EOS facts
