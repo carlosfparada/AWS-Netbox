@@ -56,9 +56,13 @@
       register: nameservers
 
     - debug:
-        var: banner.stdout
+        var: banner.stdout_lines
     - debug:
-        var: banner.stdout_lines[0]
+        var: banner.stdout_lines[0][1]
+    - debug:
+        var: banner.stdout_lines[0][2]
+    - debug:
+        var: banner.stdout_lines[0][3]
     - debug:
         var: banner.stdout|list
     - debug:
