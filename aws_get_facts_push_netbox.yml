@@ -314,7 +314,7 @@
           sites:
             - "{{ site }}"
         state: present
-      run_once: true
+      #run_once: true
       delegate_to: localhost
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
@@ -325,6 +325,6 @@
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
-      run_once: true
+      #run_once: true
       delegate_to: localhost
 
