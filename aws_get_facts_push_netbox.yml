@@ -64,7 +64,7 @@
     - debug:
         var: banner.stdout[0] | split('\n') 
     - debug:
-        msg: "{{ banner.stdout_lines[0][0] | regex_search('(.*)', '\\1', multiline=True) }}"
+        msg: "{{ banner.stdout[0] | regex_search('(.*)', '\\1', multiline=True) }}"
 
 
     # - debug:
