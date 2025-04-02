@@ -54,6 +54,12 @@
           - show ip name-server
       register: nameservers
 
+    - ansible.utils.cli_parse:
+        command: "show interface"
+        parser:
+          name: ansible.netcommon.ntc_templates
+      register: _int_result
+
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
