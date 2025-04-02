@@ -55,11 +55,9 @@
       register: nameservers
 
     - debug:
-        var: banner.stdout[0]|list
+        var: banner.stdout|list
     - debug:
-        var: banner.stdout[0] | list
-    - debug:
-        var: banner.stdout[0] | split('\n')
+        var: banner.stdout | split('\n')
     - debug:
         msg: "{{ banner.stdout_lines[0][0] | regex_search('(.*)', '\\1', multiline=True) }}"
 
