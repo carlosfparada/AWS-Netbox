@@ -290,10 +290,7 @@
           description: "login_banner"
           data: |
             {
-              "login_banner":
-                {
-                  "banner": "{{ banner.stdout[0] | split('\n') | first }}"
-                }
+              "login_banner": "{{ banner.stdout[0] | split('\n') | first }}"
             }
           sites:
             - "{{ site }}"
@@ -312,7 +309,7 @@
           description: "dns_servers"
           data: |
             {
-              "dns_servers": "{{ nameservers.stdout_lines[0] }}"
+              "dns_servers": {{ nameservers.stdout_lines[0] }}
             }
           sites:
             - "{{ site }}"
