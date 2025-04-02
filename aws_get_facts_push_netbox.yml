@@ -295,7 +295,7 @@
           sites:
             - "{{ site }}"
         state: present
-      run_once: true
+      throttle: 1
       delegate_to: localhost
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
@@ -314,7 +314,7 @@
           sites:
             - "{{ site }}"
         state: present
-      #run_once: true
+      throttle: 1
       delegate_to: localhost
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
 
