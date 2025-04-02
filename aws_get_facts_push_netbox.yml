@@ -55,9 +55,9 @@
       register: nameservers
 
     - debug:
-        var: banner
+        var: banner.stdout[0]
     - debug:
-        var: banner.stdout[0] | regex_search('^(.*)$','\\1')
+        var: banner.stdout[0] | regex_search('(.*)','\\1')
 
 
     - debug:
