@@ -68,7 +68,7 @@
         var: "{{banner.stdout[0]}}"
 
     - debug:
-        var: nameservers.stdout[0]
+        var: aanameservers.stdout[0]
     - debug:
         var: nameservers.stdout
     - debug:
