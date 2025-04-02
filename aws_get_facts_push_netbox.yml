@@ -54,6 +54,12 @@
           - show ip name-server
       register: nameservers
 
+    - name: Pass text and template_path
+      ansible.utils.cli_parse:
+        text: "{{ banner.stdout }}"
+        parser:
+          name: ansible.netcommon.ntc_templates
+
     - debug:
         var: banner.stdout[0]
     - debug:
