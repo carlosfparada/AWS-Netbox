@@ -71,12 +71,10 @@
         msg: "{{ banner.stdout[0] | regex_search('(.*)', '\\1', multiline=True) }}"
 
 
-    # - debug:
-    #     var: nameservers.stdout[0]
-    # - debug:
-    #     var: nameservers.stdout
-    # - debug:
-    #     msg: "{{nameservers.stdout[0]}}"
+    - debug:
+        var: nameservers.stdout_lines
+    - debug:
+        var: nameservers.stdout_lines[0]
 
 - name: Collect Arista Facts
   hosts: arista
