@@ -44,13 +44,13 @@
         commands:
           - show banner login
       become: true
-      register: cisco_banner
+      register: banner
 
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
         commands:
           - show ip name-server
-      register: cisco_nameservers
+      register: nameservers
 
 - name: Collect Arista Facts
   hosts: arista
@@ -79,13 +79,13 @@
         commands:
           - show banner login
       become: true
-      register: arista_banner
+      register: banner
 
     - name: Get EOS Name Servers
       arista.eos.eos_command:
         commands:
           - show ip name-server
-      register: arista_nameservers
+      register: nameservers
 
 - name: Push to Netbox
   hosts: cisco,arista
@@ -285,7 +285,13 @@
         data:
           name: "login_banner"
           description: "login_banner"
-          data: "{{ login_banner }}"
+          data: |
+            {
+              "login_banner":
+                {
+                  "banner": "{{ banner.stdout_lines }}"
+                }
+            }
           sites:
             - "{{ site }}"
         state: present
@@ -300,7 +306,10 @@
         data:
           name: "dns_servers"
           description: "dns_servers"
-          data: "{{ dns_servers }}"
+          data: |
+            {
+              "dns_servers": "{{ nameservers.stdout_lines }}"
+            }
           sites:
             - "{{ site }}"
         state: present
