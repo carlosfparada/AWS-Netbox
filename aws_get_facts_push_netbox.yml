@@ -55,10 +55,10 @@
       register: nameservers
 
     - debug:
-        var: banner.stdout[0]
+        var: banner.stdout[0][0]
         
     - debug:
-        var: nameservers.stdout[0]
+        var: nameservers.stdout[0] | split('\n')
 
     - debug:
         var: nameservers.stdout
