@@ -58,9 +58,9 @@
     - debug:
         var: banner.stdout
     - debug:
-        var: banner.stdout_lines
+        var: banner.stdout_lines[0]
     - debug:
-        var: banner.stdout|list[0]
+        var: banner.stdout|list
     - debug:
         var: banner.stdout[0] | split('\n') 
     - debug:
