@@ -44,7 +44,7 @@
     - name: Get IOS Banner
       cisco.ios.ios_command:
         commands:
-          - show banner
+          - show banner login
           #- show running-config
       become: true
       register: banner
