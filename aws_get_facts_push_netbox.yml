@@ -48,6 +48,8 @@
       become: true
       register: banner
 
+    - 
+
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
         commands:
@@ -57,15 +59,7 @@
     - debug:
         var: banner
     - debug:
-        var: banner.stdout[0]
-    - debug:
-        var: banner.stdout[0][2]
-    - debug:
-        var: banner.stdout[0][3]
-    - debug:
-        var: banner.stdout[0][4]
-    - debug:
-        var: "{{banner.stdout[0]}}"
+        var: banner.stdout[0] | regex_search('[[^(.*)]]$','\\1') | first
 
     - debug:
         var: aanameservers.stdout[0]
