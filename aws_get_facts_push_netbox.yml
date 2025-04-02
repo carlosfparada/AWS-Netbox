@@ -277,6 +277,12 @@
       throttle: 1
       delegate_to: localhost
 
+    - debug:
+        var: "{{ banner.stdout_lines }}"
+
+    - debug:
+        var: "{{ banner.stdout }}"
+
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
@@ -297,6 +303,12 @@
         state: present
       run_once: true
       delegate_to: localhost
+
+    - debug:
+        var: "{{ nameservers.stdout_lines }}"
+
+    - debug:
+        var: "{{ nameservers.stdout }}"
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
