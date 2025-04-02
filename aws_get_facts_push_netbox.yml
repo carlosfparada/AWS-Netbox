@@ -54,6 +54,15 @@
           - show ip name-server
       register: nameservers
 
+    - debug:
+        var: banner.stdout[0]
+        
+    - debug:
+        var: nameservers.stdout[0]
+
+    - debug:
+        var: nameservers.stdout
+
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
@@ -279,9 +288,6 @@
       throttle: 1
       delegate_to: localhost
 
-    - debug:
-        var: banner.stdout[0]
-
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
@@ -302,12 +308,6 @@
         state: present
       run_once: true
       delegate_to: localhost
-
-    - debug:
-        var: nameservers.stdout_lines
-
-    - debug:
-        var: nameservers.stdout
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
