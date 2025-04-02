@@ -55,7 +55,7 @@
       register: nameservers
 
     - ansible.utils.cli_parse:
-        command: "show interface"
+        command: "show running | section banner"
         parser:
           name: ansible.netcommon.ntc_templates
       register: _int_result
