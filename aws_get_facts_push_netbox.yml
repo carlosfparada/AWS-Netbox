@@ -55,9 +55,15 @@
       register: nameservers
 
     - debug:
+        var: banner
+    - debug:
         var: banner.stdout[0]
     - debug:
         var: banner.stdout[0][2]
+    - debug:
+        var: banner.stdout[0][3]
+    - debug:
+        var: banner.stdout[0][4]
     - debug:
         var: "{{banner.stdout[0]}}"
 
