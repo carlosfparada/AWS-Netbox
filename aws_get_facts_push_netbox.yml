@@ -45,7 +45,7 @@
       cisco.ios.ios_command:
         commands:
           #- show banner login
-          - show running config
+          - show running-config
       become: true
       register: banner
 
