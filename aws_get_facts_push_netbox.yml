@@ -300,6 +300,7 @@
         state: present
       run_once: true
       delegate_to: localhost
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
@@ -318,6 +319,7 @@
         state: present
       run_once: true
       delegate_to: localhost
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Delete Token
       netbox.netbox.netbox_token:
