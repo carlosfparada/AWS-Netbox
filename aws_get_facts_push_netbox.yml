@@ -21,15 +21,17 @@
       #connection: local
       cisco.ios.ios_facts:
         gather_subset:
-          - hardware
+          # - hardware
+          - all
         gather_network_resources:
-          - "interfaces"
-          - "l2_interfaces"
-          - "l3_interfaces"
-          - "acl_interfaces"
-          - "static_routes" 
-          - "acls" 
-          - "vlans"
+          # - "interfaces"
+          # - "l2_interfaces"
+          # - "l3_interfaces"
+          # - "acl_interfaces"
+          # - "static_routes" 
+          # - "acls" 
+          # - "vlans"
+          - all
       become: true
       register: _ios_facts
     # - name: Debug IOS facts
@@ -63,8 +65,10 @@
   tasks:
     - name: EOS Facts
       arista.eos.eos_facts:
-        gather_subset: all
-        gather_network_resources: all
+        # gather_subset: all
+        # gather_network_resources: all
+        gather_subset: config
+        gather_network_resources: config
       become: true
       register: _eos_facts
     # - name: Debug EOS facts
