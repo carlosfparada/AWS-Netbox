@@ -63,6 +63,8 @@
         var: banner.stdout_lines[0] | split('\n') | first
     # - debug:
     #     msg: "{{ banner.stdout[0] | regex_search('(.*)', '\\1', multiline=True) }}"
+    - debug:
+        var: banner.stdout| from_yaml
 
 
     - debug:
