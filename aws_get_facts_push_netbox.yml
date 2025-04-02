@@ -55,13 +55,18 @@
       register: nameservers
 
     - debug:
-        var: banner.stdout[0][0]
-        
+        var: banner.stdout[0]
     - debug:
-        var: nameservers.stdout[0] | split('\n')
+        var: banner.stdout[0][0]
+    - debug:
+        var: "{{banner.stdout[0]}}"
 
     - debug:
+        var: nameservers.stdout[0] | split('\n')
+    - debug:
         var: nameservers.stdout
+    - debug:
+        msg: "{{nameservers.stdout}}"
 
 - name: Collect Arista Facts
   hosts: arista
