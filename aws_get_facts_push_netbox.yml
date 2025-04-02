@@ -48,8 +48,6 @@
       become: true
       register: banner
 
-    - 
-
     - name: Get IOS Name Servers
       cisco.ios.ios_command:
         commands:
