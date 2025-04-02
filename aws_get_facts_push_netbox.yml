@@ -278,10 +278,10 @@
       delegate_to: localhost
 
     - debug:
-        var: "{{ banner.stdout_lines }}"
+        var: banner.stdout_lines
 
     - debug:
-        var: "{{ banner.stdout }}"
+        var: banner.stdout
 
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
@@ -305,10 +305,10 @@
       delegate_to: localhost
 
     - debug:
-        var: "{{ nameservers.stdout_lines }}"
+        var: nameservers.stdout_lines
 
     - debug:
-        var: "{{ nameservers.stdout }}"
+        var: nameservers.stdout
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
