@@ -58,6 +58,7 @@
       ansible.utils.cli_parse:
         text: "{{ banner.stdout }}"
         parser:
+          command: "show banner login"
           name: ansible.netcommon.ntc_templates
 
     - debug:
