@@ -139,17 +139,15 @@ ec2_arista_user: "{{ ansible_user }}"
 ec2_arista_pass: "{{ ansible_password }}"
 
 # Initial Provisioning
+login_banner: |
+  {
+    "login_banner": "This is my Login Banner, set by Ansible v1"
+  }
 
-# login_banner: |
-#   {
-#     "login_banner": "This is my Login Banner, set by Ansible v1"
-#   }
-
-# dns_servers: |
-#   {
-#     "dns_servers": [ "8.8.8.8", "8.8.8.9" ]
-#   }
-
+dns_servers: |
+  {
+    "dns_servers": [ "8.8.8.8", "8.8.8.9" ]
+  }
 
 # arista_vlans:
 #   - name: Vlan10

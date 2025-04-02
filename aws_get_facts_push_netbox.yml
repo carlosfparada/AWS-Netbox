@@ -41,20 +41,6 @@
       set_fact:
         _facts: "{{ _ios_facts }}"
 
-    - name: Get IOS Banner
-      cisco.ios.ios_command:
-        commands:
-          - show banner login 
-          #- show running-config
-      become: true
-      register: banner
-
-    - name: Get IOS Name Servers
-      cisco.ios.ios_command:
-        commands:
-          - show ip name-servers
-      register: nameservers
-
 - name: Collect Arista Facts
   hosts: arista
   gather_facts: false
@@ -76,19 +62,6 @@
     - name: Set EOS facts
       set_fact:
         _facts: "{{ _eos_facts }}"
-
-    - name: Get EOS Banner
-      arista.eos.eos_command:
-        commands:
-          - show banner login
-      become: true
-      register: banner
-
-    - name: Get EOS Name Servers
-      arista.eos.eos_command:
-        commands:
-          - show ip name-server
-      register: nameservers
 
 - name: Push to Netbox
   hosts: cisco,arista
@@ -288,15 +261,12 @@
         data:
           name: "login_banner"
           description: "login_banner"
-          data: |
-            {
-              "login_banner": "{{ banner.stdout[0] | split('\n') | first }}"
-            }
+          data: "{{ login_banner }}"
           sites:
             - "{{ site }}"
         state: present
+      throttle: 1
       delegate_to: localhost
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
@@ -306,15 +276,12 @@
         data:
           name: "dns_servers"
           description: "dns_servers"
-          data: |
-            {
-              "dns_servers": {{ nameservers.stdout_lines[0] }}
-            }
+          data: "{{ dns_servers }}"
           sites:
             - "{{ site }}"
         state: present
+      throttle: 1
       delegate_to: localhost
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
 
     - name: Delete Token
       netbox.netbox.netbox_token:
@@ -323,6 +290,6 @@
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
-      #run_once: true
+      run_once: true
       delegate_to: localhost
 
