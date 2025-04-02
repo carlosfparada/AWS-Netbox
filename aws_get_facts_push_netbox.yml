@@ -57,7 +57,7 @@
     - debug:
         var: banner
     - debug:
-        var: banner.stdout[0] | regex_search('^[[(.*)]]$','\\1')
+        var: banner.stdout[0] | regex_search('^(.*)$','\\1')
 
 
     - debug:
