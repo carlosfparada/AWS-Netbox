@@ -1,6 +1,5 @@
 ---
 
-
 - name: Get nodes from Inventory and add to Groups
   hosts: localhost
   connection: local
