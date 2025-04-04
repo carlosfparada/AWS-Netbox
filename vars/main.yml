@@ -141,7 +141,7 @@ ec2_arista_pass: "{{ ansible_password }}"
 # Initial Provisioning
 login_banner: |
   {
-    "login_banner": "This is my Login Banner, set by Ansible v1"
+    "login_banner": "This is my Login Banner, set by Ansible Netbox v1"
   }
 
 dns_servers: |
