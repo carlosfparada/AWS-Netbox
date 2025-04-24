@@ -328,7 +328,8 @@
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_ip.webhook.id }}",
           "type_create": true,
-          "type_update": true
+          "type_update": true,
+          "enabled": false
         }
       body_format: json
       headers:
@@ -351,7 +352,8 @@
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_vlan_interface.webhook.id }}",
           "type_create": true,
-          "type_update": true
+          "type_update": true,
+          "enabled": false
         }
       body_format: json
       headers:
@@ -374,7 +376,8 @@
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_vlan.webhook.id }}",
           "type_create": true,
-          "type_update": true
+          "type_update": true,
+          "enabled": false
         }
       body_format: json
       headers:
