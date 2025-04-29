@@ -468,7 +468,7 @@
     - name: Create Banner (Arista)
       arista.eos.eos_banner:
         banner: login
-        text: "This is my login Banner, set by Ansible Netbox (v1)"
+        text: "This is my login Banner, set by Ansible Netbox v1"
         state: present
       become: true
 
@@ -505,7 +505,7 @@
     - name: Create Banner (Cisco)
       cisco.ios.ios_banner:
         banner: login
-        text: "This is my login Banner, set by Ansible Netbox (v1)"
+        text: "This is my login Banner, set by Ansible Netbox v1"
         state: present
       become: true
 
