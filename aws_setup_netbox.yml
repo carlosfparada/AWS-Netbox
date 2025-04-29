@@ -400,7 +400,8 @@
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_eda.webhook.id }}",
           "type_create": true,
-          "type_update": true
+          "type_update": true,
+          "enabled": false
         }
       body_format: json
       headers:
