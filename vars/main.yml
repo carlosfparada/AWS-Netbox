@@ -84,7 +84,7 @@ ec2_cisco_flavor_name: t3.medium
 # Key Pair
 ec2_cisco_key_name: "KeyPair-Virginia"
 # Instance
-ec2_cisco_instance_name: cisco-1
+ec2_cisco_instance_name: cisco-2
 
 # ec2-user
 ec2_cisco_user: "{{ ansible_user }}"
@@ -132,7 +132,7 @@ ec2_arista_flavor_name: c5.xlarge
 # Key Pair
 ec2_arista_key_name: "KeyPair-Virginia"
 # Instance
-ec2_arista_instance_name: arista-1
+ec2_arista_instance_name: arista-2
 
 # ec2-user
 ec2_arista_user: "{{ ansible_user }}"
