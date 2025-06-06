@@ -115,7 +115,7 @@
     - name: Set Manufacturer (Arista)
       set_fact:
         manufacturer: "Arista"
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
       delegate_to: localhost
 
     - name: Push Manufacturer to Netbox
