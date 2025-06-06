@@ -109,7 +109,7 @@
     - name: Set Manufacturer (Cisco)
       set_fact:
         manufacturer: "Cisco"
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
       delegate_to: localhost
 
     - name: Set Manufacturer (Arista)

@@ -20,12 +20,12 @@
     - name: Debug Netbox data structure (Cisco)
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Debug Netbox relevant variables (Cisco)
       debug:
         msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Update IPv4 to l3 interface on {{ device }} (Cisco)
       cisco.ios.ios_l3_interfaces:
@@ -35,7 +35,7 @@
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == '4' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: address_family == '4' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Update IPv6 to l3 interface on {{ device }} (Cisco)
       cisco.ios.ios_l3_interfaces:
@@ -45,7 +45,7 @@
             - address: "{{ ip_address }}"
         state: merged
       become: true
-      when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Update description to interface on {{ device }} (Cisco)
       cisco.ios.ios_interfaces:
@@ -53,5 +53,5 @@
         - name: "{{ interface }}"
           description: "{{ description }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
