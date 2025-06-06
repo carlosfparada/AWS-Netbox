@@ -24,19 +24,19 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Clean Up DNS Server (Arista) 
       arista.eos.eos_config:
         lines:
           - no ip name-server
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Create DNS Servers (Arista) 
       arista.eos.eos_config:
@@ -44,7 +44,7 @@
           - ip name-server {{ item }}
       loop: "{{ data.data.dns_servers }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
 
 - name: Update DNS configs (Cisco) 
@@ -62,19 +62,19 @@
     - name: Debug Netbox data structure (Cisco) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
         msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Clean Up DNS Server (Cisco) 
       cisco.ios.ios_config:
         lines:
           - no ip name-server
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Create DNS Servers (Cisco) 
       cisco.ios.ios_config:
@@ -82,4 +82,4 @@
           - ip name-server {{ item }}
       loop: "{{ data.data.dns_servers }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")

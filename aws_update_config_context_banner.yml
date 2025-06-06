@@ -24,12 +24,12 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ data.name }}, {{ data.data.login_banner }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Create Banner (Arista) 
       arista.eos.eos_banner:
@@ -37,7 +37,7 @@
         text: "{{ data.data.login_banner }}"
         state: present
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
 
 - name: Update Banner configs (Arista) 
@@ -55,12 +55,12 @@
     - name: Debug Netbox data structure (Cisco) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
         msg: "{{ data.name }}, {{ data.data.login_banner }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
     - name: Create Banner (Cisco)
       cisco.ios.ios_banner:
@@ -68,4 +68,4 @@
         text: "{{ data.data.login_banner }}"
         state: present
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")

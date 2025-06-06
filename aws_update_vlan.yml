@@ -20,12 +20,12 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ vlan_id }}, {{ vlan_name }}, {{ state }}, {{ event }}, {{ timestamp }}, {{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
 
     - name: Create VLAN (Arista) 
       arista.eos.eos_vlans:
@@ -35,4 +35,4 @@
             state: "{{ state }}"
         state: merged
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-(.*)$")
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
