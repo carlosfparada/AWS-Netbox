@@ -148,7 +148,7 @@
 
 - name: Create and Attach Cisco ENI 2
   amazon.aws.ec2_eni:
-    name: "{{ ec2_arista_eni_name2 }}"
+    name: "{{ ec2_cisco_eni_name2 }}"
     region: "{{ ec2_vpc_region }}"
     instance_id: "{{ ec2_cisco_instance.instances[0].instance_id }}"
     device_index: 2
