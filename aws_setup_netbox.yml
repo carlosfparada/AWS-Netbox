@@ -482,7 +482,7 @@
     - name: Create Hostname (Arista) 
       arista.eos.eos_config:
         lines:
-          - hostname Arista
+          - hostname Arista-2
       become: true
 
 #     - name: Create Arista VLANs
@@ -525,7 +525,7 @@
     - name: Create Hostname (Cisco) 
       cisco.ios.ios_config:
         lines:
-          - hostname Cisco
+          - hostname Cisco-2
       become: true
 
 #     - name: Create Cisco VLANs
