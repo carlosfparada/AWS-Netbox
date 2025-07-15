@@ -24,6 +24,7 @@
       dest: /tmp/private-key.pem
       mode: '0600'
 
+  # Cisco
   - name: Set Cisco password
     ansible.builtin.expect:
       command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
@@ -43,6 +44,7 @@
           - exit
     no_log: false # hide passwords on logs
 
+  # Arista
   - name: Set Arista password
     ansible.builtin.expect:
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
@@ -62,6 +64,45 @@
           - exit
     no_log: false # hide passwords on logs
 
+  # Juniper
+  - ansible.builtin.set_fact:
+      my_salt: "{{ 99999999 | random | to_uuid | regex_replace('-', '') | truncate(15, True, '') }}"
+
+  - ansible.builtin.set_fact:
+      hashed_password: "{{ ec2_juniper_pass | password_hash('sha512', my_salt) }}"
+
+  - name: Set Juniper password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem {{ ec2_juniper_user }}@{{ groups['juniper'][0] }}"
+      responses:
+        'ec2-user> ':
+          - "configure"
+          - "exit"
+          - "exit"
+        'ec2-user# ':
+          # - "set groups aws-default system host-name Juniper-1"
+          - "set groups aws-default system login user ec2-user class super-user"
+          - "set groups aws-default system services ssh no-passwords"
+          - "delete groups aws-default system services ssh no-passwords"
+          - "set groups aws-default system authentication-order password"
+          - "set groups aws-default system login user ec2-user authentication encrypted-password {{ hashed_password }}"
+          - "set groups aws-default security forwarding-options family mpls mode packet-based"
+          - "set groups aws-default security forwarding-options family iso mode packet-based"
+          - "commit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+          - "exit"
+    no_log: false # hide passwords on logs
+
+  # Netbox
   - name: Create an AAP Token
     ansible.platform.token:
       gateway_hostname: "https://{{ groups['aap'][0] }}"
@@ -542,3 +583,51 @@
 #       cisco.ios.ios_l3_interfaces:
 #         config: "{{ cisco_l3_interfaces }}"
 #       become: yes
+
+    - name: Save running to startup when modified
+      cisco.ios.ios_config:
+        save_when: modified
+      become: true
+
+- name: Provision Juniper Device
+  hosts: juniper
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    # sh banner login
+    - name: Create Banner (Juniper)
+      junipernetworks.junos.junos_banner:
+        banner: login
+        text: "This is my login Banner, set by Ansible Netbox v1"
+        state: present
+      become: true
+
+    - name: Create DNS Servers (Juniper) 
+      junipernetworks.junos.junos_config:
+        lines:
+          - ip name-server 8.8.8.8
+          - ip name-server 8.8.8.9
+      become: true
+
+    - name: Set Hostname (Juniper) 
+      junipernetworks.junos.junos_config:
+        lines:
+          #- "set groups aws-default system host-name Juniper-2"
+          - "set system host-name Juniper-2"
+      become: true
+
+    - name: Check Juniper OS correctness of commit configuration
+      junipernetworks.junos.junos_config:
+        check_commit: true
+      become: true
+    # - name: Rollback Juniper OS to last commit
+    #   junipernetworks.junos.junos_config:
+    #     rollback: 0
+    - name: Confirm previous Juniper OS commit
+      junipernetworks.junos.junos_config:
+        confirm_commit: true
+      become: true
