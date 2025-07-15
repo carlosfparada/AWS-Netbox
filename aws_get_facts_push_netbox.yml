@@ -63,8 +63,28 @@
       set_fact:
         _facts: "{{ _eos_facts }}"
 
+- name: Collect Juniper Facts
+  hosts: juniper
+  gather_facts: false
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    - name: JunOS Facts
+      junipernetworks.junos.junos_facts:
+        gather_subset: all
+        gather_network_resources: all
+      register: _junos_facts
+    # - name: Debug JunOS facts
+    #   debug:
+    #     var: _junos_facts
+    - name: Set JunOS facts
+      set_fact:
+        _facts: "{{ _junos_facts }}"
+
 - name: Push to Netbox
-  hosts: cisco,arista
+  hosts: cisco,arista,juniper
   gather_facts: false
   vars_files: vars/main.yml
   vars:
