@@ -55,3 +55,51 @@
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
 
+
+- name: Update interface IP (Juniper)
+  hosts: "{{ device }}"
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    - name: Debug Netbox data structure (Juniper)
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Debug Netbox relevant variables (Juniper)
+      debug:
+        msg: "{{ device }}, {{ interface }}, {{ ip_address }}, {{ address_family }}, {{ description }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Update IPv4 to l3 interface on {{ device }} (Juniper)
+      junipernetworks.junos.junos_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv4:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '4' and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Update IPv6 to l3 interface on {{ device }} (Juniper)
+      junipernetworks.junos.junos_l3_interfaces:
+        config: 
+          - name: "{{ interface }}"
+            ipv6:
+            - address: "{{ ip_address }}"
+        state: merged
+      become: true
+      when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Update description to interface on {{ device }} (Juniper)
+      junipernetworks.junos.junos_l3_interfaces:
+        config:
+        - name: "{{ interface }}"
+          description: "{{ description }}"
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+

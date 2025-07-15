@@ -83,3 +83,42 @@
       loop: "{{ data.data.dns_servers }}"
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+
+
+- name: Update DNS configs (Juniper) 
+  hosts: juniper
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    - name: Set facts
+      ansible.builtin.set_fact:
+        data: "{{ ansible_eda.event.payload.data }}"
+
+    - name: Debug Netbox data structure (Juniper) 
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Debug Netbox relevant variables (Juniper) 
+      debug:
+        msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Clean Up DNS Server (Juniper) 
+      junipernetworks.junos.junos_config:
+        lines:
+          - no ip name-server
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Create DNS Servers (Juniper) 
+      junipernetworks.junos.junos_config:
+        lines:
+          - "set system name-server {{ item }}"
+      loop: "{{ data.data.dns_servers }}"
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")

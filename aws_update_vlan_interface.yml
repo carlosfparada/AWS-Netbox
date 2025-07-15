@@ -37,3 +37,33 @@
         state: merged
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+
+
+- name: Update interface VLAN configs (Juniper) 
+  hosts: "{{ device }}"
+  gather_facts: false
+  vars_files: vars/main.yml
+  vars:
+    ansible_connection: netconf
+    ansible_network_os: junos
+    ansible_command_timeout: 300
+  tasks:
+    - name: Debug Netbox data structure (Juniper) 
+      debug:
+        msg: "{{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Debug Netbox relevant variables (Arista) 
+      debug:
+        msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+
+    - name: Update VLAN to {{ device }} (Juniper) 
+      junipernetworks.junos.junos_l2_interfaces:
+        config:
+          - name: "{{ interface }}"
+            access:
+              vlan: "{{ vlan_id }}"
+        state: merged
+      become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
