@@ -140,6 +140,12 @@
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
       delegate_to: localhost
 
+    - name: Set Manufacturer (Juniper)
+      set_fact:
+        manufacturer: "Juniper"
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      delegate_to: localhost
+
     - name: Push Manufacturer to Netbox
       netbox.netbox.netbox_manufacturer:
         netbox_url: "{{ netbox_url }}"
@@ -224,6 +230,22 @@
       throttle: 1
       delegate_to: localhost
 
+    - name: Push interfaces data to Netbox (Juniper)
+      netbox.netbox.netbox_device_interface:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          device: "{{ inventory_hostname }}"
+          name: "{{ item.key }}"
+          type: "Virtual"
+          description: "{{ item.key }} description"
+        state: present
+      with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      throttle: 1
+      delegate_to: localhost
+
     - name: Push IPv4 addresses data to Netbox (Cisco)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
@@ -257,6 +279,24 @@
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
       when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$") and item.value.ipv4.address is defined
+      throttle: 1
+      delegate_to: localhost
+
+    - name: Push IPv4 addresses data to Netbox (Juniper)
+      netbox.netbox.netbox_ip_address:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token.json.key }}"
+        validate_certs: no
+        data: 
+          assigned_object:
+            name: "{{ item.key }}"
+            device: "{{ inventory_hostname }}"
+          #family: 4
+          address: "{{ item.value.ipv4.address }}"
+          description: "{{ item.value.ipv4.address }} description"
+        state: present
+      with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$") and item.value.ipv4.address is defined
       throttle: 1
       delegate_to: localhost
 
