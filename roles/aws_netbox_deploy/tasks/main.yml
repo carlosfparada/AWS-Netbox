@@ -217,6 +217,62 @@
   ansible.builtin.debug:
     msg: "Arista: ssh [-i <*.pem>] ec2-user@{{ ec2_cisco_instance.instances[0].public_dns_name }}"
 
+# JUNIPER
+- name: Get Juniper AMI by Name
+  amazon.aws.ec2_ami_info:
+    filters:
+      name: "{{ ec2_juniper_image_name }}"
+    region: "{{ ec2_vpc_region }}"
+  register: ami_find
+
+- name: Create Juniper instance
+  amazon.aws.ec2_instance:
+    image_id: "{{ ami_find.images[-1].image_id | default('') }}"
+    instance_type: "{{ ec2_juniper_flavor_name }}"
+    security_group: "{{ ec2_sg_name }}"
+    name: "{{ ec2_juniper_instance_name }}"
+    key_name: "{{ ec2_juniper_key_name }}"
+    region: "{{ ec2_vpc_region }}"
+    vpc_subnet_id: "{{ subnet.subnet.id }}"
+    # network:
+    #   assign_public_ip: true
+    network_interfaces:
+      - assign_public_ip: true
+    volumes: "{{ ec2_juniper_volumes }}"
+    #user_data: "{{ lookup('ansible.builtin.template', 'user_data_juniper.j2') }}"
+    tags:
+      name: "{{ ec2_juniper_instance_name }}"
+    state: running
+  register: ec2_juniper_instance
+
+- name: Create and Attach Juniper ENI 1
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_juniper_eni_name1 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_juniper_instance.instances[0].instance_id }}"
+    device_index: 1
+    subnet_id: "{{ subnet1.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Create and Attach Juniper ENI 2
+  amazon.aws.ec2_eni:
+    name: "{{ ec2_juniper_eni_name2 }}"
+    region: "{{ ec2_vpc_region }}"
+    instance_id: "{{ ec2_juniper_instance.instances[0].instance_id }}"
+    device_index: 2
+    subnet_id: "{{ subnet2.subnet.id }}"
+    #security_groups: "{{ ec2_sg_name }}"
+    delete_on_termination: true
+    attached: true
+    state: present
+
+- name: Print Juniper instance details
+  ansible.builtin.debug:
+    msg: "Juniper: ssh [-i <*.pem>] ec2-user@{{ ec2_juniper_instance.instances[0].public_dns_name }}"
+
 # Wait for boot up
 - name: Wait until Netbox to boot up
   wait_for:
@@ -242,6 +298,14 @@
     timeout: 600
     delay: 30
     host: "{{ ec2_arista_instance.instances[0].public_dns_name }}"
+
+- name: Wait until Juniper to boot up
+  wait_for:
+    port: 22
+    state: started
+    timeout: 600
+    delay: 30
+    host: "{{ ec2_juniper_instance.instances[0].public_ip_address }}"
 
 - name: Sleep for 30 seconds and continue with play
   wait_for:

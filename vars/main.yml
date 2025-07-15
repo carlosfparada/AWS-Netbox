@@ -18,6 +18,9 @@ ec2_cisco_eni_name2: ENI_CISCO_NETBOX2
 # Arista ENIs
 ec2_arista_eni_name1: ENI_ARISTA_NETBOX1
 ec2_arista_eni_name2: ENI_ARISTA_NETBOX2
+# Juniper ENIs
+ec2_juniper_eni_name1: ENI_JUNIPER_NETBOX1
+ec2_juniper_eni_name2: ENI_JUNIPER_NETBOX2
 # IGW
 ec2_igw_name: IGW_NETBOX
 # Route Table
@@ -30,6 +33,7 @@ ec2_sg_rules:
       - 80
       - 443
       - 22
+      - 830
       - 8000
     cidr_ip: 0.0.0.0/0
     rule_desc: Allow all on ports
@@ -172,3 +176,27 @@ dns_servers: |
 #   - name: Ethernet3
 #     ipv4:
 #     - address: 10.4.5.6/24
+
+
+# JUNIPER
+# AMI
+ec2_juniper_image_name: "junos-vsrx3-x86-64-24.2R2.18-newlic-appsec--prod-8987d154-c3e3-411e-8f38-aecdd80e529f"
+ec2_juniper_image_id: ami-05ef9849ca62c0e89
+# Volumes
+ec2_juniper_volumes:
+  - device_name: /dev/xvda
+    ebs:
+      volume_type: gp2
+      volume_size: 8
+      delete_on_termination: true
+      encrypted: false
+# Flavour 
+ec2_juniper_flavor_name: c5.large
+# Key Pair
+ec2_juniper_key_name: "KeyPair-Virginia"
+# Instance
+ec2_juniper_instance_name: juniper-2
+
+# ec2-user / ?
+ec2_juniper_user: "{{ ansible_user }}"
+ec2_juniper_pass: "{{ ansible_password }}"

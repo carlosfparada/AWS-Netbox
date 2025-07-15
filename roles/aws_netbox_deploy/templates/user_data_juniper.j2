@@ -1,0 +1,53 @@
+#junos-config
+groups {
+    aws-default {
+        system {
+            host-name HOSTNAME;
+            services {
+                ssh {
+                    root-login allow;
+                }
+            }
+            login {
+                user ec2-user {
+                    uid 100;
+                    class super-user;
+                    authentication {
+                        encrypted-password "$6$2C/XTaiT$opb9.RaRpedxtHwvkBCvo56IGbheOMDhxB2K0isWPCoYPDVWdKVBEaol9oeXhgm6psV4hW63qi6JjyyfkvodY/";
+                    }
+                }
+            }
+            syslog {
+                user * {
+                    any emergency;
+                }
+                file messages {
+                    any notice;
+                    authorization info;
+                }
+                file interactive-commands {
+                    interactive-commands any;
+                }
+            }
+        }
+        interfaces {
+            fxp0 {
+                unit 0 {
+                    family inet {
+                        address FXP0ADDR;
+                    }
+                }
+            }
+        }
+        routing-options {
+            static {
+                route 0.0.0.0/0 {
+                    next-hop GATEWAY;
+                    retain;
+                    no-readvertise;
+                }
+            }
+        }
+    }
+}
+apply-groups aws-default;

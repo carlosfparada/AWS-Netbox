@@ -50,3 +50,15 @@
     name: "{{ node_name }}"
     groups: "arista"
   when: node_name is defined
+
+- name: Get Juniper node
+  set_fact:
+    node_name: "{{ item }}"
+  loop: "{{ groups['all'] }}"
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^juniper-2$")
+
+- name: Add Juniper node to the juniper group
+  add_host:
+    name: "{{ node_name }}"
+    groups: "juniper"
+  when: node_name is defined
