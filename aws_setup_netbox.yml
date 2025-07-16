@@ -24,25 +24,25 @@
       dest: /tmp/private-key.pem
       mode: '0600'
 
-  # Cisco
-  - name: Set Cisco password
-    ansible.builtin.expect:
-      command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
-      responses:
-        # ip-10-0-0-197# configure terminal
-        # ip-10-0-0-197(config)# aaa new-model
-        # ip-10-0-0-197(config)# aaa authentication login default local enable
-        # ip-10-0-0-197(config)# username ec2-user password xxxx
-        # ip-10-0-0-197(config)# exit
-        # ip-10-0-0-197# exit
-        'ip-*':
-          - configure terminal
-          - aaa new-model
-          - aaa authentication login default local enable
-          - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
-          - exit
-          - exit
-    no_log: false # hide passwords on logs
+  # # Cisco
+  # - name: Set Cisco password
+  #   ansible.builtin.expect:
+  #     command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
+  #     responses:
+  #       # ip-10-0-0-197# configure terminal
+  #       # ip-10-0-0-197(config)# aaa new-model
+  #       # ip-10-0-0-197(config)# aaa authentication login default local enable
+  #       # ip-10-0-0-197(config)# username ec2-user password xxxx
+  #       # ip-10-0-0-197(config)# exit
+  #       # ip-10-0-0-197# exit
+  #       'ip-*':
+  #         - configure terminal
+  #         - aaa new-model
+  #         - aaa authentication login default local enable
+  #         - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
+  #         - exit
+  #         - exit
+  #   no_log: false # hide passwords on logs
 
   # Arista
   - name: Set Arista password
