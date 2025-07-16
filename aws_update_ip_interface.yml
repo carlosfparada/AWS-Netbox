@@ -102,7 +102,7 @@
       when: address_family == '6' and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
 
     - name: Update description to interface on {{ device }} (Juniper)
-      junipernetworks.junos.junos_l3_interfaces:
+      junipernetworks.junos.junos_interfaces:
         config:
         - name: "{{ interface }}"
           description: "{{ description }}"
