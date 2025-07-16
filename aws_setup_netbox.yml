@@ -609,8 +609,8 @@
     - name: Create DNS Servers (Juniper) 
       junipernetworks.junos.junos_config:
         lines:
-          - ip name-server 8.8.8.8
-          - ip name-server 8.8.8.9
+          - set system name-server 8.8.8.8
+          - set system name-server 8.8.8.9
       become: true
 
     - name: Set Hostname (Juniper) 
