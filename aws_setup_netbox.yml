@@ -24,45 +24,45 @@
       dest: /tmp/private-key.pem
       mode: '0600'
 
-  # # Cisco
-  # - name: Set Cisco password
-  #   ansible.builtin.expect:
-  #     command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
-  #     responses:
-  #       # ip-10-0-0-197# configure terminal
-  #       # ip-10-0-0-197(config)# aaa new-model
-  #       # ip-10-0-0-197(config)# aaa authentication login default local enable
-  #       # ip-10-0-0-197(config)# username ec2-user password xxxx
-  #       # ip-10-0-0-197(config)# exit
-  #       # ip-10-0-0-197# exit
-  #       'ip-*':
-  #         - configure terminal
-  #         - aaa new-model
-  #         - aaa authentication login default local enable
-  #         - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
-  #         - exit
-  #         - exit
-  #   no_log: false # hide passwords on logs
+  # Cisco
+  - name: Set Cisco password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -i /tmp/private-key.pem ec2-user@{{ groups['cisco'][0] }}"
+      responses:
+        # ip-10-0-0-197# configure terminal
+        # ip-10-0-0-197(config)# aaa new-model
+        # ip-10-0-0-197(config)# aaa authentication login default local enable
+        # ip-10-0-0-197(config)# username ec2-user password xxxx
+        # ip-10-0-0-197(config)# exit
+        # ip-10-0-0-197# exit
+        'ip-*':
+          - configure terminal
+          - aaa new-model
+          - aaa authentication login default local enable
+          - username {{ ec2_cisco_user }} password {{ ec2_cisco_pass }}
+          - exit
+          - exit
+    no_log: false # hide passwords on logs
 
-  # # Arista
-  # - name: Set Arista password
-  #   ansible.builtin.expect:
-  #     command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
-  #     responses:
-  #       # localhost> enable
-  #       # localhost# configure terminal
-  #       # localhost(config)# aaa authentication login default local
-  #       # localhost(config)# username ec2-user secret 0 xxxx
-  #       # localhost(config)# exit
-  #       # localhost# exit
-  #       'localhost*':
-  #         - enable
-  #         - configure terminal
-  #         - aaa authentication login default local
-  #         - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
-  #         - exit
-  #         - exit
-  #   no_log: false # hide passwords on logs
+  # Arista
+  - name: Set Arista password
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
+      responses:
+        # localhost> enable
+        # localhost# configure terminal
+        # localhost(config)# aaa authentication login default local
+        # localhost(config)# username ec2-user secret 0 xxxx
+        # localhost(config)# exit
+        # localhost# exit
+        'localhost*':
+          - enable
+          - configure terminal
+          - aaa authentication login default local
+          - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
+          - exit
+          - exit
+    no_log: false # hide passwords on logs
 
   # Juniper
   - ansible.builtin.set_fact:
