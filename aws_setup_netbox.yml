@@ -44,25 +44,25 @@
   #         - exit
   #   no_log: false # hide passwords on logs
 
-  # Arista
-  - name: Set Arista password
-    ansible.builtin.expect:
-      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
-      responses:
-        # localhost> enable
-        # localhost# configure terminal
-        # localhost(config)# aaa authentication login default local
-        # localhost(config)# username ec2-user secret 0 xxxx
-        # localhost(config)# exit
-        # localhost# exit
-        'localhost*':
-          - enable
-          - configure terminal
-          - aaa authentication login default local
-          - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
-          - exit
-          - exit
-    no_log: false # hide passwords on logs
+  # # Arista
+  # - name: Set Arista password
+  #   ansible.builtin.expect:
+  #     command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['arista'][0] }}"
+  #     responses:
+  #       # localhost> enable
+  #       # localhost# configure terminal
+  #       # localhost(config)# aaa authentication login default local
+  #       # localhost(config)# username ec2-user secret 0 xxxx
+  #       # localhost(config)# exit
+  #       # localhost# exit
+  #       'localhost*':
+  #         - enable
+  #         - configure terminal
+  #         - aaa authentication login default local
+  #         - username {{ ec2_arista_user }} secret 0 {{ ec2_arista_pass }}
+  #         - exit
+  #         - exit
+  #   no_log: false # hide passwords on logs
 
   # Juniper
   - ansible.builtin.set_fact:
