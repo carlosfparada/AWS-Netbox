@@ -72,6 +72,7 @@
       junipernetworks.junos.junos_config:
         check_commit: true
       become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
     # - name: Rollback Juniper OS to last commit
     #   junipernetworks.junos.junos_config:
     #     rollback: 0
@@ -79,3 +80,4 @@
       junipernetworks.junos.junos_config:
         confirm_commit: true
       become: true
+      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
