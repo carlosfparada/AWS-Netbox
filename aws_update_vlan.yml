@@ -39,7 +39,7 @@
 
 
 - name: Create VLAN configs (Juniper) 
-  hosts: arista
+  hosts: juniper
   gather_facts: false
   vars_files: vars/main.yml
   vars:
