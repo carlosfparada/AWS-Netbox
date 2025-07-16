@@ -117,7 +117,7 @@
     - name: Clean Up DNS Server (Juniper) 
       junipernetworks.junos.junos_config:
         lines:
-          - no ip name-server
+          - delete system name-server
       become: true
       when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
 
