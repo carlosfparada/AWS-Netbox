@@ -118,8 +118,10 @@ ec2_arista_pass: "{{ ansible_password }}"
 
 # JUNIPER
 # AMI
-ec2_juniper_image_name: "junos-vsrx3-x86-64-24.2R2.18-newlic-appsec--prod-8987d154-c3e3-411e-8f38-aecdd80e529f"
-ec2_juniper_image_id: ami-05ef9849ca62c0e89
+#ec2_juniper_image_name: "junos-vsrx3-x86-64-24.2R2.18-newlic-appsec--prod-8987d154-c3e3-411e-8f38-aecdd80e529f"
+#ec2_juniper_image_id: ami-05ef9849ca62c0e89
+ec2_juniper_image_name: "junos-vsrx3-x86-64-*-pmtlic-appsec--prod-*"
+ec2_juniper_image_id: ami-0e1c9976248c25760
 # Volumes
 ec2_juniper_volumes:
   - device_name: /dev/xvda
