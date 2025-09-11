@@ -7,7 +7,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^aap-(.*)$")
+  #when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^aap-(.*)$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^aap-1$")
 
 - name: Add AAP node to the netbox group
   add_host:
@@ -19,7 +20,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^netbox-(.*)$")
+  #when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^netbox-(.*)$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^netbox-(.*)$")
 
 - name: Add Netbox node to the netbox group
   add_host:
@@ -31,7 +33,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^cisco-2$")
+  #when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^cisco-2$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^cisco-2$")
 
 - name: Add Cisco node to the cisco group
   add_host:
@@ -43,7 +46,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^arista-2$")
+  #when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^arista-2$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^arista-2$")
 
 - name: Add Arista node to the arista group
   add_host:
@@ -55,7 +59,8 @@
   set_fact:
     node_name: "{{ item }}"
   loop: "{{ groups['all'] }}"
-  when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^juniper-2$")
+  #when: hostvars[item].tags is defined and hostvars[item].tags.Name | regex_search("^juniper-2$")
+  when: hostvars[item].tags is defined and hostvars[item].tags.Name is match("^juniper-2$")
 
 - name: Add Juniper node to the juniper group
   add_host:

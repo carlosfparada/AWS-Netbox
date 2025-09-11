@@ -24,12 +24,14 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ data.name }}, {{ data.data.login_banner }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Create Banner (Arista) 
       arista.eos.eos_banner:
@@ -37,10 +39,11 @@
         text: "{{ data.data.login_banner }}"
         state: present
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
 
-- name: Update Banner configs (Arista) 
+- name: Update Banner configs (Cisco) 
   hosts: cisco
   gather_facts: false
   vars_files: vars/main.yml
@@ -55,12 +58,14 @@
     - name: Debug Netbox data structure (Cisco) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
         msg: "{{ data.name }}, {{ data.data.login_banner }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Create Banner (Cisco)
       cisco.ios.ios_banner:
@@ -68,13 +73,15 @@
         text: "{{ data.data.login_banner }}"
         state: present
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Save running to startup when modified
       cisco.ios.ios_config:
         save_when: modified
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
 
 - name: Update Banner configs (Juniper) 
@@ -93,12 +100,14 @@
     - name: Debug Netbox data structure (Juniper) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Debug Netbox relevant variables (Juniper) 
       debug:
         msg: "{{ data.name }}, {{ data.data.login_banner }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Create Banner (Juniper)
       junipernetworks.junos.junos_banner:
@@ -106,13 +115,15 @@
         text: "{{ data.data.login_banner }}"
         state: present
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Check Juniper OS correctness of commit configuration
       junipernetworks.junos.junos_config:
         check_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
     # - name: Rollback Juniper OS to last commit
     #   junipernetworks.junos.junos_config:
     #     rollback: 0
@@ -120,4 +131,5 @@
       junipernetworks.junos.junos_config:
         confirm_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")

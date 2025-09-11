@@ -24,19 +24,22 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Clean Up DNS Server (Arista) 
       arista.eos.eos_config:
         lines:
           - no ip name-server
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Create DNS Servers (Arista) 
       arista.eos.eos_config:
@@ -44,7 +47,8 @@
           - ip name-server {{ item }}
       loop: "{{ data.data.dns_servers }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
 
 - name: Update DNS configs (Cisco) 
@@ -62,19 +66,22 @@
     - name: Debug Netbox data structure (Cisco) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Debug Netbox relevant variables (Cisco) 
       debug:
         msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Clean Up DNS Server (Cisco) 
       cisco.ios.ios_config:
         lines:
           - no ip name-server
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Create DNS Servers (Cisco) 
       cisco.ios.ios_config:
@@ -82,13 +89,15 @@
           - ip name-server {{ item }}
       loop: "{{ data.data.dns_servers }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
     - name: Save running to startup when modified
       cisco.ios.ios_config:
         save_when: modified
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
 
 
 - name: Update DNS configs (Juniper) 
@@ -107,19 +116,22 @@
     - name: Debug Netbox data structure (Juniper) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Debug Netbox relevant variables (Juniper) 
       debug:
         msg: "{{ data.name }}, {{ data.data.dns_servers }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Clean Up DNS Server (Juniper) 
       junipernetworks.junos.junos_config:
         lines:
           - delete system name-server
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Create DNS Servers (Juniper) 
       junipernetworks.junos.junos_config:
@@ -127,13 +139,15 @@
           - "set system name-server {{ item }}"
       loop: "{{ data.data.dns_servers }}"
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Check Juniper OS correctness of commit configuration
       junipernetworks.junos.junos_config:
         check_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
     # - name: Rollback Juniper OS to last commit
     #   junipernetworks.junos.junos_config:
     #     rollback: 0
@@ -141,4 +155,5 @@
       junipernetworks.junos.junos_config:
         confirm_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")

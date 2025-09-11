@@ -20,12 +20,14 @@
     - name: Debug Netbox data structure (Arista) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Debug Netbox relevant variables (Arista) 
       debug:
         msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
     - name: Update VLAN to {{ device }} (Arista) 
       arista.eos.eos_l2_interfaces:
@@ -36,7 +38,8 @@
               vlan: "{{ vlan_id }}"
         state: merged
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
 
 
 - name: Update interface VLAN configs (Juniper) 
@@ -51,12 +54,14 @@
     - name: Debug Netbox data structure (Juniper) 
       debug:
         msg: "{{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Debug Netbox relevant variables (Juniper) 
       debug:
         msg: "{{ device }}, {{ interface }}, {{ vlan_id }}, {{ vlan_name }}, {{ event }}, {{ timestamp }}, {{ data }}" 
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Update VLAN to {{ device }} (Juniper) 
       junipernetworks.junos.junos_l2_interfaces:
@@ -66,13 +71,15 @@
               vlan: "{{ vlan_id }}"
         state: merged
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
 
     - name: Check Juniper OS correctness of commit configuration
       junipernetworks.junos.junos_config:
         check_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
     # - name: Rollback Juniper OS to last commit
     #   junipernetworks.junos.junos_config:
     #     rollback: 0
@@ -80,4 +87,5 @@
       junipernetworks.junos.junos_config:
         confirm_commit: true
       become: true
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")

@@ -131,19 +131,22 @@
     - name: Set Manufacturer (Cisco)
       set_fact:
         manufacturer: "Cisco"
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
       delegate_to: localhost
 
     - name: Set Manufacturer (Arista)
       set_fact:
         manufacturer: "Arista"
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^arista-2$")
       delegate_to: localhost
 
     - name: Set Manufacturer (Juniper)
       set_fact:
         manufacturer: "Juniper"
-      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
       delegate_to: localhost
 
     - name: Push Manufacturer to Netbox
@@ -210,7 +213,8 @@
           description: "{{ item.name }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$") and _facts.ansible_facts.ansible_network_resources.interfaces is defined
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$") and _facts.ansible_facts.ansible_network_resources.interfaces is defined
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$") and _facts.ansible_facts.ansible_network_resources.interfaces is defined
       throttle: 1
       delegate_to: localhost
 
@@ -226,7 +230,8 @@
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
       throttle: 1
       delegate_to: localhost
 
@@ -242,7 +247,8 @@
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
       throttle: 1
       delegate_to: localhost
 
@@ -260,7 +266,8 @@
           description: "{{ item.ipv4[0].address }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$") and item.ipv4[0].address is defined
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$") and item.ipv4[0].address is defined
+      when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$") and item.ipv4[0].address is defined
       throttle: 1
       delegate_to: localhost
 
@@ -278,7 +285,8 @@
           description: "{{ item.value.ipv4.address }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$") and item.value.ipv4.address is defined
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$") and item.value.ipv4.address is defined
+      when: hostvars[inventory_hostname].tags.Name is match("^arista-2$") and item.value.ipv4.address is defined
       throttle: 1
       delegate_to: localhost
 
@@ -296,7 +304,8 @@
           description: "{{ item.value.ipv4.address }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$") and item.value.ipv4.address is defined
+      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$") and item.value.ipv4.address is defined
+      when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$") and item.value.ipv4.address is defined
       throttle: 1
       delegate_to: localhost
 
