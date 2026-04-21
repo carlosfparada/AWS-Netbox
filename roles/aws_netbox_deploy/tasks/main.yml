@@ -76,6 +76,9 @@
     tags:
       name: "{{ ec2_sg_name }}"
 
+- debug:
+    var: ec2_netbox_image_name
+    
 # NETBOX
 - name: Get Netbox AMI by Name
   amazon.aws.ec2_ami_info:
