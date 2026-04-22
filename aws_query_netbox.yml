@@ -43,6 +43,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Query IPv4 addresses data on Netbox
       debug:
@@ -60,6 +61,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Query devices data on Netbox
       debug:
@@ -68,6 +70,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Query device types data on Netbox
       debug:
@@ -76,6 +79,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Query sites data on Netbox
       debug:
@@ -84,6 +88,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Query config-contexts data on Netbox
       debug:
@@ -92,6 +97,7 @@
                     api_endpoint=netbox_url,
                     token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
+                    # token=netbox_token.json.key # token v1
 
     - name: Delete Token
       netbox.netbox.netbox_token:
