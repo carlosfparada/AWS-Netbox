@@ -471,7 +471,8 @@
   #      # Authorization: "Token {{ netbox_token.json.key }}" # token v1
   #      Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
   #     data:
-  #         key: "{{ netbox_token.json.key }}"
+  #         key: "{{ netbox_token.json.key }}" # token v1
+  #         key: nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
   #     state: absent
 
   # - name: Delete an AAP Token
