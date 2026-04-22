@@ -375,9 +375,15 @@
           "content_types": [
               "ipam.ipaddress"
           ],
+          "object_types": [
+                "extras.eventrule"
+          ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_ip.webhook.id }}",
+          "event_types": [
+              "object_created"
+          ],
           "type_create": true,
           "type_update": true,
           "enabled": false
