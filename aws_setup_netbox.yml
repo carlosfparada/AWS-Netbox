@@ -160,7 +160,7 @@
       body: |
         { 
           "username": "admin",
-          "password": "{{ hostvars[groups['netbox'][0]].instance_id }}a"
+          "password": "{{ hostvars[groups['netbox'][0]].instance_id }}"
         }
       status_code: 201
       body_format: json
