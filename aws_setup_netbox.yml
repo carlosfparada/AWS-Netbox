@@ -178,7 +178,7 @@
       body: |
         { 
           "username": "admin",
-          "password": "{{ ec2_netbox_pass }}{{ ec2_netbox_pass }}"
+          "password": "{{ ec2_netbox_pass }}"
         }
       status_code: 201
       body_format: json
@@ -206,7 +206,7 @@
       netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       data:
           username: admin
-          password: "{{ ec2_netbox_pass }}{{ ec2_netbox_pass }}"
+          password: "{{ ec2_netbox_pass }}"
       state: present
 
   - name: Delete Webhook on Netbox (IP address)
