@@ -384,8 +384,6 @@
           "event_types": [
               "object_created"
           ],
-          "type_create": true,
-          "type_update": true,
           "enabled": false
         }
       body_format: json
@@ -415,8 +413,6 @@
           "event_types": [
               "object_created"
           ],
-          "type_create": true,
-          "type_update": true,
           "enabled": false
         }
       body_format: json
@@ -446,8 +442,6 @@
           "event_types": [
               "object_created"
           ],
-          "type_create": true,
-          "type_update": true,
           "enabled": false
         }
       body_format: json
@@ -477,8 +471,6 @@
           "event_types": [
               "object_created"
           ],
-          "type_create": true,
-          "type_update": true,
           "enabled": false
         }
       body_format: json
