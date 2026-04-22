@@ -406,9 +406,15 @@
           "content_types": [
               "dcim.interface"
           ],
+          "object_types": [
+                "extras.eventrule"
+          ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_vlan_interface.webhook.id }}",
+          "event_types": [
+              "object_created"
+          ],
           "type_create": true,
           "type_update": true,
           "enabled": false
@@ -431,9 +437,15 @@
           "content_types": [
               "ipam.vlan"
           ],
+          "object_types": [
+                "extras.eventrule"
+          ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_vlan.webhook.id }}",
+          "event_types": [
+              "object_created"
+          ],
           "type_create": true,
           "type_update": true,
           "enabled": false
@@ -456,9 +468,15 @@
           "content_types": [
               "extras.configcontext"
           ],
+          "object_types": [
+                "extras.eventrule"
+          ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
           "action_object_id": "{{ webhook_eda.webhook.id }}",
+          "event_types": [
+              "object_created"
+          ],
           "type_create": true,
           "type_update": true,
           "enabled": false
