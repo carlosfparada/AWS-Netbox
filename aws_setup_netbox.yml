@@ -198,21 +198,21 @@
       netbox_token: "{{ netbox_token_not_first }}"
     when: netbox_token_first is failed
 
-  # - name: Set Netbox password
-  #   netbox.netbox.netbox_user:
-  #     netbox_url: "{{ netbox_url }}"
-  #     #netbox_token: "{{ netbox_token.json.key }}"
-  #     netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}"
-  #     data:
-  #         username: admin
-  #         password: "{{ ec2_netbox_pass }}{{ ec2_netbox_pass }}"
-  #     state: present
+  - name: Set Netbox password
+    netbox.netbox.netbox_user:
+      netbox_url: "{{ netbox_url }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      data:
+          username: admin
+          password: "{{ ec2_netbox_pass }}{{ ec2_netbox_pass }}"
+      state: present
 
   - name: Delete Webhook on Netbox (IP address)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}"
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook IP Address
@@ -221,7 +221,8 @@
   - name: Create Webhook on Netbox (IP address)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook IP Address
@@ -253,7 +254,8 @@
   - name: Delete Webhook on Netbox (VLAN Interface)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN Interface
@@ -262,7 +264,8 @@
   - name: Create Webhook on Netbox (VLAN Interface)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN Interface
@@ -294,7 +297,8 @@
   - name: Delete Webhook on Netbox (VLAN)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN
@@ -303,7 +307,8 @@
   - name: Create Webhook on Netbox (VLAN)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN
@@ -334,7 +339,8 @@
   - name: Delete Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook Config Context (EDA)
@@ -343,7 +349,8 @@
   - name: Create Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      netbox_token: "{{ netbox_token.json.key }}"
+      #netbox_token: "{{ netbox_token.json.key }}" # token v1
+      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook Config Context (EDA)
@@ -378,7 +385,8 @@
       headers:
         Content-Type: "application/json"
         Accept: "application/json; indent=4"
-        Authorization: "Token {{ netbox_token.json.key }}"
+        # Authorization: "Token {{ netbox_token.json.key }}" # token v1
+        Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       status_code: 201
 
   - name: Create an Event Rule (VLAN Interface)
@@ -402,7 +410,8 @@
       headers:
         Content-Type: "application/json"
         Accept: "application/json; indent=4"
-        Authorization: "Token {{ netbox_token.json.key }}"
+        # Authorization: "Token {{ netbox_token.json.key }}" # token v1
+        Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       status_code: 201
 
   - name: Create an Event Rule (VLAN)
@@ -426,7 +435,8 @@
       headers:
         Content-Type: "application/json"
         Accept: "application/json; indent=4"
-        Authorization: "Token {{ netbox_token.json.key }}"
+        # Authorization: "Token {{ netbox_token.json.key }}" # token v1
+        Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       status_code: 201
 
   - name: Create an Event Rule (Config Context)
@@ -450,14 +460,16 @@
       headers:
         Content-Type: "application/json"
         Accept: "application/json; indent=4"
-        Authorization: "Token {{ netbox_token.json.key }}"
+        # Authorization: "Token {{ netbox_token.json.key }}" # token v1
+        Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       status_code: 201
 
 
   # - name: Delete Netbox Token
   #   netbox.netbox.netbox_token:
   #     netbox_url: "{{ netbox_url }}"
-  #     netbox_token: "{{ netbox_token.json.key }}"
+  #      # Authorization: "Token {{ netbox_token.json.key }}" # token v1
+  #      Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
   #     data:
   #         key: "{{ netbox_token.json.key }}"
   #     state: absent
@@ -488,7 +500,8 @@
         inventory: Netbox Inventory
         source_vars:
           NETBOX_API: "{{ netbox_url }}"
-          NETBOX_TOKEN: "{{ netbox_token.json.key }}"      
+          # NETBOX_TOKEN: "{{ netbox_token.json.key }}" # token v1
+          NETBOX_TOKEN: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
     controller_inventory_source_update:
       - name: Netbox Inventory Source Update
         description: Netbox Inventory Source Update
