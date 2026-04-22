@@ -40,7 +40,8 @@
     - name: Cleanup VLANs data on Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           site: "{{ item.value.site.name }}"
@@ -55,7 +56,8 @@
     - name: Cleanup IPv4 addresses data on Netbox
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -72,7 +74,8 @@
     - name: Cleanup interfaces data on Netbox
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ item.value.device.name }}"
@@ -88,7 +91,8 @@
     - name: Cleanup devices data on Netbox
       netbox.netbox.netbox_device:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -106,7 +110,8 @@
     - name: Cleanup device roles data on Netbox
       netbox.netbox.netbox_device_role:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -119,7 +124,8 @@
     - name: Cleanup device types data on Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           model: "{{ item.value.model }}"
@@ -134,7 +140,8 @@
     - name: Cleanup manufacturer data on Netbox
       netbox.netbox.netbox_manufacturer:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -147,7 +154,8 @@
     - name: Cleanup sites data on Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -163,7 +171,8 @@
     - name: Cleanup config-contexts on {{ site }}
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "{{ item.value.name }}"
@@ -177,7 +186,8 @@
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
