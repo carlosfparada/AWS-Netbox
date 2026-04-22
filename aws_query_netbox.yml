@@ -41,7 +41,7 @@
         var: item
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=netbox_url,
-                    token=netbox_token.json.key,
+                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
                     validate_certs=False) }}"
 
     - name: Query IPv4 addresses data on Netbox
