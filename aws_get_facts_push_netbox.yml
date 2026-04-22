@@ -117,7 +117,8 @@
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ site }}"
@@ -152,7 +153,8 @@
     - name: Push Manufacturer to Netbox
       netbox.netbox.netbox_manufacturer:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ manufacturer }}"
@@ -163,7 +165,8 @@
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           model: "{{ _facts.ansible_facts.ansible_net_model | lower }}"
@@ -176,7 +179,8 @@
     - name: Push devices role data to Netbox
       netbox.netbox.netbox_device_role:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "demo"
@@ -187,7 +191,8 @@
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ inventory_hostname }}"
@@ -204,7 +209,8 @@
     - name: Push interfaces data to Netbox (Cisco)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -221,7 +227,8 @@
     - name: Push interfaces data to Netbox (Arista)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -238,7 +245,8 @@
     - name: Push interfaces data to Netbox (Juniper)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -255,7 +263,8 @@
     - name: Push IPv4 addresses data to Netbox (Cisco)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -274,7 +283,8 @@
     - name: Push IPv4 addresses data to Netbox (Arista)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -293,7 +303,8 @@
     - name: Push IPv4 addresses data to Netbox (Juniper)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -312,7 +323,8 @@
     - name: Push VLANs data to Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           site: "{{ site }}"
@@ -327,7 +339,8 @@
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "login_banner"
@@ -342,7 +355,8 @@
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "dns_servers"
@@ -357,7 +371,8 @@
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token.json.key }}"
+        #netbox_token: "{{ netbox_token.json.key }}" # token v1
+        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
