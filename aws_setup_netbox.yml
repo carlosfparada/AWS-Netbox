@@ -365,30 +365,30 @@
       state: present
     register: webhook_eda
 
-  - name: Create an Event Rule (IP Address)
-    ansible.builtin.uri:
-      url: "{{ netbox_url }}/api/extras/event-rules/"
-      method: POST
-      body: |
-        { 
-          "name": "Event Rule IP Address",
-          "content_types": [
-              "ipam.ipaddress"
-          ],
-          "action_type": "webhook",
-          "action_object_type": "extras.webhook",
-          "action_object_id": "{{ webhook_ip.webhook.id }}",
-          "type_create": true,
-          "type_update": true,
-          "enabled": false
-        }
-      body_format: json
-      headers:
-        Content-Type: "application/json"
-        Accept: "application/json; indent=4"
-        Authorization: "Token {{ netbox_token.json.key }}" # token v1
-        #Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
-      status_code: 201
+  # - name: Create an Event Rule (IP Address)
+  #   ansible.builtin.uri:
+  #     url: "{{ netbox_url }}/api/extras/event-rules/"
+  #     method: POST
+  #     body: |
+  #       { 
+  #         "name": "Event Rule IP Address",
+  #         "content_types": [
+  #             "ipam.ipaddress"
+  #         ],
+  #         "action_type": "webhook",
+  #         "action_object_type": "extras.webhook",
+  #         "action_object_id": "{{ webhook_ip.webhook.id }}",
+  #         "type_create": true,
+  #         "type_update": true,
+  #         "enabled": false
+  #       }
+  #     body_format: json
+  #     headers:
+  #       Content-Type: "application/json"
+  #       Accept: "application/json; indent=4"
+  #       Authorization: "Token {{ netbox_token.json.key }}" # token v1
+  #       #Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+  #     status_code: 201
 
   - name: Create an Event Rule (VLAN Interface)
     ansible.builtin.uri:
