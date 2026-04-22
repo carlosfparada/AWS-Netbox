@@ -207,7 +207,7 @@
           username: admin
           password: "{{ ec2_netbox_pass }}"
       state: present
-      no_log: false
+    no_log: false
 
   - name: Delete Webhook on Netbox (IP address)
     netbox.netbox.netbox_webhook:
