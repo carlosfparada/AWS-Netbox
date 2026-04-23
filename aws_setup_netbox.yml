@@ -64,6 +64,7 @@
           - exit
           - exit
     no_log: false # hide passwords on logs
+    ignore_errors: true
 
   # Juniper
   - ansible.builtin.set_fact:
@@ -102,6 +103,7 @@
           - "exit"
           - "exit"
     no_log: false # hide passwords on logs
+    ignore_errors: true
 
   # Netbox
   # https://netboxlabs.com/docs/netbox/integrations/rest-api/#v1-and-v2-tokens
