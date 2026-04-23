@@ -215,7 +215,8 @@
         data: 
           device: "{{ inventory_hostname }}"
           name: "{{ item.name }}"
-          type: "Virtual"
+          #type: "Virtual"
+          type: "other"
           description: "{{ item.name }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.interfaces }}"
@@ -233,7 +234,8 @@
         data: 
           device: "{{ inventory_hostname }}"
           name: "{{ item.key }}"
-          type: "Virtual"
+          #type: "Virtual"
+          type: "other"
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
@@ -251,7 +253,8 @@
         data: 
           device: "{{ inventory_hostname }}"
           name: "{{ item.key }}"
-          type: "Virtual"
+          #type: "Virtual"
+          type: "other"
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
