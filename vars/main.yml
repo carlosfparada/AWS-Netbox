@@ -50,8 +50,10 @@ eda_port: 6000
 #ec2_netbox_image_id: ami-0d0dff5040aeeaf7f
 # ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0426-prod-jz3khonabosm6"
 # ec2_netbox_image_id: ami-0703b778dd54cb67e
-ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0226-prod-jz3khonabosm6"
-ec2_netbox_image_id: ami-023d906da37afd3ab
+# ec2_netbox_image_name: "Arara Solutions - Ubuntu 22.04 - NetBox community - v0226-prod-jz3khonabosm6"
+# ec2_netbox_image_id: ami-023d906da37afd3ab
+ec2_netbox_image_name: "bastionlinux-36-netbox-4.3.4-prod-rf4bhvnngap4q"
+ec2_netbox_image_id: ami-0ce77894ac9774358
 # Volumes
 ec2_netbox_volumes:
   - device_name: /dev/sda1
