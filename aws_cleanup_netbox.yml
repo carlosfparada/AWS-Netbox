@@ -17,7 +17,8 @@
   tasks:
     - name: Set Netbox URL
       set_fact:
-        netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        #netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+        netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
         
     - name: Create a Token
       ansible.builtin.uri:
@@ -33,6 +34,7 @@
         headers:
           Content-Type: "application/json"
           Accept: "application/json; indent=4"
+        validate_certs: false
       run_once: true
       delegate_to: localhost
       register: netbox_token
@@ -40,8 +42,8 @@
     - name: Cleanup VLANs data on Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           site: "{{ item.value.site.name }}"
@@ -50,14 +52,15 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
+                    # token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token # token v2
 
     - name: Cleanup IPv4 addresses data on Netbox
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -68,14 +71,14 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'ip-addresses',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup interfaces data on Netbox
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ item.value.device.name }}"
@@ -85,14 +88,14 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'interfaces',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup devices data on Netbox
       netbox.netbox.netbox_device:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -104,28 +107,28 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup device roles data on Netbox
       netbox.netbox.netbox_device_role:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-roles',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup device types data on Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           model: "{{ item.value.model }}"
@@ -134,28 +137,28 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'device-types',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup manufacturer data on Netbox
       netbox.netbox.netbox_manufacturer:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'manufacturers',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup sites data on Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ item.value.name }}"
@@ -165,14 +168,14 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'sites',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Cleanup config-contexts on {{ site }}
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "{{ item.value.name }}"
@@ -180,14 +183,14 @@
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'config-contexts',
                     api_endpoint=netbox_url,
-                    token='nbt_' + netbox_token.json.key +  '.' + netbox_token.json.token,
+                    token=netbox_token.json.key,
                     validate_certs=False) }}"
 
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
