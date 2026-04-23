@@ -108,7 +108,8 @@
 
 - name: Print Netbox instance details
   ansible.builtin.debug:
-    msg: "Netbox: http://{{ ec2_netbox_instance.instances[0].public_dns_name }}:8000"
+    msg: "Netbox: https://{{ ec2_netbox_instance.instances[0].public_dns_name }}"
+    #msg: "Netbox: http://{{ ec2_netbox_instance.instances[0].public_dns_name }}:8000"
 
 # CISCO
 - name: Get Cisco AMI by Name
