@@ -218,8 +218,8 @@
   - name: Delete Webhook on Netbox (IP address)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook IP Address
