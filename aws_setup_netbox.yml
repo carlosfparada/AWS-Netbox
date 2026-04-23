@@ -372,11 +372,8 @@
       body: |
         { 
           "name": "Event Rule VLAN",
-          "content_types": [
-              "ipam.vlan"
-          ],
           "object_types": [
-                "extras.eventrule"
+                "ipam.vlan"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
@@ -401,11 +398,8 @@
       body: |
         { 
           "name": "Event Rule VLAN Interface",
-          "content_types": [
-              "dcim.interface"
-          ],
           "object_types": [
-                "extras.eventrule"
+                "dcim.interface"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
@@ -430,11 +424,8 @@
       body: |
         { 
           "name": "Event Rule IP Address",
-          "content_types": [
-              "ipam.ipaddress"
-          ],
           "object_types": [
-                "extras.eventrule"
+                "ipam.ipaddress"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
@@ -459,11 +450,8 @@
       body: |
         { 
           "name": "Event Rule Config Context",
-          "content_types": [
-              "extras.configcontext"
-          ],
           "object_types": [
-                "extras.eventrule"
+                "extras.configcontext"
           ],
           "action_type": "webhook",
           "action_object_type": "extras.webhook",
