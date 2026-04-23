@@ -396,6 +396,7 @@
         Accept: "application/json; indent=4"
         Authorization: "Token {{ netbox_token.json.key }}" # token v1
         #Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      validate_certs: false
       status_code: 201
 
   - name: Create an Event Rule (VLAN Interface)
@@ -423,6 +424,7 @@
         Accept: "application/json; indent=4"
         Authorization: "Token {{ netbox_token.json.key }}" # token v1
         # Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      validate_certs: false
       status_code: 201
 
   - name: Create an Event Rule (IP Address)
@@ -450,6 +452,7 @@
         Accept: "application/json; indent=4"
         Authorization: "Token {{ netbox_token.json.key }}" # token v1
         # Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      validate_certs: false
       status_code: 201
 
   - name: Create an Event Rule (Config Context)
@@ -477,6 +480,7 @@
         Accept: "application/json; indent=4"
         Authorization: "Token {{ netbox_token.json.key }}" # token v1
         # Authorization: "Bearer nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      validate_certs: false
       status_code: 201
 
 
