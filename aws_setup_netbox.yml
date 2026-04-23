@@ -213,6 +213,7 @@
       data:
           username: admin
           password: "{{ ec2_netbox_pass }}"
+      validate_certs: no
       state: present
 
   - name: Delete Webhook on Netbox (IP address)
