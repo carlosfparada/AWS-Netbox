@@ -110,6 +110,7 @@
         headers:
           Content-Type: "application/json"
           Accept: "application/json; indent=4"
+        validate_certs: no
       run_once: true
       delegate_to: localhost
       register: netbox_token
@@ -117,8 +118,8 @@
     - name: Push site data to Netbox
       netbox.netbox.netbox_site:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ site }}"
@@ -132,29 +133,26 @@
     - name: Set Manufacturer (Cisco)
       set_fact:
         manufacturer: "Cisco"
-      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$")
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^cisco-2$")
       delegate_to: localhost
 
     - name: Set Manufacturer (Arista)
       set_fact:
         manufacturer: "Arista"
-      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^arista-2$")
       delegate_to: localhost
 
     - name: Set Manufacturer (Juniper)
       set_fact:
         manufacturer: "Juniper"
-      #when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
       when: hostvars[inventory_hostname].tags is defined and hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
       delegate_to: localhost
 
     - name: Push Manufacturer to Netbox
       netbox.netbox.netbox_manufacturer:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ manufacturer }}"
@@ -165,8 +163,8 @@
     - name: Push device type data to Netbox
       netbox.netbox.netbox_device_type:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           model: "{{ _facts.ansible_facts.ansible_net_model | lower }}"
@@ -179,8 +177,8 @@
     - name: Push devices role data to Netbox
       netbox.netbox.netbox_device_role:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "demo"
@@ -191,8 +189,8 @@
     - name: Push devices data to Netbox
       netbox.netbox.netbox_device:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           name: "{{ inventory_hostname }}"
@@ -209,8 +207,8 @@
     - name: Push interfaces data to Netbox (Cisco)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -228,8 +226,8 @@
     - name: Push interfaces data to Netbox (Arista)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -239,7 +237,6 @@
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$")
       when: hostvars[inventory_hostname].tags.Name is match("^arista-2$")
       throttle: 1
       delegate_to: localhost
@@ -247,8 +244,8 @@
     - name: Push interfaces data to Netbox (Juniper)
       netbox.netbox.netbox_device_interface:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           device: "{{ inventory_hostname }}"
@@ -258,7 +255,6 @@
           description: "{{ item.key }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$")
       when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$")
       throttle: 1
       delegate_to: localhost
@@ -266,8 +262,8 @@
     - name: Push IPv4 addresses data to Netbox (Cisco)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -278,7 +274,6 @@
           description: "{{ item.ipv4[0].address }} description"
         state: present
       loop: "{{ _facts.ansible_facts.ansible_network_resources.l3_interfaces }}"
-      #when: hostvars[inventory_hostname].tags.Name | regex_search("^cisco-2$") and item.ipv4[0].address is defined
       when: hostvars[inventory_hostname].tags.Name is match("^cisco-2$") and item.ipv4[0].address is defined
       throttle: 1
       delegate_to: localhost
@@ -286,8 +281,8 @@
     - name: Push IPv4 addresses data to Netbox (Arista)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -298,7 +293,6 @@
           description: "{{ item.value.ipv4.address }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      #when: hostvars[inventory_hostname].tags.Name | regex_search("^arista-2$") and item.value.ipv4.address is defined
       when: hostvars[inventory_hostname].tags.Name is match("^arista-2$") and item.value.ipv4.address is defined
       throttle: 1
       delegate_to: localhost
@@ -306,8 +300,8 @@
     - name: Push IPv4 addresses data to Netbox (Juniper)
       netbox.netbox.netbox_ip_address:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           assigned_object:
@@ -318,7 +312,6 @@
           description: "{{ item.value.ipv4.address }} description"
         state: present
       with_dict: "{{ _facts.ansible_facts.ansible_net_interfaces }}"
-      #when: hostvars[inventory_hostname].tags.Name | regex_search("^juniper-2$") and item.value.ipv4.address is defined
       when: hostvars[inventory_hostname].tags.Name is match("^juniper-2$") and item.value.ipv4.address is defined
       throttle: 1
       delegate_to: localhost
@@ -326,8 +319,8 @@
     - name: Push VLANs data to Netbox
       netbox.netbox.netbox_vlan:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data: 
           site: "{{ site }}"
@@ -342,8 +335,8 @@
     - name: Push Banner data to Netbox (login_banner config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "login_banner"
@@ -358,8 +351,8 @@
     - name: Push DNS Servers data to Netbox (dns_servers config context on {{ site }})
       netbox.netbox.netbox_config_context:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
         validate_certs: no
         data:
           name: "dns_servers"
@@ -374,8 +367,9 @@
     - name: Delete Token
       netbox.netbox.netbox_token:
         netbox_url: "{{ netbox_url }}"
-        #netbox_token: "{{ netbox_token.json.key }}" # token v1
-        netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        netbox_token: "{{ netbox_token.json.key }}" # token v1
+        #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+        validate_certs: no
         data:
             key: "{{ netbox_token.json.key }}"
         state: absent
