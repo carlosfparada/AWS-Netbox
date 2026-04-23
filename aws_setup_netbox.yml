@@ -228,8 +228,8 @@
   - name: Create Webhook on Netbox (IP address)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook IP Address
@@ -261,8 +261,8 @@
   - name: Delete Webhook on Netbox (VLAN Interface)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN Interface
@@ -271,8 +271,8 @@
   - name: Create Webhook on Netbox (VLAN Interface)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN Interface
@@ -304,8 +304,8 @@
   - name: Delete Webhook on Netbox (VLAN)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN
@@ -314,8 +314,8 @@
   - name: Create Webhook on Netbox (VLAN)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook VLAN
@@ -346,8 +346,8 @@
   - name: Delete Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook Config Context (EDA)
@@ -356,8 +356,8 @@
   - name: Create Webhook on Netbox (EDA Config Context)
     netbox.netbox.netbox_webhook:
       netbox_url: "{{ netbox_url }}"
-      #netbox_token: "{{ netbox_token.json.key }}" # token v1
-      netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
+      netbox_token: "{{ netbox_token.json.key }}" # token v1
+      #netbox_token: "nbt_{{ netbox_token.json.key }}.{{ netbox_token.json.token }}" # token v2
       validate_certs: no
       data: 
         name: Webhook Config Context (EDA)
