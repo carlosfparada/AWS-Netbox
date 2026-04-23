@@ -99,7 +99,7 @@
           site: "{{ site }}"
           serial: "{{ item.value.serial }}"
           device_type: "{{ item.value.device_type }}"
-          device_role: "{{ item.value.device_role }}"
+          #device_role: "{{ item.value.device_role }}"
           comments: "Added by AAP"
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'devices',
