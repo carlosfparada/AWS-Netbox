@@ -155,7 +155,8 @@
 
   - name: Set Netbox URL
     ansible.builtin.set_fact:
-      netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+      #netbox_url: "http://{{ hostvars[groups['netbox'][0]].public_dns_name }}:8000"
+      netbox_url: "https://{{ hostvars[groups['netbox'][0]].public_dns_name }}"
 
   - name: Create a Netbox Token (first time password)
     ansible.builtin.uri:
