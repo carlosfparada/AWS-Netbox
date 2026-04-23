@@ -43,6 +43,7 @@
           - exit
           - exit
     no_log: false # hide passwords on logs
+    ignore_errors: true
 
   # Arista
   - name: Set Arista password
