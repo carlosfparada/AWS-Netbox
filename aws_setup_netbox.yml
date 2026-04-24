@@ -111,7 +111,8 @@
       command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['netbox'][0] }}"
       responses:
         # [ec2-user@ip-10-0-0-93 ~]$ sudo systemctl status netbox-rq
-        '[user-ec2*':
+        'user-ec2*':
+          - ls
           - sudo systemctl status netbox-rq
           - exit
     no_log: false # hide passwords on logs
