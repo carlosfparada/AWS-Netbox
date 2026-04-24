@@ -106,6 +106,17 @@
     ignore_errors: true
 
   # Netbox
+  - name: Start Netbox RQ service (sudo systemctl start netbox-rq)
+    ansible.builtin.expect:
+      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['netbox'][0] }}"
+      responses:
+        # [ec2-user@ip-10-0-0-93 ~]$ sudo systemctl status netbox-rq
+        '[user-ec2*':
+          - sudo systemctl status netbox-rq
+          - exit
+    no_log: false # hide passwords on logs
+    ignore_errors: true
+
   # https://netboxlabs.com/docs/netbox/integrations/rest-api/#v1-and-v2-tokens
   - name: Create an AAP Token
     ansible.platform.token:
