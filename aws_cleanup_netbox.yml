@@ -47,7 +47,7 @@
         validate_certs: no
         data:
           site: "{{ item.value.site.name }}"
-          name: "{{ item.value.site.name }}"
+          #name: "{{ item.value.site.name }}"
           vid: "{{ item.value.vid }}"          
         state: absent
       loop: "{{ query('netbox.netbox.nb_lookup', 'vlans',
