@@ -107,14 +107,8 @@
 
   # Netbox
   - name: Start Netbox RQ service (sudo systemctl start netbox-rq)
-    ansible.builtin.expect:
-      command: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['netbox'][0] }}"
-      responses:
-        # [ec2-user@ip-10-0-0-93 ~]$ sudo systemctl status netbox-rq
-        "*ec2-user*":
-          - ls
-          - sudo systemctl status netbox-rq
-          - exit
+    ansible.builtin.shell:
+      cmd: "ssh -o StrictHostKeyChecking=no -i /tmp/private-key.pem ec2-user@{{ groups['netbox'][0] }} sudo systemctl start netbox-rq"
     no_log: false # hide passwords on logs
     ignore_errors: true
 
